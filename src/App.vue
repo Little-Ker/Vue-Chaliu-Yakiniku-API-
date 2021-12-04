@@ -16,7 +16,11 @@
 }
 
 #nav {
-  padding: 30px;
+  // padding: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  height: 50px;
 
   a {
     font-weight: bold;
