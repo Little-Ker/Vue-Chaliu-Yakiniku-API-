@@ -99,11 +99,6 @@ export default {
             background-size: cover;
             background-position: center;
             height: 100%;
-            .blackHide {
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-            }
         }
     }
     .banner-text {

@@ -4,7 +4,7 @@
       <Banner/>
     <!-- </div> -->
     <!-- <div class="index-about"> -->
-      <!-- <AboutText/> -->
+      <AboutText/>
     <!-- </div> -->
 
     <img alt="Vue logo" src="../assets/logo.png">
@@ -13,13 +13,13 @@
 
 <script>
 import Banner from '@/components/Banner.vue'
-// import AboutText from '@/components/AboutText.vue'
+import AboutText from '@/components/AboutText.vue'
 
 export default {
   name: 'Home',
   components: {
     Banner,
-    // AboutText
+    AboutText
   }
 }
 </script>
