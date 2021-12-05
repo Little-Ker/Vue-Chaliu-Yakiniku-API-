@@ -41,10 +41,10 @@ export default {
             },
             swiperList: [
                 {
-                    img: require('../assets/index/banner01.jpg'),
+                    img: require('../assets/images/index/banner01.jpg'),
                 },
                 {
-                    img: require('../assets/index/banner02.jpg'),
+                    img: require('../assets/images/index/banner02.jpg'),
                 },
             ],
             bannerText: {
@@ -81,6 +81,7 @@ export default {
 }
 
 .banner {
+    height: 100vh;
     .swiper-scale-effect .swiper-slide.swiper-slide-active .swiper-slide-cover {
         animation: scaleAmim 8s;
         animation-fill-mode: forwards;
