@@ -5,6 +5,7 @@
     <!-- </div> -->
     <!-- <div class="index-about"> -->
       <AboutText/>
+      <SwiperTest/>
     <!-- </div> -->
 
     <img alt="Vue logo" src="../assets/logo.png">
@@ -14,12 +15,14 @@
 <script>
 import Banner from '@/components/Banner.vue'
 import AboutText from '@/components/AboutText.vue'
+import SwiperTest from '@/components/SwiperTest.vue'
 
 export default {
   name: 'Home',
   components: {
     Banner,
-    AboutText
+    AboutText,
+    SwiperTest
   }
 }
 </script>
@@ -27,5 +30,9 @@ export default {
 <style lang="scss" scoped>
 
 .home {}
+
+// .main-bg-img {
+//   height: 2000px;
+// }
 
 </style>

@@ -9,6 +9,10 @@
 <style lang="scss">
 @import "../src/assets/scss/_all.scss";
 
+* {
+  text-align: left;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
