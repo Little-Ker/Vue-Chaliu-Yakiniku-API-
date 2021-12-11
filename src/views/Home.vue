@@ -6,6 +6,7 @@
     <!-- <div class="index-about"> -->
       <AboutText/>
       <SwiperTest/>
+      <Delicacy/>
     <!-- </div> -->
 
     <img alt="Vue logo" src="../assets/logo.png">
@@ -16,13 +17,15 @@
 import Banner from '@/components/Banner.vue'
 import AboutText from '@/components/AboutText.vue'
 import SwiperTest from '@/components/SwiperTest.vue'
+import Delicacy from '@/components/Delicacy.vue'
 
 export default {
   name: 'Home',
   components: {
     Banner,
     AboutText,
-    SwiperTest
+    SwiperTest,
+    Delicacy
   }
 }
 </script>

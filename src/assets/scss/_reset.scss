@@ -3,6 +3,16 @@
    License: none (public domain)
 */
 
+a {
+    text-decoration: none;
+    display: block;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
 html,
 body,
 div,
@@ -94,6 +104,7 @@ video {
 
 p {
     letter-spacing: 1px;
+    margin: 0;
 }
 
 
