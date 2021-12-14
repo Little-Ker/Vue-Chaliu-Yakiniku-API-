@@ -7,6 +7,7 @@
       <AboutText/>
       <SwiperTest/>
       <Delicacy/>
+      <Reserve/>
     <!-- </div> -->
 
     <img alt="Vue logo" src="../assets/logo.png">
@@ -18,6 +19,7 @@ import Banner from '@/components/Banner.vue'
 import AboutText from '@/components/AboutText.vue'
 import SwiperTest from '@/components/SwiperTest.vue'
 import Delicacy from '@/components/Delicacy.vue'
+import Reserve from '@/components/Reserve.vue'
 
 export default {
   name: 'Home',
@@ -25,7 +27,8 @@ export default {
     Banner,
     AboutText,
     SwiperTest,
-    Delicacy
+    Delicacy,
+    Reserve
   }
 }
 </script>
