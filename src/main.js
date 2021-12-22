@@ -9,4 +9,7 @@ import 'bootstrap';
 // fontello
 import '../src/assets/fontello/css/fontello.css';
 
+// scss
+import '@/assets/scss/_all.scss'
+
 createApp(App).use(store).use(router).mount('#app')
