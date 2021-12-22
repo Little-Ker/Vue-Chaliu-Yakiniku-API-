@@ -92,7 +92,6 @@ export default {
         transition:10s;
     }
     position: relative;
-    margin-top: -50px;
     .swiper-slide {
         height: 100vh;
         .slide-bg {
