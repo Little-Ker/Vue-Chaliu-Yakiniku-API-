@@ -122,27 +122,27 @@ export default {
     .list {
         width: 80%;
     }
-}
 
-.swiper-button {
-    cursor: pointer;
-    position: absolute;
-    top: 140px;
-    font-size: 24px;
-    z-index: 2;
-    &.swiper-next-btn {
-        right: -37px;
+    .swiper-button {
+        cursor: pointer;
+        position: absolute;
+        top: 140px;
+        font-size: 24px;
+        z-index: 2;
+        &.swiper-next-btn {
+            right: -37px;
+        }
+        &.swiper-prev-btn {
+            left: -37px;
+        }
     }
-    &.swiper-prev-btn {
-        left: -37px;
-    }
-}
 
-.swiper-slide {
-    height: 300px;
-    line-height: 300px;
-    font-size: 30px;
-    text-align: center;
-    background-color: pink;
+    .swiper-slide {
+        height: 300px;
+        line-height: 300px;
+        font-size: 30px;
+        text-align: center;
+        background-color: pink;
+    }
 }
 </style>

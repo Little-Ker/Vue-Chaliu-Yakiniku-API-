@@ -33,7 +33,6 @@
                 :autoplay="swiperOption.autoplay"
                 :slides-per-view="swiperOption.slidesPerView"
                 :space-between="swiperOption.spaceBetween"
-                @swiper="onSwiper"
                 >
                     <swiper-slide class="bg-fit" v-for="(item, index) in foodScrollList" :key="index" :style="{backgroundImage:'url('+item.img+')'}">
                         <div class="blackHide transition-0-1 d-flex justify-content-center align-items-center">
