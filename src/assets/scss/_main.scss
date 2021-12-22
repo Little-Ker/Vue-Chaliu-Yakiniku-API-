@@ -1,3 +1,13 @@
+.title h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.title p {
+    font-size: 18px;
+    margin-left: 3px;
+}
+
 // 顏色配置
 .main-white-text {
     color: $main-white-text;
@@ -155,6 +165,22 @@
     font-family: "Roboto", sans-serif;
 }
 
+.font-PlayfairDisplay {
+    font-family: 'Playfair Display', serif;
+}
+
+.font-CourierNew {
+    font-family: "Courier New", Courier, monospace;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
 .fw-700 {
     font-weight: 700;
     font-family: 'Courier New', Courier, monospace;
@@ -167,6 +193,14 @@
 // 排版
 .main-margin-top {
     margin-top: $main-margin-top !important;
+}
+
+.title-margin-top {
+    margin-top: ($main-margin-top / 2) !important;
+}
+
+.main-padding-bottom {
+    padding-bottom: ($main-margin-top / 2) !important;
 }
 
 .img-fit {
@@ -193,6 +227,30 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 30px;
+}
+
+.line1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.line2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.line3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .justify-content-bewteen {

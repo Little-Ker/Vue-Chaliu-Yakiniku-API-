@@ -5,7 +5,7 @@
     <!-- </div> -->
     <!-- <div class="index-about"> -->
       <AboutText/>
-      <SwiperTest/>
+      <News/>
       <Delicacy/>
       <Reserve/>
     <!-- </div> -->
@@ -17,7 +17,7 @@
 <script>
 import Banner from '@/components/Banner.vue'
 import AboutText from '@/components/AboutText.vue'
-import SwiperTest from '@/components/SwiperTest.vue'
+import News from '@/components/News.vue'
 import Delicacy from '@/components/Delicacy.vue'
 import Reserve from '@/components/Reserve.vue'
 
@@ -26,7 +26,7 @@ export default {
   components: {
     Banner,
     AboutText,
-    SwiperTest,
+    News,
     Delicacy,
     Reserve
   }

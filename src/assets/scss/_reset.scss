@@ -8,6 +8,11 @@ a {
     display: block;
 }
 
+a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
 html,
 body {
     overflow-x: hidden;
