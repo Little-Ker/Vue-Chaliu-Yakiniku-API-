@@ -5,5 +5,9 @@
 .icon-mail:before { content: '\e803'; } /* '' */
 .icon-facebook-rect:before { content: '\e804'; } /* '' */
 .icon-phone:before { content: '\e805'; } /* '' */
-.icon-calendar:before { content: '\e806'; } /* '' */
+.icon-line:before { content: '\e806'; } /* '' */
 .icon-mobile:before { content: '\e807'; } /* '' */
+.icon-calendar:before { content: '\e808'; } /* '' */
+.icon-cog:before { content: '\e809'; } /* '' */
+.icon-facebook:before { content: '\f09a'; } /* '' */
+.icon-gplus:before { content: '\f30f'; } /* '' */

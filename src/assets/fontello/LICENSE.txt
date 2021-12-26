@@ -46,12 +46,12 @@ Font license info
    Homepage:  http://aristeides.com/
 
 
-## Zocial
+## Entypo
 
-   Copyright (C) 2012 by Sam Collins
+   Copyright (C) 2012 by Daniel Bruce
 
-   Author:    Sam Collins
-   License:   MIT (http://opensource.org/licenses/mit-license.php)
-   Homepage:  http://zocial.smcllns.com/
+   Author:    Daniel Bruce
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://www.entypo.com
 
 
