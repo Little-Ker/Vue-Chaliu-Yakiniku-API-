@@ -6,7 +6,11 @@
         </router-link>
         <div class="d-flex menu">
             <router-link :to="item.url" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
-            <a class="loginBtn transition-0-3">會員登入</a>
+            <a v-if="!isLoginSuccess" @click="clickLoginFn" class="loginBtn transition-0-3">會員登入</a>
+            <a v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
+                <p class="icon-cog"></p>
+                <p>會員管理</p>
+            </a>
         </div>
     </div>
 </div>
@@ -14,6 +18,11 @@
 
 <script>
 export default {
+    computed: {
+        isLoginSuccess() {
+            return this.$store.state.isLoginSuccess;
+        }
+    },
     data() {
         return {
             logoUrl: require('@/assets/images/all/logo02.png'),
@@ -35,6 +44,20 @@ export default {
                     url: '/about'
                 },
             ]
+        }
+    },
+    methods: {
+        clickLoginFn() {
+            this.$store.dispatch('updateIsShowLogin', true);
+            this.stopScrollBar();
+        },
+        // 禁用滾動條
+        stopScrollBar() {
+            var tops = $(document).scrollTop();
+            $(document).bind("scroll",function (){$(document).scrollTop(tops); });
+        },
+        startScrollBar() {
+            $(document).unbind("scroll");
         }
     }
 }
@@ -89,6 +112,12 @@ export default {
             &:hover {
                 background-color: #c7994f;
                 color: #fff;
+            }
+        }
+        .userBtn {
+            .icon-cog {
+                font-size: 18px;
+                margin-bottom: 10px;
             }
         }
     }

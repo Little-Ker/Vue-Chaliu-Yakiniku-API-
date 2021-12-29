@@ -25,12 +25,20 @@
     color: $main-blue-text;
 }
 
+.main-light-blue-text {
+    color: $main-light-blue-text;
+}
+
 .main-brow-text {
     color: $main-brow-text;
 }
 
 .main-bg-img {
     background-image: url($main-bg-url);
+}
+
+.border-brow {
+    border: 1px solid $main-brow-text;
 }
 
 // 功能
@@ -151,6 +159,34 @@
     }
 }
 
+.btn-close {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    &:hover::after,
+    &:hover::before {
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 3px 3px, rgba(0, 0, 0, 0.1) 0px 3px 3px;
+    }
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        top: 45%;
+        left: 0;
+        width: 30px;
+        height: 5px;
+        background-color: $main-blue-text;
+        transition: .1s all;
+    }
+    &::after {
+        transform: rotate(45deg);
+    }
+    &::before {
+        transform: rotate(-45deg);
+    }
+}
+
 // 文字
 .font-Courier {
     font-family: 'Courier New', Courier, monospace;
@@ -171,6 +207,10 @@
 
 .font-CourierNew {
     font-family: "Courier New", Courier, monospace;
+}
+
+.text-align-center {
+    text-align: center;
 }
 
 .text-align-left {
