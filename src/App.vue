@@ -2,23 +2,20 @@
   <Navbar/>
   <router-view/>
   <Footer/>
-  <Login/>
-  <LoginSucModel/>
+  <LoginView/>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import Login from '@/components/Login.vue'
-import LoginSucModel from '@/components/LoginSucModel.vue'
+import LoginView from '@/views/LoginView.vue'
 
 export default {
   name: 'all',
   components: {
     Navbar,
     Footer,
-    Login,
-    LoginSucModel
+    LoginView,
   }
 }
 </script>

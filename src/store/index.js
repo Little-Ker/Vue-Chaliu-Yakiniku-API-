@@ -4,7 +4,9 @@ export default createStore({
     state: {
         isShowLogin: false,
         isLoginSuccess: false,
-        isShowLoginNotice: false,
+        isShowNotice: false,
+        isShowRegister: false,
+        isShowRegisterNotice: false,
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {
@@ -13,8 +15,14 @@ export default createStore({
         updateIsLoginSuccess(context, isLoginSuccess) {
             context.commit('SetIsLoginSuccess', isLoginSuccess);
         },
-        updateIsShowLoginNotice(context, isShowLoginNotice) {
-            context.commit('SetIsShowLoginNotice', isShowLoginNotice);
+        updateIsShowNotice(context, isShowNotice) {
+            context.commit('SetIsShowNotice', isShowNotice);
+        },
+        updateIsShowRegister(context, isShowRegister) {
+            context.commit('SetIsShowRegister', isShowRegister);
+        },
+        updateIsShowRegisterNotice(context, isShowRegisterNotice) {
+            context.commit('SetIsShowRegisterNotice', isShowRegisterNotice);
         },
     },
     // 改state資料
@@ -25,8 +33,14 @@ export default createStore({
         SetIsLoginSuccess(state, isLoginSuccess) {
             state.isLoginSuccess = isLoginSuccess;
         },
-        SetIsShowLoginNotice(state, isShowLoginNotice) {
-            state.isShowLoginNotice = isShowLoginNotice;
+        SetIsShowNotice(state, isShowNotice) {
+            state.isShowNotice = isShowNotice;
+        },
+        SetIsShowRegister(state, isShowRegister) {
+            state.isShowRegister = isShowRegister;
+        },
+        SetIsShowRegisterNotice(state, isShowRegisterNotice) {
+            state.isShowRegisterNotice = isShowRegisterNotice;
         },
     },
     modules: {}

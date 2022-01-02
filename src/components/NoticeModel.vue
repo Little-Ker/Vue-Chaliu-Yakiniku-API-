@@ -1,9 +1,10 @@
 <template>
-    <div v-if="isShowLoginNotice" class="loginSucModel d-flex justify-content-center align-items-center">
+    <div v-if="isShowNotice" class="loginSucModel d-flex justify-content-center align-items-center">
         <transition @after-enter='afterEnterFn' name='fadeIn' appear>
             <div class="model">
                 <p class="icon-ok-circled text-align-center"></p>
-                <p class="title fw-700 text-align-center">登入成功！</p>
+                <p v-if="!isShowRegisterNotice" class="title fw-700 text-align-center">登入成功！</p>
+                <p v-else class="title fw-700 text-align-center">會員註冊成功！</p>
             </div>
         </transition>
     </div>
@@ -12,13 +13,17 @@
 <script>
 export default {
     computed: {
-        isShowLoginNotice() {
-            return this.$store.state.isShowLoginNotice;
+        isShowNotice() {
+            return this.$store.state.isShowNotice;
+        },
+        isShowRegisterNotice() {
+            return this.$store.state.isShowRegisterNotice;
         }
     },
     methods: {
         afterEnterFn() {
-            this.$store.dispatch('updateIsShowLoginNotice', false);
+            this.$store.dispatch('updateIsShowNotice', false);
+            this.$store.dispatch('updateIsShowRegisterNotice', false);
         }
     } 
 }

@@ -1,35 +1,40 @@
 <template>
-<div @click.self="closeLogin" class="login" v-if="isShowLogin">
+<div @click.self="closeRegister" class="register" v-if="isShowRegister">
     <div class="form-section pos-relative">
-        <div @click="closeLogin" class="btn-close"></div>
-        <p class="title text-align-center fw-700">會員登入</p>
-        <form action="login-form" autocomplete="off" @submit.prevent="clickLoginBtn" class="position-relative">
+        <div @click="closeRegister" class="btn-close"></div>
+        <p class="title text-align-center fw-700">新會員註冊</p>
+        <form action="login-form" autoComplete="off" @submit.prevent="clickRegisterBtn" class="position-relative">
             <div class="form choose-select">
                 <div class="formBox d-flex flex-direction-column">
-                    <label for="contactName" class="colLabel">帳號</label>
-                    <input type="text" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
+                    <label for="contactAcc" class="colLabel">帳號</label>
+                    <input v-model="acc" type="text" autoComplete="off" maxlength="10" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactAcc" required>
                 </div>
                 <div class="formBox">
-                    <label for="contactTel" class="colLabel">密碼</label>
-                    <input type="password" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactTel" required>
+                    <label for="contactPwd" class="colLabel">密碼</label>
+                    <input v-model="pwd" type="password" autoComplete="off" minlength="5" placeholder="請輸入至少5個字元" maxlength="10" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactPwd" required>
+                </div>
+                <div :class="{'redTip': isShowTip}" class="formBox">
+                    <label for="contactCheckPwd" class="colLabel">密碼確認</label>
+                    <input v-model="checkPwd" type="password" maxlength="10" autoComplete="off" placeholder="請重複輸入密碼" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCheckPwd" required>
+                </div>
+                <p v-if="isShowTip" class="tip">*密碼重複輸入錯誤</p>
+                <div class="formBox d-flex flex-direction-column">
+                    <label for="contactName" class="colLabel">姓名</label>
+                    <input v-model="name" type="text" maxlength="5" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
+                </div>
+                <div class="formBox d-flex flex-direction-column">
+                    <label for="contactCellphone" class="colLabel">手機</label>
+                    <input v-model="cellphone" type="tel" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
                 </div>
             </div>
             <div class="align-self-center mt-4">
                 <button type="submit" class="btn d-block text-align-center main-brow-text">
-                    <span>登 入</span>
+                    <span>註 冊</span>
                 </button>
             </div>
         </form>
-        <!-- <div class="d-flex flex-direction-col align-items-center">
-            <p class="orTxt text-align-center main-gray-text">or with</p>
-            <div class="d-flex">
-                <a href="#" class="loginIcon icon-gplus"></a>
-                <a href="#" class="loginIcon icon-facebook"></a>
-                <a href="#" class="loginIcon icon-line"></a>
-            </div>
-        </div> -->
-        <a @click="clickRegisterBtn" class="d-flex justify-content-end">
-            <span class="register-btn main-light-blue-text">還沒有帳號？<span class="fw-700"> 註冊</span></span>
+        <a @click="clickLoginBtn" class="d-flex justify-content-end">
+            <span class="register-btn main-light-blue-text">已經有帳號<span class="fw-700"> 登入</span></span>
         </a> 
     </div>
 </div>
@@ -38,23 +43,43 @@
 <script>
 export default {
     computed: {
-        isShowLogin() {
-            return this.$store.state.isShowLogin;
+        isShowRegister() {
+            return this.$store.state.isShowRegister;
         },
     },
     data() {
-        return {}
+        return {
+            isShowTip: false,
+            acc: null,
+            pwd: null,
+            checkPwd: null,
+            name: null,
+            cellphone: null,
+        }
     },
     methods: {
         clickRegisterBtn() {
-            this.$store.dispatch('updateIsShowLogin', false);
-            this.$store.dispatch('updateIsShowRegister', true);
-            // this.startScrollBar();
+            if (this.pwd !== this.checkPwd) {
+                this.isShowTip = true;
+                return;
+            }
+            this.clickLoginBtn();
+            this.$store.dispatch('updateIsShowRegisterNotice', true);
+            this.$store.dispatch('updateIsShowNotice', true);
+
         },
         clickLoginBtn() {
-            this.closeLogin();
-            this.$store.dispatch('updateIsLoginSuccess', true);
-            this.$store.dispatch('updateIsShowNotice', true);
+            this.$store.dispatch('updateIsShowLogin', true);
+            this.$store.dispatch('updateIsShowRegister', false);
+            this.clearForm();
+        },
+        clearForm() {
+            this.acc = null;
+            this.pwd = null;
+            this.checkPwd = null;
+            this.name = null;
+            this.cellphone = null;
+            this.isShowTip = false;
         },
         focusInputFn(el) {
             $(el.target).closest('.formBox').addClass('inputFocus');
@@ -62,9 +87,10 @@ export default {
         blurInputFn(el) {
             $(el.target).closest('.formBox').removeClass('inputFocus');
         },
-        closeLogin() {
-            this.$store.dispatch('updateIsShowLogin', false);
+        closeRegister() {
+            this.$store.dispatch('updateIsShowRegister', false);
             this.startScrollBar();
+            this.clearForm();
         },
         // 禁用滾動條
         stopScrollBar() {
@@ -81,7 +107,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/_variable.scss";
 
-.login {
+.register {
+    overflow: auto;
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
@@ -101,7 +128,7 @@ export default {
         }
     }
     .register-btn {
-        margin-top: 50px;
+        margin-top: 40px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
@@ -125,14 +152,14 @@ export default {
             animation: lineHoverTwo .3s .3s forwards;
         }
     }
-    .form-section {
+    .form-section {   
         background-color: #fff;
         border-radius: 5px;
         padding: 50px 40px;
         box-shadow: rgba(250, 250, 193, 0.25) 0px 13px 27px -5px, rgba(255, 255, 255, 0.3) 0px 8px 16px -8px;
         .title {
             font-size: 24px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         .btn {
             width: 100%;
@@ -146,6 +173,19 @@ export default {
                 background-color: $main-light-blue-text
             }
         }
+        .tip {
+            position: relative;
+            top: -10px;
+            left: 104px;
+            font-size: 14px;
+            color: rgb(212, 4, 4);
+        }
+        .redTip {
+            border-color: rgb(212, 4, 4) !important;
+            .colLabel::before {
+                background-color: rgb(212, 4, 4) !important;
+            }
+        }
         .formBox {
             width: 100%;
             border: solid 1px rgba(205, 205, 205, 0.7);
@@ -155,8 +195,9 @@ export default {
             transition: all 0.4s;
             margin-bottom: 20px;
             .colLabel {
-                min-width: 85px;
-                padding: 0 0 0 20px;
+                text-align: center;
+                min-width: 90px;
+                padding: 0 10px;
                 margin: 4px 0;
                 line-height: 25px;
                 color: #242424;
@@ -166,7 +207,7 @@ export default {
                     content: '';
                     position: absolute;
                     top: 0;
-                    right: 10px;
+                    right: 0px;
                     width: 0.5px;
                     height: 25px;
                     background-color: rgba(205, 205, 205, 0.7);
@@ -192,43 +233,6 @@ export default {
                 border-color: $main-light-blue-text;
                 color: $main-blue-text !important;
             }
-        }
-    }
-    .orTxt {
-        margin: 40px 0 25px 0;
-        position: relative;
-        width: 100%;
-        text-align: center;
-        &::after, &::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: calc(100% - 200px);
-            height: 0.5px;
-            background-color: $main-gray-text;
-        }
-        &::after {
-            left: 0; 
-        }
-        &::before {
-            right: 0;
-        }
-    }
-    .loginIcon {
-        border: 2px solid $main-light-blue-text;
-        width: 37px;
-        height: 37px;
-        border-radius: 50%;
-        margin: 0 12px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $main-light-blue-text;
-        transition: .1s all;
-        box-shadow: rgba(0, 0, 0, 0.08) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
-        &:hover {
-            background-color: $main-blue-text;
-            color: #fff;
         }
     }
 }
