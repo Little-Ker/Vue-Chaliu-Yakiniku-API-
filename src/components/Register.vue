@@ -26,6 +26,10 @@
                     <label for="contactCellphone" class="colLabel">手機</label>
                     <input v-model="cellphone" type="tel" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
                 </div>
+                <div class="formBox d-flex flex-direction-column">
+                    <label for="contactCellphone" class="colLabel">信箱</label>
+                    <input v-model="email" type="email" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
+                </div>
             </div>
             <div class="align-self-center mt-4">
                 <button type="submit" class="btn d-block text-align-center main-brow-text">
@@ -55,6 +59,7 @@ export default {
             checkPwd: null,
             name: null,
             cellphone: null,
+            email: null,
         }
     },
     methods: {
@@ -64,8 +69,8 @@ export default {
                 return;
             }
             this.clickLoginBtn();
-            this.$store.dispatch('updateIsShowRegisterNotice', true);
             this.$store.dispatch('updateIsShowNotice', true);
+            this.$store.dispatch('updateNoticeText', '會員註冊成功！');
 
         },
         clickLoginBtn() {

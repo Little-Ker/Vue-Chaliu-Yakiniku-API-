@@ -49,12 +49,12 @@ export default {
         clickRegisterBtn() {
             this.$store.dispatch('updateIsShowLogin', false);
             this.$store.dispatch('updateIsShowRegister', true);
-            // this.startScrollBar();
         },
         clickLoginBtn() {
             this.closeLogin();
             this.$store.dispatch('updateIsLoginSuccess', true);
             this.$store.dispatch('updateIsShowNotice', true);
+            this.$store.dispatch('updateNoticeText', '會員登入成功！');
         },
         focusInputFn(el) {
             $(el.target).closest('.formBox').addClass('inputFocus');

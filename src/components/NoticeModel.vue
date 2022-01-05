@@ -3,8 +3,7 @@
         <transition @after-enter='afterEnterFn' name='fadeIn' appear>
             <div class="model">
                 <p class="icon-ok-circled text-align-center"></p>
-                <p v-if="!isShowRegisterNotice" class="title fw-700 text-align-center">登入成功！</p>
-                <p v-else class="title fw-700 text-align-center">會員註冊成功！</p>
+                <p class="title fw-700 text-align-center">{{noticeText}}</p>
             </div>
         </transition>
     </div>
@@ -16,14 +15,13 @@ export default {
         isShowNotice() {
             return this.$store.state.isShowNotice;
         },
-        isShowRegisterNotice() {
-            return this.$store.state.isShowRegisterNotice;
+        noticeText() {
+            return this.$store.state.noticeText;
         }
     },
     methods: {
         afterEnterFn() {
             this.$store.dispatch('updateIsShowNotice', false);
-            this.$store.dispatch('updateIsShowRegisterNotice', false);
         }
     } 
 }
