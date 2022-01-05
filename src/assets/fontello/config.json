@@ -97,6 +97,30 @@
       "css": "cancel-circled",
       "code": 59402,
       "src": "fontawesome"
+    },
+    {
+      "uid": "c1f1975c885aa9f3dad7810c53b82074",
+      "css": "lock",
+      "code": 59404,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
+      "css": "pencil",
+      "code": 59405,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "pzy4lq1ak4datbxpdfj3ya74vjfhwxg1",
+      "css": "article-alt",
+      "code": 59406,
+      "src": "modernpics"
+    },
+    {
+      "uid": "f9c3205df26e7778abac86183aefdc99",
+      "css": "ccw",
+      "code": 59407,
+      "src": "fontawesome"
     }
   ]
 }
