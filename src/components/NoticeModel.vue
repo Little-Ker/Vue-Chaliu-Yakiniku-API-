@@ -47,6 +47,7 @@ export default {
             this.$store.dispatch('updateNoticeText', '登出成功');
             this.$store.dispatch('updateIsShowCheckNotice', false);
             this.$store.dispatch('updateIsLoginSuccess', false);
+            this.$store.dispatch('updateIsAdiminsLogin', false);
             this.goTop();
             this.$router.push("/");
         },

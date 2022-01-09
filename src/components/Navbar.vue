@@ -7,10 +7,11 @@
         <div class="d-flex menu">
             <router-link :to="item.url" @click="goTop" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
             <a v-if="!isLoginSuccess" @click="clickLoginFn" class="loginBtn transition-0-3">會員登入</a>
-            <router-link @click="goTop" to="/member/reserve" v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
+            <a @click="clickAdminFn();goTop();" v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
                 <p class="icon-cog"></p>
-                <p>會員管理</p>
-            </router-link>
+                <p v-if="!isAdiminsLogin">會員系統</p>
+                <p v-else>管理員系統</p>
+            </a>
         </div>
     </div>
 </div>
@@ -21,6 +22,9 @@ export default {
     computed: {
         isLoginSuccess() {
             return this.$store.state.isLoginSuccess;
+        },
+        isAdiminsLogin() {
+            return this.$store.state.isAdiminsLogin;
         }
     },
     data() {
@@ -50,6 +54,13 @@ export default {
         clickLoginFn() {
             this.$store.dispatch('updateIsShowLogin', true);
             this.stopScrollBar();
+        },
+        clickAdminFn() {
+            if (!this.isAdiminsLogin) {
+                this.$router.push("/member/reserve");
+                return;
+            }
+             this.$router.push("/admin");
         },
         goTop() {
             $('html,body').scrollTop(0, 0);
@@ -120,7 +131,7 @@ export default {
         .userBtn {
             .icon-cog {
                 font-size: 18px;
-                margin-bottom: 10px;
+                margin-bottom: 2px;
             }
         }
     }

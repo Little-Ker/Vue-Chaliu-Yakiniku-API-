@@ -13,6 +13,8 @@ export default createStore({
         memberCellphone: '0911-111111',
         memberEmail: 'abc@gmail.com',
         memberPassword: '11111',
+        // 管理員資料
+        isAdiminsLogin: true,
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {
@@ -45,6 +47,10 @@ export default createStore({
         },
         updateMemberPassword(context, memberPassword) {
             context.commit('SetMemberPassword', memberPassword);
+        },
+        // 管理員資料
+        updateIsAdiminsLogin(context, isAdiminsLogin) {
+            context.commit('SetIsAdiminsLogin', isAdiminsLogin);
         },
     },
     // 改state資料
@@ -79,6 +85,10 @@ export default createStore({
         },
         SetMemberPassword(state, memberPassword) {
             state.memberPassword = memberPassword;
+        },
+        // 管理員資料
+        SetIsAdiminsLogin(state, isAdiminsLogin) {
+            state.isAdiminsLogin = isAdiminsLogin;
         },
     },
     modules: {}
