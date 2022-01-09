@@ -7,28 +7,28 @@
             <div class="form choose-select">
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactAcc" class="colLabel">帳號</label>
-                    <input v-model="acc" type="text" autoComplete="off" maxlength="10" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactAcc" required>
+                    <input v-model="acc" type="text" @keydown="keydownNull($event)" autoComplete="off" maxlength="10" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactAcc" required>
                 </div>
                 <div class="formBox">
                     <label for="contactPwd" class="colLabel">密碼</label>
-                    <input v-model="pwd" type="password" autoComplete="off" minlength="5" placeholder="請輸入至少5個字元" maxlength="10" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactPwd" required>
+                    <input v-model="pwd" type="password" @keydown="keydownNull($event)" autoComplete="off" minlength="5" placeholder="請輸入至少5個字元" maxlength="10" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactPwd" required>
                 </div>
                 <div :class="{'redTip': isShowTip}" class="formBox">
                     <label for="contactCheckPwd" class="colLabel">密碼確認</label>
-                    <input v-model="checkPwd" type="password" maxlength="10" autoComplete="off" placeholder="請重複輸入密碼" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCheckPwd" required>
+                    <input v-model="checkPwd" type="password" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" placeholder="請重複輸入密碼" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCheckPwd" required>
                 </div>
                 <p v-if="isShowTip" class="tip">*密碼重複輸入錯誤</p>
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactName" class="colLabel">姓名</label>
-                    <input v-model="name" type="text" maxlength="5" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
+                    <input v-model="name" type="text" @keydown="keydownNull($event)" maxlength="5" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
                 </div>
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactCellphone" class="colLabel">手機</label>
-                    <input v-model="cellphone" type="tel" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
+                    <input v-model="cellphone" type="tel" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
                 </div>
                 <div class="formBox d-flex flex-direction-column">
-                    <label for="contactCellphone" class="colLabel">信箱</label>
-                    <input v-model="email" type="email" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
+                    <label for="contactEmail" class="colLabel">信箱</label>
+                    <input v-model="email" type="email" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactEmail" required>
                 </div>
             </div>
             <div class="align-self-center mt-4">
@@ -96,6 +96,12 @@ export default {
             this.$store.dispatch('updateIsShowRegister', false);
             this.startScrollBar();
             this.clearForm();
+        },
+        // 禁止輸入空格
+        keydownNull(e){
+            if(e.keyCode == 32){
+                e.returnValue = false
+            }
         },
         // 禁用滾動條
         stopScrollBar() {

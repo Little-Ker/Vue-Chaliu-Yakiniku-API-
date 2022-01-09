@@ -5,8 +5,14 @@ export default createStore({
         isShowLogin: false,
         isLoginSuccess: false,
         isShowNotice: false,
+        isShowCheckNotice: false,
         noticeText: '',
         isShowRegister: false,
+        // 會員資料
+        memberName: 'Vivi',
+        memberCellphone: '0911-111111',
+        memberEmail: 'abc@gmail.com',
+        memberPassword: '11111',
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {
@@ -21,8 +27,24 @@ export default createStore({
         updateNoticeText(context, noticeText) {
             context.commit('SetNoticeText', noticeText);
         },
+        updateIsShowCheckNotice(context, isShowCheckNotice) {
+            context.commit('SetIsShowCheckNotice', isShowCheckNotice);
+        },
         updateIsShowRegister(context, isShowRegister) {
             context.commit('SetIsShowRegister', isShowRegister);
+        },
+        // 會員資料
+        updateMemberName(context, memberName) {
+            context.commit('SetMemberName', memberName);
+        },
+        updateMemberCellphone(context, memberCellphone) {
+            context.commit('SetMemberCellphone', memberCellphone);
+        },
+        updateMemberEmail(context, memberEmail) {
+            context.commit('SetMemberEmail', memberEmail);
+        },
+        updateMemberPassword(context, memberPassword) {
+            context.commit('SetMemberPassword', memberPassword);
         },
     },
     // 改state資料
@@ -39,8 +61,24 @@ export default createStore({
         SetNoticeText(state, noticeText) {
             state.noticeText = noticeText;
         },
+        SetIsShowCheckNotice(state, isShowCheckNotice) {
+            state.isShowCheckNotice = isShowCheckNotice;
+        },
         SetIsShowRegister(state, isShowRegister) {
             state.isShowRegister = isShowRegister;
+        },
+        // 會員資料
+        SetMemberName(state, memberName) {
+            state.memberName = memberName;
+        },
+        SetMemberCellphone(state, memberCellphone) {
+            state.memberCellphone = memberCellphone;
+        },
+        SetMemberEmail(state, memberEmail) {
+            state.memberEmail = memberEmail;
+        },
+        SetMemberPassword(state, memberPassword) {
+            state.memberPassword = memberPassword;
         },
     },
     modules: {}

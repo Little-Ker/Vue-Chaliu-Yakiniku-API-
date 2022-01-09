@@ -1,16 +1,16 @@
 <template>
 <div class="nav">
-    <div class="d-flex justify-content-bewteen">
-        <router-link to="/" class="logo">
+    <div class="navBg d-flex justify-content-bewteen">
+        <router-link to="/" @click="goTop" class="logo">
             <img :src="logoUrl" class="img-fit" alt="茶六">
         </router-link>
         <div class="d-flex menu">
-            <router-link :to="item.url" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
+            <router-link :to="item.url" @click="goTop" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
             <a v-if="!isLoginSuccess" @click="clickLoginFn" class="loginBtn transition-0-3">會員登入</a>
-            <a v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
+            <router-link @click="goTop" to="/member/reserve" v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
                 <p class="icon-cog"></p>
                 <p>會員管理</p>
-            </a>
+            </router-link>
         </div>
     </div>
 </div>
@@ -50,6 +50,9 @@ export default {
         clickLoginFn() {
             this.$store.dispatch('updateIsShowLogin', true);
             this.stopScrollBar();
+        },
+        goTop() {
+            $('html,body').scrollTop(0, 0);
         },
         // 禁用滾動條
         stopScrollBar() {
@@ -123,7 +126,7 @@ export default {
     }
     .logo {
         height: 40px;
-        margin-top: 25px;
+        margin-top: 15px;
         margin-left: 30px;
     }
 }

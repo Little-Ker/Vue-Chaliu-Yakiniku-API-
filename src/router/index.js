@@ -7,6 +7,30 @@ const routes = [{
         component: Home
     },
     {
+        path: '/member',
+        name: 'Member',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/MemberView.vue'),
+        children: [{
+                path: 'reserve',
+                name: 'Member-Reserve',
+                component: () =>
+                    import ('../components/member/Member-Reserve.vue')
+            },
+            {
+                path: 'information',
+                name: 'Member-Information',
+                component: () =>
+                    import ('../components/member/Member-Information.vue')
+            },
+            {
+                path: 'edit',
+                name: 'Member-Password',
+                component: () =>
+                    import ('../components/member/Member-Password.vue')
+            }
+        ],
+    }, {
         path: '/about',
         name: 'About',
         // route level code-splitting
@@ -14,7 +38,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
-    }
+    },
 ]
 
 const router = createRouter({

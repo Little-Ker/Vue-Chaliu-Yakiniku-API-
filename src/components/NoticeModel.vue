@@ -1,9 +1,25 @@
 <template>
-    <div v-if="isShowNotice" class="loginSucModel d-flex justify-content-center align-items-center">
+    <div v-if="isShowNotice" class="noticeModel d-flex justify-content-center align-items-center">
         <transition @after-enter='afterEnterFn' name='fadeIn' appear>
             <div class="model">
                 <p class="icon-ok-circled text-align-center"></p>
                 <p class="title fw-700 text-align-center">{{noticeText}}</p>
+            </div>
+        </transition>
+    </div>
+    <div v-if="isShowCheckNotice" @click.self="clickCancelBtn" class="noticeModel d-flex justify-content-center align-items-center">
+        <transition @after-enter='afterEnterFn' name='checkfadeIn' appear>
+            <div class="model">
+                <p class="icon-logout text-align-center"></p>
+                <p class="title fw-700 text-align-center">確定是否登出?</p>
+                <div class="d-flex mt-4 justify-content-end">
+                    <a @click="clickCancelBtn" class="btn cancel d-flex justify-content-center align-items-center">
+                        <span>取消</span>
+                    </a>
+                    <a @click="clickLogoutBtn" class="btn d-flex justify-content-center align-items-center">
+                        <span>確定</span>
+                    </a>
+                </div>
             </div>
         </transition>
     </div>
@@ -17,20 +33,53 @@ export default {
         },
         noticeText() {
             return this.$store.state.noticeText;
-        }
+        },
+        isShowCheckNotice() {
+            return this.$store.state.isShowCheckNotice;
+        },
     },
     methods: {
+        clickCancelBtn() {
+            this.$store.dispatch('updateIsShowCheckNotice', false);
+        },
+        clickLogoutBtn() {
+            this.$store.dispatch('updateIsShowNotice', true);
+            this.$store.dispatch('updateNoticeText', '登出成功');
+            this.$store.dispatch('updateIsShowCheckNotice', false);
+            this.$store.dispatch('updateIsLoginSuccess', false);
+            this.goTop();
+            this.$router.push("/");
+        },
+        goTop() {
+            $('html,body').scrollTop(0, 0);
+        },
+        // 禁用滾動條
+        stopScrollBar() {
+            var tops = $(document).scrollTop();
+            $(document).bind("scroll",function (){$(document).scrollTop(tops); });
+        },
+        startScrollBar() {
+            $(document).unbind("scroll");
+        },
         afterEnterFn() {
             this.$store.dispatch('updateIsShowNotice', false);
         }
-    } 
+    },
+    watch: {
+        isShowNotice() {
+            (this.isShowNotice) ? this.stopScrollBar() : this.startScrollBar();
+        },
+        isShowCheckNotice() {
+            (this.isShowCheckNotice) ? this.stopScrollBar() : this.startScrollBar();
+        }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/_variable.scss";
 
-.loginSucModel {
+.noticeModel {
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -40,23 +89,49 @@ export default {
     z-index: 100;
     .model {
         position: relative;
-        padding: 65px 75px;
+        padding: 50px 60px;
         border-radius: 0.3rem;
         background-color: #fff;
-        .icon-ok-circled {
+        .icon-ok-circled, .icon-logout {
             font-size: 64px;
             margin-bottom: 32px;
             color: $main-blue-text;
         }
+        .icon-logout {
+            margin-bottom: 50px;
+        }
         .title {
             color: $main-light-blue-text;
             font-size: 24px;
+        }
+        .btn {
+            width: 100px;
+            height: 45px;
+            letter-spacing: 5px;
+            border-radius: 0;
+            background-color: $main-blue-text;
+            color: $main-white-text;
+            &:hover {
+                background-color: $main-light-blue-text
+            }
+        }
+        .cancel {
+            background-color: #fff;
+            border: 1px solid $main-blue-text;
+            color: $main-blue-text;
+            margin-right: 30px;
+            &:hover {
+                background-color: #eeeeee
+            }
         }
     }
 }
 
 /* 提示框進出場動畫 */
 .fadeIn-enter-active {
-  animation: fadeIn 2s;
+    animation: fadeInOut 2s;
+}
+.checkfadeIn-enter-active {
+    animation: fadeIn .6s;
 }
 </style>
