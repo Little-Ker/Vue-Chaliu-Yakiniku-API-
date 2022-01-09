@@ -1,0 +1,195 @@
+<template>
+    <div class="member-reserve">
+        <h1 class="title">預約紀錄</h1>
+        <p class="txt main-white-888">- 目前僅提供前十筆紀錄。</p>
+        <div @click="goTop" class="d-flex mb-3">
+            <div @click="isShowNowOrder = true" :class="{'active': isShowNowOrder}" class="choose">即將用餐</div>
+            <div @click="isShowNowOrder = false" :class="{'active': !isShowNowOrder}" class="choose">歷史紀錄</div>
+        </div>
+        <div v-for="(item, index) in orders" :key="index" class="order">
+            <div class="shop">
+                <p class="name">茶六燒肉堂 - {{item.shopName}}</p>
+                <p class="main-white-888">{{shopAddress(item.shopName)}}</p>
+            </div>
+            <div class="fw-700 d-flex">
+                <p class="mr-2">
+                    <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
+                    <span></span>預定時間:</p>
+                <p class="d-flex">
+                    <span class="mr-2 d-block">{{item.date}}</span>
+                    <span class="d-block">{{item.time}}</span>
+                </p> 
+            </div>
+            <p class="fw-700">
+                <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
+                <span class="mr-2">預定人數:</span>
+                <span>{{item.people}}人</span>
+            </p>
+            <div :class="[{'orderStatus': !isShowNowOrder}, {'mt-2': isShowNowOrder}]" class="d-flex justify-content-bewteen">
+                <p class="align-self-end main-white-888">於 {{item.bookTime}} 預約</p>
+                <a v-if="isShowNowOrder" @click="clickCancelBtn" class="btn-border">
+                    <span class="btn-border-text transition-0-3">取消預約</span>
+                </a>
+                <p v-if="!isShowNowOrder" class="statusTxt fw-700">{{item.status}}</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div @click="goTopScroll" v-if="orders.length > 1 && !isShowNowOrder" class="goTop transition-0-3 icon-left-open"></div>
+        </div>
+        <div v-if="orders.length === 0" class="noOrder">
+            <p class="icon-calendar text-align-center"></p>
+            <p class="txt fw-700 text-align-center">目前無任何紀錄</p>
+        </div>
+    </div>
+</template>
+
+<script>
+import memberReseveData from '@/assets/datas/memberReserveData.json';
+import shopPointDada from '@/assets/datas/shopPointDada.json';
+
+export default {
+    data() {
+        return {
+            isShowNowOrder: true,
+            memberReseveData : memberReseveData.reserves,
+            shopPointDada: shopPointDada.shop,
+        }
+    },
+    computed: {
+        orders() {
+            const orderList = [];
+            this.memberReseveData.forEach(order => {
+                if (this.isShowNowOrder && order.status === '訂位中') {
+                    orderList.push(order);
+                }
+                if (!this.isShowNowOrder && order.status !== '訂位中') {
+                    orderList.push(order);
+                }
+            });
+            return orderList;
+        },
+        shopAddress() {
+            const vm = this;
+            return function (shopName) {
+                let address = '';
+                vm.shopPointDada.forEach(shop => {
+                    if(shopName === shop.shopName) {
+                        address = shop.address;
+                    }
+                });
+                return address;
+            }
+        }
+    },
+    methods: {
+        clickCancelBtn() {
+            this.$store.dispatch('updateIsShowNotice', true);
+            this.$store.dispatch('updateNoticeText', '取消預約成功');
+        },
+        goTop() {
+            $('html,body').scrollTop(0, 0);
+        },
+        goTopScroll() {
+            $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/_variable.scss";
+
+.member-reserve {
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    .txt {
+        margin-bottom: 40px;
+        margin-left: 3px;
+    }
+    .choose {
+        cursor: pointer;
+        width: 50%;
+        height: 40px;
+        text-align: center;
+        border-bottom: 1px solid #DCDCDC;
+        font-weight: 700;
+        &.active {
+            border-bottom: 2.5px solid $main-brow-text; 
+        }
+    }
+    .order {
+        padding: 35px 20px;
+        border-bottom: 1px dashed $main-light-blue-text;
+        .shop {
+            margin-bottom: 15px;
+            .name {
+                font-size: 18px;
+                font-weight: 700;
+            }
+        }
+        .btn-border {
+            border-color: $main-brow-text;
+            margin-right: 0;
+            width: 120px;
+            .btn-border-text {
+                color: $main-brow-text;
+            }
+            &:hover {
+                &::before {
+                    background-color: $main-brow-text;
+                }
+                .btn-border-text  {
+                    color: $main-white-text;
+                }
+            }
+        }
+        .orderStatus {
+            margin-top: 31px;
+            position: relative;
+            .statusTxt {
+                &::before {
+                    content: '';
+                    width: 60px;
+                    height: 10px;
+                    position: absolute;
+                    margin-top: 10px;
+                    margin-left: -4px;
+                    background-color: #aa83437c;
+                }
+            }
+        }
+    }
+    .noOrder {
+        padding: 120px 0 40px 0;
+        .icon-calendar {
+            font-size: 64px;
+        }
+        .txt {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+    }
+    .goTop {
+        cursor: pointer;
+        margin-top: 30px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid $main-blue-text;
+        position: relative;
+        font-size: 24px;
+        &::before {
+            transform: rotate(90deg);
+            position: absolute;
+            top: 4px;
+        }
+        &:hover {
+            background-color: $main-blue-text;
+            color: #fff;
+        }
+    }
+}
+</style>
