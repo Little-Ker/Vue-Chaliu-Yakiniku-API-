@@ -50,6 +50,7 @@ import shopPointData from '@/assets/datas/shopPointData.json';
 export default {
     data() {
         return {
+            maxDataCount: 10,
             isShowNowOrder: true,
             memberReseveData : memberReseveData.reserves,
             shopPointData: shopPointData.shop,
@@ -66,6 +67,8 @@ export default {
                     orderList.push(order);
                 }
             });
+            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            if (orderList.length > this.maxDataCount) orderList.length = this.maxDataCount;
             return orderList;
         },
         shopAddress() {
