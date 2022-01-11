@@ -45,14 +45,14 @@
 
 <script>
 import memberReseveData from '@/assets/datas/memberReserveData.json';
-import shopPointDada from '@/assets/datas/shopPointDada.json';
+import shopPointData from '@/assets/datas/shopPointData.json';
 
 export default {
     data() {
         return {
             isShowNowOrder: true,
             memberReseveData : memberReseveData.reserves,
-            shopPointDada: shopPointDada.shop,
+            shopPointData: shopPointData.shop,
         }
     },
     computed: {
@@ -72,7 +72,7 @@ export default {
             const vm = this;
             return function (shopName) {
                 let address = '';
-                vm.shopPointDada.forEach(shop => {
+                vm.shopPointData.forEach(shop => {
                     if(shopName === shop.shopName) {
                         address = shop.address;
                     }
