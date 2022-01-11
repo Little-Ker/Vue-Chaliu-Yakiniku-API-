@@ -36,6 +36,12 @@ const routes = [{
         name: 'Admin',
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/AdminView.vue'),
+        children: [{
+            path: 'reserve',
+            name: 'Admin-Reserve',
+            component: () =>
+                import ('../components/admin/Admin-Reserve.vue')
+        }, ],
     }, {
         path: '/about',
         name: 'About',

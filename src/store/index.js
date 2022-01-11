@@ -14,7 +14,7 @@ export default createStore({
         memberEmail: 'abc@gmail.com',
         memberPassword: '11111',
         // 管理員資料
-        isAdiminsLogin: true,
+        isAdiminsLogin: false,
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {

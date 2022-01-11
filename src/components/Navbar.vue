@@ -60,7 +60,7 @@ export default {
                 this.$router.push("/member/reserve");
                 return;
             }
-             this.$router.push("/admin");
+            this.$router.push("/admin/reserve");
         },
         goTop() {
             $('html,body').scrollTop(0, 0);

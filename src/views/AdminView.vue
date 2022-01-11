@@ -6,8 +6,8 @@
                     <p class="fw-700">管理員<br>後台</p>
                 </div>
                 <div class="bottom">
-                    <router-link to="/member/reserve" @click="goTop" class="link icon-article-alt">預約紀錄</router-link>
-                    <router-link to="/member/information" @click="goTop" class="link icon-user">會員名單</router-link>
+                    <router-link to="/admin/reserve" @click="goTop" class="link icon-article-alt">訂位紀錄</router-link>
+                    <router-link to="/admin/memberList" @click="goTop" class="link icon-user">會員名單</router-link>
                     <a @click="loginOut" class="link icon-ccw">登出</a>
                 </div>
             </div>
