@@ -129,12 +129,6 @@
       "src": "fontawesome"
     },
     {
-      "uid": "2d76f2c8d13be40694ecadfea7fb83c3",
-      "css": "logout-1",
-      "code": 59408,
-      "src": "entypo"
-    },
-    {
       "uid": "a6b6f85116fc55e4a7c83d66973035a7",
       "css": "logout",
       "code": 61485,
@@ -145,6 +139,18 @@
       "css": "ok",
       "code": 59409,
       "src": "fontawesome"
+    },
+    {
+      "uid": "cb8b402e2efdc57d6d37ad7d3da819fe",
+      "css": "stopwatch",
+      "code": 59408,
+      "src": "typicons"
+    },
+    {
+      "uid": "d2c6b59d9a239140cb76be0627480855",
+      "css": "dot",
+      "code": 59412,
+      "src": "entypo"
     }
   ]
 }
