@@ -1,0 +1,142 @@
+<template>
+    <div class="admin-memberList">
+        <h1 class="title">會員名單</h1>
+        <div class="d-flex justify-content-end">
+            <div class="form">
+                <input v-model="filterTxt" type="text" placeholder="關鍵字搜尋">
+                <p class="icon-search"></p>
+            </div>   
+        </div>
+        <div class="list">
+            <div class="listTitle d-flex">
+                <div class="widthM item"><b>帳號</b></div>
+                <div class="widthM item"><b>姓名</b></div>
+                <div class="widthL item"><b>電話</b></div>
+                <div class="widthL item"><b>信箱</b></div>
+            </div>
+            <div v-for="(member, index) in filerMemberData" :key="index" class="listItem d-flex">
+                <div class="widthM item">{{member.admin}}</div>
+                <div class="widthM item">{{member.name}}</div>
+                <div class="widthL item">{{member.cellphone}}</div>
+                <div class="widthL item">{{member.email}}</div>
+            </div>
+        </div>
+        <div v-if="filerMemberData.length === 0" class="noMember">
+            <p class="icon-cancel-circled text-align-center"></p>
+            <p class="txt fw-700 text-align-center">無任何會員資料</p>
+        </div>
+    </div>
+</template>
+
+<script>
+import memberListData from '@/assets/datas/memberListData.json';
+
+export default {
+    data() {
+        return {
+            memberList: memberListData.memberList,
+            filterTxt: '',
+        }
+    },
+    computed: {
+        filerMemberData() {
+            let filerMemberList = this.memberList;
+            if (this.filterTxt === '') {
+                return filerMemberList;
+            }
+            return filerMemberList = this.memberList.filter(member => 
+                (member.name.toLowerCase()).match(this.filterTxt.toLowerCase()) ||
+                (member.cellphone.toLowerCase()).match(this.filterTxt.toLowerCase()) ||
+                (member.email.toLowerCase()).match(this.filterTxt.toLowerCase())
+            );
+        }
+    },
+    methods: {
+        goTop() {
+            $('html,body').scrollTop(0, 0);
+        },
+        goTopScroll() {
+            $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/_variable.scss";
+
+.admin-memberList {
+    .title {
+        padding-left: 30px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    .form {
+        margin-top: 50px;
+        margin-bottom: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        input {
+            outline: 0;
+            border: 0;
+            background-color: transparent;
+            padding: 10px 15px;
+            width: 180px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #555;
+        }
+        input::-webkit-input-placeholder {
+            color: #aaa;
+        }
+        .icon-search {
+            display: inline-block;
+            margin: 0 5px 5px 0;
+            border-left: 1px solid #ccc;
+            font-size: 22px;
+            padding: 0 0 0 5px;
+        }
+    }
+    .list {
+        .listTitle, .listItem {
+            padding: 20px 5px;
+            letter-spacing: 1px;
+            .item {
+                text-align: center;
+                padding: 0 5px;
+                font-weight: 700;
+                text-align: center;
+            }
+        }
+        .listTitle {
+            border: 1.5px solid #000;
+            border-left: 0px;
+            border-right: 0px;
+        }
+        .listItem {
+            font-size: 14px;
+            border-bottom: 1px solid rgba(218, 218, 218);
+            color: #656565;
+            &:hover {
+                color: $main-brow-text;
+            }
+        }
+        .widthM {
+            width: 20%;
+        }
+        .widthL {
+            width: 30%;
+        }
+    }
+    .noMember {
+        padding: 120px 0 80px 0;
+        .icon-cancel-circled {
+            font-size: 72px;
+        }
+        .txt {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+    }
+}
+</style>

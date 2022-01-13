@@ -41,6 +41,11 @@ const routes = [{
             name: 'Admin-Reserve',
             component: () =>
                 import ('../components/admin/Admin-Reserve.vue')
+        }, {
+            path: 'memberList',
+            name: 'Admin-MemberList',
+            component: () =>
+                import ('../components/admin/Admin-MemberList.vue')
         }, ],
     }, {
         path: '/about',

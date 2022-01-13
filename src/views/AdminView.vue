@@ -92,7 +92,7 @@ export default {
         }
     }
     .message {
-        padding: 60px 80px;
+        padding: 60px 50px;
         width: 80%;
     }
 }

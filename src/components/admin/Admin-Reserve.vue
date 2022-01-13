@@ -190,6 +190,7 @@ export default {
 
 .member-reserve {
     .title {
+        padding-left: 30px;
         font-size: 24px;
         font-weight: 700;
     }
