@@ -115,8 +115,8 @@ export default {
             this.chooseTime = setChooseTimeVal;
         },
         getNowTime() {
-            this.nowTime = new Date().getHours();
-            this.$store.dispatch('updateNowTime', this.nowTime);
+            const newTime = new Date().getHours();
+            this.$store.dispatch('updateNowTime', newTime);
         },
         clickShopSelect(shop) {
             this.selectShop = shop.shopName;

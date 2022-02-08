@@ -181,12 +181,12 @@ export default {
         },
         chooseDateFn(i, j, chooseDateData) {
             if(this.setNotChooseDayClass(i, j) || this.setOtherClass(i, j)) return;
-            this.isSameDate();
-            this.getNowTime();
             this.chooseDay.year = chooseDateData.year;
             this.chooseDay.month = chooseDateData.month;
             this.chooseDay.date = chooseDateData.date;
             this.chooseDay.day = chooseDateData.day;
+            this.isSameDate();
+            this.getNowTime();
             this.sendChooseDate();
         },
         getNowTime() {
@@ -199,7 +199,10 @@ export default {
         isSameDate() {
             if (this.today.date !== this.chooseDay.date) {
                 this.$store.dispatch('updateNowTime', (this.businessTime.open - 1));
+                return;
             }
+            const newTime = new Date().getHours();
+            this.$store.dispatch('updateNowTime', newTime);
         },
         setToday() {
             const addDay = this.getNowTime();
@@ -254,9 +257,9 @@ export default {
     },
     watch: {
         nowTime() {
-            this.getChooseDay();
-            this.sendChooseDate();
-            this.isSameDate();
+            // this.getChooseDay();
+            // this.sendChooseDate();
+            // this.isSameDate();
         },
     }
 }
