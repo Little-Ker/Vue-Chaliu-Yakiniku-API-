@@ -41,7 +41,7 @@
             <div class="custom-time">
                 <Time :businessTime="getBusinessTime" @chooseTime="getChooseTime"></Time>
             </div>
-            <a class="btn-border align-self-end">
+            <a @click="nextStepFn()" class="btn-border align-self-end">
                 <span class="btn-border-text fw-700 transition-0-3">下一步</span>
             </a>
         </form>
@@ -67,6 +67,9 @@ export default {
         }
     },
     computed: {
+        isLoginSuccess() {
+            return this.$store.state.isLoginSuccess;
+        },
         getBusinessTime() {
             const businessTime = {
                 open: 11,
@@ -125,7 +128,24 @@ export default {
         },
         showCalendar() {
             $( ".custom-calendar" ).slideToggle("slow");
-        }
+        },
+        nextStepFn() {
+            if (!this.isLoginSuccess) {
+                return this.$store.dispatch('updateIsShowLogin', true);
+            }
+            const orderMessage = {
+                shop: this.selectShop,
+                people: this.selectPeople,
+                date: this.chooseDate,
+                time: this.chooseTime,
+            };
+            this.$store.dispatch('updateOrderMessage', orderMessage);
+            this.$store.dispatch('updateOrderLevel', 2);
+            this.goTop();
+        },
+        goTop() {
+            $('html,body').scrollTop(0, 0);
+        },
     },
     created() {
         this.getNowTime();

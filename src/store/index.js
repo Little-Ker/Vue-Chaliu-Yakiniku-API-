@@ -17,6 +17,15 @@ export default createStore({
         isAdiminsLogin: false,
         // 現在時刻
         nowTime: 0,
+        // 預約單狀態
+        orderLevel: 1,
+        // 預約單資訊
+        orderMessage: {
+            shop: '',
+            people: '',
+            date: '',
+            time: '',
+        },
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {
@@ -57,6 +66,14 @@ export default createStore({
         // 現在時刻
         updateNowTime(context, nowTime) {
             context.commit('SetNowTime', nowTime);
+        },
+        // 預約單狀態
+        updateOrderLevel(context, orderLevel) {
+            context.commit('SetOrderLevel', orderLevel);
+        },
+        // 預約單資訊
+        updateOrderMessage(context, orderMessage) {
+            context.commit('SetOrderMessage', orderMessage);
         },
     },
     // 改state資料
@@ -99,6 +116,14 @@ export default createStore({
         // 現在時刻
         SetNowTime(state, nowTime) {
             state.nowTime = nowTime;
+        },
+        // 預約單狀態
+        SetOrderLevel(state, orderLevel) {
+            state.orderLevel = orderLevel;
+        },
+        // 預約單資訊
+        SetOrderMessage(state, orderMessage) {
+            state.orderMessage = orderMessage;
         },
     },
     modules: {}

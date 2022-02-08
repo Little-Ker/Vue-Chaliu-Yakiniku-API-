@@ -6,7 +6,12 @@
                     <h1 class="main-brow-text">線上訂位系統</h1>
                     <p class="main-brow-text">Reserve System</p>
                 </div>
-                <CreateOrder></CreateOrder>
+                <div v-if="orderLevel == 1">
+                    <CreateOrder></CreateOrder>
+                </div>
+                <div v-if="orderLevel == 2">
+                    <OrderMessage></OrderMessage>
+                </div>
             </div>
         </div>  
     </div>
@@ -14,17 +19,24 @@
 
 <script>
 import CreateOrder from '@/components/reserve/CreateOrder.vue';
+import OrderMessage from '@/components/reserve/OrderMessage.vue';
 
 export default {
     name: 'ReserveView',
     components: {
         CreateOrder,
+        OrderMessage
     },
     data() {
         return {
             bannerImg: require('@/assets/images/reserve/banner.jpg'),
         }
     },
+    computed: {
+        orderLevel() {
+            return this.$store.state.orderLevel;
+        }
+    }
 }
 </script>
 
