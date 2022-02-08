@@ -41,6 +41,9 @@ export default {
         isShowLogin() {
             return this.$store.state.isShowLogin;
         },
+        orderMessageShop() {
+            return this.$store.state.orderMessage.shop;
+        }
     },
     data() {
         return {}
@@ -50,11 +53,17 @@ export default {
             this.$store.dispatch('updateIsShowLogin', false);
             this.$store.dispatch('updateIsShowRegister', true);
         },
+        goOrderMessage() {
+            if (this.orderMessageShop == '') return;
+            this.$store.dispatch('updateOrderLevel', 2);
+            this.goTop();
+        },
         clickLoginBtn() {
             this.closeLogin();
             this.$store.dispatch('updateIsLoginSuccess', true);
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '會員登入成功！');
+            this.goOrderMessage();
         },
         focusInputFn(el) {
             $(el.target).closest('.formBox').addClass('inputFocus');
@@ -73,6 +82,9 @@ export default {
         },
         startScrollBar() {
             $(document).unbind("scroll");
+        },
+        goTop() {
+            $('html,body').scrollTop(0, 0);
         }
     }
 }

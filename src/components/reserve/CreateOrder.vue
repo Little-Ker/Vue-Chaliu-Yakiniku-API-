@@ -130,9 +130,6 @@ export default {
             $( ".custom-calendar" ).slideToggle("slow");
         },
         nextStepFn() {
-            if (!this.isLoginSuccess) {
-                return this.$store.dispatch('updateIsShowLogin', true);
-            }
             const orderMessage = {
                 shop: this.selectShop,
                 people: this.selectPeople,
@@ -140,6 +137,9 @@ export default {
                 time: this.chooseTime,
             };
             this.$store.dispatch('updateOrderMessage', orderMessage);
+            if (!this.isLoginSuccess) {
+                return this.$store.dispatch('updateIsShowLogin', true);
+            }
             this.$store.dispatch('updateOrderLevel', 2);
             this.goTop();
         },
