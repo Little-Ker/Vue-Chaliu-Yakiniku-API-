@@ -6,7 +6,10 @@
                     <h1 class="main-brow-text">線上訂位系統</h1>
                     <p class="main-brow-text">Reserve System</p>
                 </div>
-                <div v-if="orderLevel == 1">
+                <div v-if="orderLevel == 1 && isAlreadyOrder">
+                  <OrderFalse></OrderFalse>
+                </div>
+                <div v-if="orderLevel == 1 && !isAlreadyOrder">
                     <CreateOrder></CreateOrder>
                 </div>
                 <div v-if="orderLevel == 2">
@@ -24,17 +27,20 @@
 import CreateOrder from '@/components/reserve/CreateOrder.vue';
 import OrderMessage from '@/components/reserve/OrderMessage.vue';
 import OrderFinish from '@/components/reserve/OrderFinish.vue';
+import OrderFalse from '@/components/reserve/OrderFalse.vue';
 
 export default {
     name: 'ReserveView',
     components: {
         CreateOrder,
         OrderMessage,
-        OrderFinish
+        OrderFinish,
+        OrderFalse
     },
     data() {
         return {
             bannerImg: require('@/assets/images/reserve/banner.jpg'),
+            isAlreadyOrder: false,
         }
     },
     computed: {
@@ -52,6 +58,9 @@ export default {
             };
             this.$store.dispatch('updateOrderMessage', resetOrder);
         }
+    },
+    mounted() {
+        this.isAlreadyOrder = false;
     },
     unmounted() {
         this.$store.dispatch('updateOrderLevel', 1);
