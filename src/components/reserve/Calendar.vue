@@ -67,6 +67,9 @@ export default {
         }
     },
     computed: {
+        orderMessage() {
+            return this.$store.state.orderMessage; 
+        },
         nowTime() {
             return this.$store.state.nowTime;
         },
@@ -248,20 +251,22 @@ export default {
             if(fix > 0 && nextMonth) return;
             
             this.changeMonth(fix);
+        },
+        alreadyChooseDate() {
+            const alreadyDate = this.orderMessage.dateData;
+            if (alreadyDate === '') return;
+            this.chooseDay.year = alreadyDate.year;
+            this.chooseDay.month = alreadyDate.month;
+            this.chooseDay.date = alreadyDate.date;
+            this.chooseDay.day = alreadyDate.day;
         }
     },
     mounted() {
         this.setToday();
         this.getChooseDay();
+        this.alreadyChooseDate();
         this.sendChooseDate();
     },
-    watch: {
-        nowTime() {
-            // this.getChooseDay();
-            // this.sendChooseDate();
-            // this.isSameDate();
-        },
-    }
 }
 </script>
 

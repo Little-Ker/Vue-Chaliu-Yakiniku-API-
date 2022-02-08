@@ -53,6 +53,7 @@ export default {
             const resetOrder = {
                 shop: '',
                 people: '',
+                dateData: '',
                 date: '',
                 time: '',
             };

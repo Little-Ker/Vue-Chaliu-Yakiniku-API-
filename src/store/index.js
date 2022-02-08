@@ -23,6 +23,7 @@ export default createStore({
         orderMessage: {
             shop: '',
             people: '',
+            dateData: '',
             date: '',
             time: '',
         },

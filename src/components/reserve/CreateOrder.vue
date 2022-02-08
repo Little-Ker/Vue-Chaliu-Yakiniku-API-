@@ -60,6 +60,7 @@ export default {
             shopPointData: shopPointData.shop,
             isOpenShopSelect: false,
             isOpenPeopleSelect: false,
+            chooseDateData: '',
             selectShop: shopPointData.shop[0].shopName,
             selectPeople: 1,
             chooseDate: '',
@@ -110,6 +111,7 @@ export default {
     methods: {
         getChooseDate(chooseDayVal, setChooseDayVal) {
             this.chooseDate = setChooseDayVal;
+            this.chooseDateData = chooseDayVal;
         },
         getChooseTime(setChooseTimeVal) {
             this.chooseTime = setChooseTimeVal;
@@ -133,6 +135,7 @@ export default {
             const orderMessage = {
                 shop: this.selectShop,
                 people: this.selectPeople,
+                dateData: this.chooseDateData,
                 date: this.chooseDate,
                 time: this.chooseTime,
             };

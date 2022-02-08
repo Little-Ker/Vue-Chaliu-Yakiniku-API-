@@ -24,6 +24,9 @@ export default {
         }
     },
     computed: {
+        orderMessage() {
+            return this.$store.state.orderMessage; 
+        },
         nowTime() {
             return this.$store.state.nowTime;
         },
@@ -95,11 +98,22 @@ export default {
             const getNowChooseTimeAry = this.getNowChooseTime();
             if (getNowChooseTimeAry.length == 0) return;
             this.chooseTime = getNowChooseTimeAry[0];
-            this.sendChooseTime();
+        },
+        alreadyChooseTime() {
+            const alreadyTime = this.orderMessage.time;
+            if (alreadyTime === '') return;
+            const timeDate = {
+                id: alreadyTime.id,
+                period: alreadyTime.period,
+                time: alreadyTime.time
+            };
+            this.chooseTime = timeDate;
         }
     },
     mounted() {
         this.chooseNowTime();
+        this.alreadyChooseTime();
+        this.sendChooseTime();
     },
     watch: {
         nowTime() {
