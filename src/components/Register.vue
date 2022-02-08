@@ -139,6 +139,7 @@ export default {
         }
     }
     .register-btn {
+        line-height: 0;
         margin-top: 40px;
         cursor: pointer;
         position: relative;

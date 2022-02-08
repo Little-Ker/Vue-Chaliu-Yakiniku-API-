@@ -264,14 +264,6 @@ export default {
             margin: 0;
             margin-top: 40px;
             letter-spacing: 3px;
-            &::before {
-            background-color: $main-brow-text;
-            }
-            &.btn-border:hover {
-                .btn-border-text {
-                    color: $main-white-text;
-                }
-            }
         }
     }
 }

@@ -315,7 +315,7 @@ export default {
         }
         .selected {
             background-color: #fff;
-            border: 1px solid $main-white-888;
+            border: 1px solid $main-white-555;
             border-radius: 5px;
             padding-left: 23px;
             cursor: pointer;
@@ -330,7 +330,7 @@ export default {
         .items {
             background-color: #fff;
             border-radius: 0px 0px 6px 6px;
-            border: 1px solid $main-white-888;
+            border: 1px solid $main-white-555;
             border-top: 0;
             position: absolute;
             box-shadow: rgb(0 0 0 / 10%) 0px 8px 10px;
@@ -348,7 +348,7 @@ export default {
                 padding-left: 25px;
                 cursor: pointer;
                 &:hover, &.selectPick{
-                    background-color: $main-white-888;
+                    background-color: $main-white-555;
                     color: #fff;
                 }
             }

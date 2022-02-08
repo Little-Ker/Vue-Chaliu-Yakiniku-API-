@@ -12,7 +12,7 @@ import NoticeModel from '@/components/NoticeModel.vue'
 import Register from '@/components/Register.vue'
 
 export default {
-  name: 'Home',
+  name: 'LoginView',
   components: {
     Login,
     NoticeModel,

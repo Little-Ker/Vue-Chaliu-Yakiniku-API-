@@ -114,7 +114,7 @@ export default {
         }
         .content {
             font-size: 28px;
-            margin: 10px 0px;
+            margin: 20px 0px;
         }
     }
 }

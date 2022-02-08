@@ -106,6 +106,7 @@ export default {
         position: relative;
         overflow: hidden;
         height: 20px;
+        line-height: 0;
         &::after, &::before {
             content: '';
             width: 100%;

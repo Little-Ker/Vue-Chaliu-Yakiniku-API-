@@ -108,7 +108,7 @@ export default {
                 border-radius: 50%;
                 color: $main-brow-text;
                 font-size: 54px;
-                line-height: 105px;
+                line-height: 95px;
             }
             .item-title {
                 font-size: 20px;

@@ -27,26 +27,30 @@
                     <span class="main-brow-text icon-pencil transition-0-3"></span>
                 </a>
             </div>
-            <div class="form-group">
-                <p class="main-white-text form-title">訂位者資訊</p>
-                <div class="main-white-text form-data">
-                    <p class="icon-user data-title">
-                        <span class="data-title-2">聯絡人：</span>
-                        <input type="text" v-model="memberName">
-                    </p>
-                    <p class="icon-phone data-title">
-                        <span class="data-title-2">電話：</span>
-                        <input type="text" v-model="memberCellphone">
-                    </p>
-                    <p class="icon-mail data-title">
-                        <span class="data-title-2">信箱：</span>
-                        <input type="text" v-model="memberEmail">
-                    </p>
+            <form action="login-form" autoComplete="off" @submit.prevent="nextStepFn()">
+                <div class="form-group">
+                    <p class="main-white-text form-title">訂位者資訊</p>
+                    <div class="main-white-text form-data">
+                        <p class="icon-user data-title">
+                            <span class="data-title-2">聯絡人：</span>
+                            <input type="text" v-model="memberName" @keydown="keydownNull($event)" maxlength="5" autoComplete="off" required>
+                        </p>
+                        <p class="icon-phone data-title">
+                            <span class="data-title-2">電話：</span>
+                            <input type="tel" v-model="memberCellphone" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
+                        </p>
+                        <p class="icon-mail data-title">
+                            <span class="data-title-2">信箱：</span>
+                            <input type="email" v-model="memberEmail" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <a @click="nextStepFn()" class="btn-border align-self-end">
-                <span class="btn-border-text fw-700 transition-0-3">送出預約單</span>
-            </a>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn-border align-self-end">
+                        <span class="btn-border-text fw-700 transition-0-3">送出預約單</span>
+                    </button>
+                </div>
+            </form>     
         </div>
     </div>
 </template>
@@ -90,12 +94,19 @@ export default {
             };
             this.sendOrder(contact);
             this.$store.dispatch('updateOrderLevel', 3);
+            this.goTop();
         },
         sendOrder(contact) {
             console.log('order',this.orderMessage, contact);
         },
         goTop() {
             $('html,body').scrollTop(0, 0);
+        },
+        // 禁止輸入空格
+        keydownNull(e){
+            if(e.keyCode == 32){
+                e.returnValue = false
+            }
         },
     },
     mounted() {
@@ -112,8 +123,6 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .orderMessage {
-    display: flex;
-    flex-direction: column;
     margin-top: 20px;
     .form-group {
         margin-bottom: 50px;
@@ -175,14 +184,6 @@ export default {
         height: 55px;
         margin: 0;
         letter-spacing: 3px;
-        &::before {
-            background-color: $main-brow-text;
-        }
-        &.btn-border:hover {
-            .btn-border-text {
-                color: $main-white-text;
-            }
-        }
     }
 }
 </style>
