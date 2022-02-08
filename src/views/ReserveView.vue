@@ -12,6 +12,9 @@
                 <div v-if="orderLevel == 2">
                     <OrderMessage></OrderMessage>
                 </div>
+                <div v-if="orderLevel == 3">
+                    <OrderFinish></OrderFinish>
+                </div>
             </div>
         </div>  
     </div>
@@ -20,12 +23,14 @@
 <script>
 import CreateOrder from '@/components/reserve/CreateOrder.vue';
 import OrderMessage from '@/components/reserve/OrderMessage.vue';
+import OrderFinish from '@/components/reserve/OrderFinish.vue';
 
 export default {
     name: 'ReserveView',
     components: {
         CreateOrder,
-        OrderMessage
+        OrderMessage,
+        OrderFinish
     },
     data() {
         return {
@@ -36,6 +41,21 @@ export default {
         orderLevel() {
             return this.$store.state.orderLevel;
         }
+    },
+    methods: {
+        resetData() {
+            const resetOrder = {
+                shop: '',
+                people: '',
+                date: '',
+                time: '',
+            };
+            this.$store.dispatch('updateOrderMessage', resetOrder);
+        }
+    },
+    unmounted() {
+        this.$store.dispatch('updateOrderLevel', 1);
+        this.resetData();
     }
 }
 </script>
