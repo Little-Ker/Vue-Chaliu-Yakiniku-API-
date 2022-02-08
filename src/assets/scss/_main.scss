@@ -25,8 +25,16 @@
     color: $main-white-opcity-text;
 }
 
-.main-white-888 {
-    color: $main-white-888;
+.main-white-555 {
+    color: $main-white-555;
+}
+
+.main-white-333 {
+    color: $main-white-333;
+}
+
+.main-white-aaa {
+    color: $main-white-aaa;
 }
 
 .main-gray-text {
@@ -54,6 +62,15 @@
 }
 
 // 功能
+.hideOpcity {
+    opacity: 0 !important;
+    cursor: auto !important;
+}
+
+.show-cursor-pointer {
+    cursor: pointer;
+}
+
 @mixin enterAniBtn($size, $border-size, $arrow-color, $border-color, $bg-color) {
     width: $size;
     height: $size;
@@ -284,6 +301,12 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+
+.container-620 {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .container-920 {

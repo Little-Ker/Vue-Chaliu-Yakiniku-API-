@@ -56,6 +56,8 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .footer {
+    position: relative;
+    z-index: 10;
     width: 100%;
     background-color: #07111B;
     .footer-block {

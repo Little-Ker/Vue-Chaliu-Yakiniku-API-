@@ -15,6 +15,8 @@ export default createStore({
         memberPassword: '11111',
         // 管理員資料
         isAdiminsLogin: false,
+        // 現在時刻
+        nowTime: 0,
     },
     actions: {
         updateIsShowLogin(context, isShowLogin) {
@@ -51,6 +53,10 @@ export default createStore({
         // 管理員資料
         updateIsAdiminsLogin(context, isAdiminsLogin) {
             context.commit('SetIsAdiminsLogin', isAdiminsLogin);
+        },
+        // 現在時刻
+        updateNowTime(context, nowTime) {
+            context.commit('SetNowTime', nowTime);
         },
     },
     // 改state資料
@@ -89,6 +95,10 @@ export default createStore({
         // 管理員資料
         SetIsAdiminsLogin(state, isAdiminsLogin) {
             state.isAdiminsLogin = isAdiminsLogin;
+        },
+        // 現在時刻
+        SetNowTime(state, nowTime) {
+            state.nowTime = nowTime;
         },
     },
     modules: {}

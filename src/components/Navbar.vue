@@ -45,7 +45,7 @@ export default {
                 },
                 {
                     txt: '線上訂位',
-                    url: '/about'
+                    url: '/reserve'
                 },
             ]
         }
