@@ -41,7 +41,7 @@ export default {
                 },
                 {
                     txt: '門市據點',
-                    url: '/about'
+                    url: '/point'
                 },
                 {
                     txt: '線上訂位',
