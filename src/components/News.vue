@@ -6,9 +6,9 @@
     </div>
     <div class="d-flex justify-content-bewteen">
         <div class="moreBtn align-self-end">
-            <a class="btn-border">
+            <router-link to="/news" class="btn-border">
                 <span class="btn-border-text fw-700 transition-0-3">更多消息</span>
-            </a>
+            </router-link>
         </div>
         <div class="list pos-relative title-margin-top">
             <swiper
@@ -21,13 +21,15 @@
                 :speed="swiperOption.speed"
                 @swiper="onSwiper"
             >
-                <swiper-slide v-for="(item, index) in newsList" :key="index">
-                    <a class="new d-flex flex-direction-col justify-content-bewteen">
+                <swiper-slide v-for="(num, index) in 5" :key="index">
+                    <router-link :to="`/new/${newsData(num).id}`" class="new">
                         <div>
-                            <p class="d-block date text-align-right fw-700 font-CourierNew main-blue-text">{{item.date}}</p>
-                            <img :src="item.img" class="img-fit" alt="圖片">
-                            <p class="title line1 fw-700 main-brow-text">{{item.title}}</p>
-                            <p class="txt main-white-text line3">{{item.txt}}</p>
+                            <p class="d-block date text-align-right fw-700 font-CourierNew main-blue-text">{{newsData(num).date}}</p>
+                            <img :src="newsData(num).img" class="img-fit" alt="圖片">
+                            <p class="title line1 fw-700 main-brow-text">{{newsData(num).title}}</p>
+                            <p class="txt main-white-text line3">
+                                <span v-for="(txt, index) in articleAry(num)" :key="index">{{txt}}</span>
+                            </p>
                         </div>
                         <div class=" fw-700 main-white-text font-CourierNew">
                             <a class="btn-arrow justify-content-between">
@@ -35,7 +37,7 @@
                                 <span class="btn-arrow-text text-align-left main-gray-text fw-700 transition-0-3">View More</span>
                             </a>
                         </div>
-                    </a>
+                    </router-link>
                 </swiper-slide>
             </swiper>
             <div @click="prevFn" class="swiper-button swiper-prev-btn">
@@ -50,44 +52,14 @@
 </template>
 
 <script>
+import newsListData from '@/assets/datas/newsListData.json';
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue.js';
 import 'swiper/swiper-bundle.min.css'
  
 export default {
     data() {
         return {
-            newsList: [
-                {
-                    title: '新品單點上桌 - 極黑牛肋條',
-                    date: '01.21,2021',
-                    img: require('@/assets/images/index/news/01.jpg'),
-                    txt: '肉質鮮嫩多汁，油花細緻不乾澀，絕對是身為資深饕客的您，必嘗鮮的美食之一。'
-                },
-                {
-                    title: '防疫期間，防疫餐點享八折優惠',
-                    date: '06.15,2021',
-                    img: require('@/assets/images/index/news/02.jpg'),
-                    txt: '開放『外帶自取』服務囉，三級防疫期間，外帶即享有『8折』優惠，疫情期間僅開放『當日』外送及外帶餐點預訂。'
-                },
-                {
-                    title: '茶六中清店 - 正式營運',
-                    date: '04.19,2021',
-                    img: require('@/assets/images/index/news/03.jpg'),
-                    txt: '各位久等了，茶六中清店將於4/24(六)正式開幕囉。'
-                },
-                {
-                    title: '茶六朝富店，進行店內設備維護',
-                    date: '03.31,2021',
-                    img: require('@/assets/images/index/news/04.jpg'),
-                    txt: '茶六朝富店進行店內設備維護，店休二日，如有造成不便，敬請見諒。'
-                },
-                {
-                    title: '日本和牛雙人套餐 - 即將上市',
-                    date: '01.14,2021',
-                    img: require('@/assets/images/index/news/05.jpg'),
-                    txt: '日本和牛肉質細緻柔嫩，擁有豐富大理石般的油花，炙烤完和牛香氣極其濃郁，入口即化的多汁與豐腴感，讓人口齒留香、意猶未盡。'
-                }
-            ],
+            newsListData: newsListData.news,
             swiper: null,
             swiperOption: {
                 slidesPerView: 3,
@@ -115,6 +87,18 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+    },
+    computed: {
+        newsData() {
+            return function(num) {
+                return this.newsListData[num];
+            }
+        },
+        articleAry() {
+            return function(num) {
+                return this.newsData(num).txt;
+            }
+        }
     },
     methods: {
         onSwiper(swiper) {
@@ -182,6 +166,7 @@ export default {
             }
             .txt {
                 line-height: 1.8;
+                margin-bottom: 23px;
             }
             .btn-arrow {
                 padding: 0;
