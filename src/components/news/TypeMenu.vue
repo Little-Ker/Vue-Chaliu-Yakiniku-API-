@@ -1,0 +1,97 @@
+<template>
+  <div class="typeMenu">
+    <div class="typeList d-flex justify-content-end">
+        <a class="typeBorder" v-for='(type, index) in newsTypesAry' :key='index'>
+            <input v-model="selectType" :id="`type0${index}`" type="radio" name='newsType' :value="type">
+            <label :for="`type0${index}`" class="typeStyle">{{type}}</label>  
+        </a>
+    </div>
+  </div>
+</template>
+
+<script>
+import newsListData from '@/assets/datas/newsListData.json';
+
+export default {
+    name: 'typeMenu',
+    data() {
+        return {
+            newsListData: newsListData.news,
+            selectType: '全部公告',
+        }
+    },
+    computed: {
+        setActiveClass() {
+            return function(type) {
+                return  this.selectType === type;
+            }
+        },
+        newsTypesAry() {
+            let typesAty = [ '全部公告'];
+            this.newsListData.forEach(news => {
+                const type = news.type;
+                if (typesAty.indexOf(type) === -1) typesAty.push(type);
+            });
+            return typesAty;
+        }
+    },
+    methods: {
+        sendTypeValue() {
+            this.$emit("chooseType", this.selectType);
+        }
+    },
+    mounted() {
+        this.sendTypeValue();
+    },
+    watch: {
+        selectType() {
+            this.sendTypeValue();
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/_variable.scss";
+
+.typeMenu {
+    .typeList {
+        margin: 80px 0 40px 0;
+        input:checked + label, input:hover + label {
+            color: $main-white-text;
+        }
+        input {
+            display: none;
+        }
+        .typeBorder {
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                width: 0.5px;
+                height: 50%;
+                right: 0;
+                top: 30%;
+                background-color: $main-white-555;
+            }
+            &:last-child::before {
+                width: 0;
+            }
+        }
+        .typeStyle {
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+            height: 55px;
+            color: $main-white-555;
+            padding: 5px 40px;
+            transition: .3s all;
+            font-weight: 700;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+</style>
+

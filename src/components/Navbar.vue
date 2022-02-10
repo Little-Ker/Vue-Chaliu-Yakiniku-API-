@@ -33,7 +33,7 @@ export default {
             linkList: [
                 {
                     txt: '活動新訊',
-                    url: '/about'
+                    url: '/news'
                 },
                 {
                     txt: '美食饗宴',
