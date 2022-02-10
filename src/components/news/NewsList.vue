@@ -1,6 +1,6 @@
 <template>
     <div class="newsList">
-        <a class="new d-flex" v-for="(news, index) in showSomeNewsAry" :key="index">
+        <router-link :to="`/new/${news.id}`" class="new d-flex" v-for="(news, index) in showSomeNewsAry" :key="index">
             <div class="imgScale">
                 <div class="img bg-fit" :style="{backgroundImage:'url('+news.img+')'}"></div>  
             </div>
@@ -20,7 +20,7 @@
                     <polyline class="rect-line--bg" fill="none" stroke-width="1" stroke-miterlimit="10" points="0,12 0,0 64,0 64,64 0,64 0,52 "></polyline>
                 </svg>
             </div>
-        </a>
+        </router-link>
   </div>
 </template>
 
