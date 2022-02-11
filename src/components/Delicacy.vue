@@ -34,10 +34,10 @@
                 :slides-per-view="swiperOption.slidesPerView"
                 :space-between="swiperOption.spaceBetween"
                 >
-                    <swiper-slide class="bg-fit" v-for="(item, index) in foodScrollList" :key="index" :style="{backgroundImage:'url('+item.img+')'}">
+                    <swiper-slide class="bg-fit" v-for="(item, index) in foodMarqueeAry" :key="index" :style="{backgroundImage:'url('+item.img+')'}">
                         <div class="blackHide transition-0-1 d-flex justify-content-center align-items-center">
                             <div class="blackHide-border transition-0-1">
-                                <p class="transition-0-1 main-white-text">{{item.txtTop}}<br>{{item.txtbottom}}</p>
+                                <p class="transition-0-1 main-white-text">{{item.name}}</p>
                             </div>
                         </div>
                     </swiper-slide>
@@ -49,14 +49,17 @@
 
 <script>
 import { Autoplay, FreeMode } from 'swiper';
- 
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue.js';
 import 'swiper/swiper-bundle.min.css'
+
+import foodListData from '@/assets/datas/foodListData.json';
 
 export default {
     data() {
         return {
-            foodTitleList: [{
+            foodListFoodData: foodListData.food,
+            foodTitleList: [
+                {
                     img: require('@/assets/images/index/delicacy/01.jpg'),
                     title: '開胃小品',
                     link: ''
@@ -72,44 +75,8 @@ export default {
                     img: require('@/assets/images/index/delicacy/04.jpg'),
                     title: '甜點飲品',
                     link: ''
-                }],
-                foodScrollList: [{
-                    img: require('@/assets/images/index/delicacy/foodScroll/01.jpg'),
-                    txtTop: '松阪',
-                    txtbottom: '豬肉',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/02.jpg'),
-                    txtTop: '茶六',
-                    txtbottom: '泡菜',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/03.jpg'),
-                    txtTop: '茶六',
-                    txtbottom: '厚牛舌',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/04.jpg'),
-                    txtTop: '醬燒',
-                    txtbottom: '橫膈膜',
-                }, {
-                   img: require('@/assets/images/index/delicacy/foodScroll/05.jpg'),
-                    txtTop: '日本',
-                    txtbottom: '山葵',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/06.jpg'),
-                    txtTop: '茶六',
-                    txtbottom: '五花牛',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/07.jpg'),
-                    txtTop: '澎湖',
-                    txtbottom: '絲瓜',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/08.jpg'),
-                    txtTop: '茶六',
-                    txtbottom: '鴨胸',
-                }, {
-                    img: require('@/assets/images/index/delicacy/foodScroll/09.jpg'),
-                    txtTop: '茶六',
-                    txtbottom: '肥腸',
-            }, ],
+                }
+            ],
             swiper: null,
             swiperOption: {
                 speed: 6000,
@@ -124,6 +91,13 @@ export default {
                 },
             },
         }
+    },
+    computed: {
+        foodMarqueeAry() {
+            return this.foodListFoodData.filter((food) => {
+                return food.name.length === 4;
+            })
+        },
     },
     components: {
         Swiper,
@@ -287,22 +261,11 @@ export default {
                         letter-spacing: 2px;
                         margin: 0;
                         text-align: center;
+                        width: 50px;
                     }
                 }
             }
         }
-    }
-    .rect-line {
-        fill: none;
-        stroke-width: 2;
-        stroke-miterlimit: 10;
-        stroke: $main-white-opcity-text;
-        // stroke-dasharray: 256;
-        // stroke-dashoffset: 256;
-        // -webkit-transition: all .6s cubic-bezier(0,0,.26,1) 0s;
-        // transition: all .6s cubic-bezier(0,0,.26,1) 0s;
-        stroke-dasharray: 256;
-        stroke-dashoffset: 0;
     }
 }
 </style>
