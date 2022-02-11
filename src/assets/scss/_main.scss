@@ -53,12 +53,20 @@
     color: $main-light-blue-text;
 }
 
+.main-red-text {
+    color: $main-red-text;
+}
+
 .main-brow-text {
     color: $main-brow-text;
 }
 
 .main-bg-img {
     background-image: url($main-bg-url);
+}
+
+.main-grayBg-img {
+    background-image: url($main-grayBg-url);
 }
 
 .border-brow {

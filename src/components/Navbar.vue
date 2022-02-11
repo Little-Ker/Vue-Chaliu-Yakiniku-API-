@@ -37,7 +37,7 @@ export default {
                 },
                 {
                     txt: '美食饗宴',
-                    url: '/about'
+                    url: '/menu'
                 },
                 {
                     txt: '門市據點',
