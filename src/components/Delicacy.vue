@@ -6,23 +6,23 @@
                 <p class="main-brow-text">Delicacy</p>
             </div>
             <div class="food-list d-flex justify-content-around">
-                <div class="item d-flex" v-for="(item, index) in foodTitleList" :key="index">
+                <router-link :to="`/menu?id=${typeListAryIndex(item.title)}`" @click="goTop()" class="item d-flex" v-for="(item, index) in foodTitleList" :key="index">
                     <div class="food-item-img">
                         <div class="bgScale bg-fit transition-0-6" :style="{backgroundImage:'url('+item.img+')'}"></div>
                     </div>
                     <p class="food-item-title main-brow-text fw-700">{{item.title}}</p>
-                    <a class="btn-arrow align-self-end">
+                    <div class="btn-arrow align-self-end">
                         <span class="arrow"></span>
                         <span class="btn-arrow-text main-gray-text fw-700 transition-0-3">View More</span>
-                    </a>
-                </div>
+                    </div>
+                </router-link>
             </div>
         </div>
         <div class="d-flex justify-content-bewteen">
             <div class="moreBtn align-self-end">
-                <a class="btn-border">
+                <router-link to="/menu" @click="goTop()" class="btn-border">
                     <span class="btn-border-text fw-700 transition-0-3">線上菜單</span>
-                </a>
+                </router-link>
             </div>
             <div class="marquee-swiper">
                 <swiper
@@ -61,20 +61,16 @@ export default {
             foodTitleList: [
                 {
                     img: require('@/assets/images/index/delicacy/01.jpg'),
-                    title: '開胃小品',
-                    link: ''
+                    title: '開胃小品'
                 }, {
                     img: require('@/assets/images/index/delicacy/02.jpg'),
-                    title: '套餐主食',
-                    link: ''
+                    title: '套餐主食'
                 }, {
                     img: require('@/assets/images/index/delicacy/03.jpg'),
-                    title: '海鮮蔬食',
-                    link: ''
+                    title: '海鮮蔬食'
                 }, {
                     img: require('@/assets/images/index/delicacy/04.jpg'),
-                    title: '甜點飲品',
-                    link: ''
+                    title: '甜點飲品'
                 }
             ],
             swiper: null,
@@ -97,6 +93,24 @@ export default {
             return this.foodListFoodData.filter((food) => {
                 return food.name.length === 4;
             })
+        },
+        typeListAry() {
+            let typeAry = ['所有單點'];
+            this.foodListFoodData.forEach((food) => {
+                if (typeAry.indexOf(food.type) === -1) typeAry.push(food.type);
+            });
+            return typeAry;
+        },
+        typeListAryIndex() {
+            return function(type) {
+                const index = this.typeListAry.indexOf(type);
+                return index;
+            }
+        }
+    },
+    methods: {
+        goTop() {
+            $('html,body').scrollTop(0, 0);
         },
     },
     components: {

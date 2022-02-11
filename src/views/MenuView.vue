@@ -6,6 +6,7 @@
                 <p class="text-center main-brow-text">Set Meal</p>
             </div>
             <MealSwiper/>
+            <div id="moveFoodPos"></div>
             <div class="food">
                <div class="title">
                     <h1 class="text-center main-brow-text">精選單點</h1>
@@ -27,6 +28,10 @@ export default {
         MealSwiper,
         FoodList
     },
+    mounted() {
+        if (this.$route.query.id === undefined) return;
+        $('html,body').animate({ scrollTop: $('#moveFoodPos').offset().top }, 'slow');
+    }
 }
 </script>
 
@@ -36,7 +41,7 @@ export default {
 .menuView {
     padding: 140px 0 0 0;
     .food {
-        margin-top: 110px;
+        margin-top: 130px;
     }
 }
 </style>

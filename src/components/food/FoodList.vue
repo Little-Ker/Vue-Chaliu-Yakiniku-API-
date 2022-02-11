@@ -45,6 +45,11 @@ export default {
             });
         },
     },
+    mounted() {
+        if (this.$route.query.id === undefined) return;
+        const routeId = parseInt(this.$route.query.id);
+        this.selectType = this.typeListAry[routeId];
+    }
 }
 </script>
 
