@@ -65,18 +65,43 @@ export default {
     methods: {
         clickRegisterBtn() {
             if (this.pwd !== this.checkPwd) {
-                this.isShowTip = true;
+                this.showFalseAnim();
                 return;
             }
+            const memberRegistnApi = process.env.VUE_APP_M_REGIST;
+            this.axios.post(memberRegistnApi, {
+                "acc": this.acc,
+                "pwd": this.pwd,
+                "name": this.name,
+                "cellphone": this.cellphone,
+                "email": this.email
+            }).then((response) => {
+                const backData = response.data;
+                if (backData.status === 'success') {
+                    this.registSucFn();
+                } else {
+                    this.showFalseAnim();
+                }
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        registSucFn() {
             this.clickLoginBtn();
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '會員註冊成功！');
-
         },
         clickLoginBtn() {
             this.$store.dispatch('updateIsShowLogin', true);
             this.$store.dispatch('updateIsShowRegister', false);
             this.clearForm();
+        },
+        showFalseAnim() {
+            this.isShowTip = true;
+            $(".form-section").addClass("animate_headShake");
+            $(".form-section").on("webkitAnimationEnd", function(){
+                $(".form-section").removeClass("animate_headShake");
+            });
         },
         clearForm() {
             this.acc = null;
@@ -84,6 +109,7 @@ export default {
             this.checkPwd = null;
             this.name = null;
             this.cellphone = null;
+            this.email = null;
             this.isShowTip = false;
         },
         focusInputFn(el) {
