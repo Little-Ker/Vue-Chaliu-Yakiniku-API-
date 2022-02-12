@@ -4,14 +4,15 @@
         <div @click="closeLogin" class="btn-close"></div>
         <p class="title text-align-center fw-700">會員登入</p>
         <form action="login-form" autocomplete="off" @submit.prevent="clickLoginBtn" class="position-relative">
+            <p v-if="isShowTip" class="tip">*帳號或密碼錯誤</p>
             <div class="form choose-select">
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactName" class="colLabel">帳號</label>
-                    <input type="text" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
+                    <input v-model="acc" type="text" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
                 </div>
                 <div class="formBox">
                     <label for="contactTel" class="colLabel">密碼</label>
-                    <input type="password" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactTel" required>
+                    <input v-model="pwd" type="password" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactTel" required>
                 </div>
             </div>
             <div class="align-self-center mt-4">
@@ -46,10 +47,15 @@ export default {
         }
     },
     data() {
-        return {}
+        return {
+            isShowTip: false,
+            acc:'',
+            pwd:''
+        }
     },
     methods: {
         clickRegisterBtn() {
+            this.clearForm();
             this.$store.dispatch('updateIsShowLogin', false);
             this.$store.dispatch('updateIsShowRegister', true);
         },
@@ -59,11 +65,35 @@ export default {
             this.goTop();
         },
         clickLoginBtn() {
+            const memberLoginApi = process.env.VUE_APP_M_LOGIN;
+            this.axios.post(memberLoginApi, {
+                "acc": this.acc,
+                "pwd": this.pwd
+            }).then((response) => {
+                const backStatus = response.data.status;
+                if (backStatus === 'success') {
+                    this.loginSucFn();
+                } else {
+                    this.loginFalseFn();
+                }
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        loginSucFn() {
             this.closeLogin();
             this.$store.dispatch('updateIsLoginSuccess', true);
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '會員登入成功！');
             this.goOrderMessage();
+        },
+        loginFalseFn() {
+            this.isShowTip = true;
+            this.pwd = '';
+            $(".form-section").addClass("animate_headShake");
+            $(".form-section").on("webkitAnimationEnd", function(){
+                $(".form-section").removeClass("animate_headShake");
+            });
         },
         focusInputFn(el) {
             $(el.target).closest('.formBox').addClass('inputFocus');
@@ -72,8 +102,14 @@ export default {
             $(el.target).closest('.formBox').removeClass('inputFocus');
         },
         closeLogin() {
+            this.clearForm();
             this.$store.dispatch('updateIsShowLogin', false);
             this.startScrollBar();
+        },
+        clearForm() {
+            this.isShowTip = false;
+            this.acc = '';
+            this.pwd = '';
         },
         // 禁用滾動條
         stopScrollBar() {
@@ -146,6 +182,13 @@ export default {
         .title {
             font-size: 24px;
             margin-bottom: 50px;
+        }
+        .tip {
+            position:absolute;
+            top: -30px;
+            right:0;
+            font-size: 14px;
+            color: rgb(212, 4, 4);
         }
         .btn {
             width: 100%;
