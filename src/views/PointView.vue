@@ -1,5 +1,8 @@
 <template>
     <div class="pointView main-bg-img">
+        <div class="banner bg-fit" :style="{backgroundImage:'url('+img+')'}">
+            <div class="blackHide"></div>
+        </div>  
         <div class="container-1100">
             <div class="title dataPadding d-flex justify-content-center flex-direction-col">
                 <h1 class="main-brow-text">門市據點</h1>
@@ -41,6 +44,7 @@ export default {
     name: 'pointView',
     data() {
         return {
+            img: require('@/assets/images/banner/03.jpg'),
             shopPointData: shopPointData.shop,
             imgPosAry: [ 0, 85, 80, 15 ],
         }
@@ -53,16 +57,11 @@ export default {
 
 .pointView {
     position: relative;
-    padding: 140px 0 60px 0;
-    .title {
-        letter-spacing: 5px;
-        h1 {
-            font-size: 42px;
-        }
-        p {
-           letter-spacing: 3px;
-           font-size: 22px;
-        }
+    .banner {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 80px;
+        mask: linear-gradient(#000, 90%, transparent);
     }
     .shopName {
         font-size: 26px;

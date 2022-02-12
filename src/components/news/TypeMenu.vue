@@ -56,7 +56,7 @@ export default {
 
 .typeMenu {
     .typeList {
-        margin: 80px 0 40px 0;
+        margin: 0 0 40px 0;
         input:checked + label, input:hover + label {
             color: $main-white-text;
         }

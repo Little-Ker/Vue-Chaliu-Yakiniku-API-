@@ -1,5 +1,8 @@
 <template>
     <div class="menuView main-bg-img">
+        <div class="banner bg-fit" :style="{backgroundImage:'url('+img+')'}">
+            <div class="blackHide"></div>
+        </div>  
         <div class="container-1440">
             <div class="title">
                 <h1 class="text-center main-brow-text">經典套餐</h1>
@@ -28,6 +31,11 @@ export default {
         MealSwiper,
         FoodList
     },
+    data() {
+        return {
+            img: require('@/assets/images/banner/02.jpg'),
+        }
+    },
     mounted() {
         if (this.$route.query.id === undefined) return;
         $('html,body').animate({ scrollTop: $('#moveFoodPos').offset().top }, 'slow');
@@ -39,7 +47,13 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .menuView {
-    padding: 140px 0 0 0;
+    .banner {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 80px;
+        background-position-y: 77%;
+        mask: linear-gradient(#000, 90%, transparent);
+    }
     .food {
         margin-top: 130px;
     }

@@ -1,5 +1,8 @@
 <template>
     <div class="newsView main-bg-img">
+        <div class="banner bg-fit" :style="{backgroundImage:'url('+img+')'}">
+            <div class="blackHide"></div>
+        </div>  
         <div class="container-1100">
             <div class="title dataPadding d-flex justify-content-center flex-direction-col">
                 <h1 class="text-center main-brow-text">活動新訊</h1>
@@ -28,6 +31,7 @@ export default {
         return {
             chooseType: '',
             nowPageNum: '',
+            img: require('@/assets/images/banner/01.jpg'),
         }
     },
     methods: {
@@ -45,14 +49,14 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .newsView {
-    padding: 140px 0 60px 0;
+    .banner {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 80px;
+        mask: linear-gradient(#000, 90%, transparent);
+    }
     .title {
-        h1 {
-            font-size: 42px;
-        }
-        p {
-            font-size: 22px;
-        }
+        margin-bottom: 30px;
     }
 }
 </style>

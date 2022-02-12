@@ -92,7 +92,7 @@ export default {
         },
         setCanChooseDayClass() {
             return function(i, j) {
-                if (this.setNotChooseDayClass(i, j)) return;
+                if (this.setNotChooseDayClass(i, j)) return false;
                 const calendar = this.setCalendarData(i, j);
                 const chooseDay = calendar.year === calendar.year && calendar.month === this.chooseDay.month && calendar.date === this.chooseDay.date;
                 const canChooseday = !this.setNotChooseDayClass(i, j);
@@ -261,8 +261,10 @@ export default {
             this.chooseDay.day = alreadyDate.day;
         }
     },
-    mounted() {
+    created() {
         this.setToday();
+    },
+    mounted() {
         this.getChooseDay();
         this.alreadyChooseDate();
         this.sendChooseDate();
