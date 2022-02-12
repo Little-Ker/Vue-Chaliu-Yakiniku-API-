@@ -9,10 +9,11 @@ export default createStore({
         noticeText: '',
         isShowRegister: false,
         // 會員資料
-        memberName: 'Vivi',
-        memberCellphone: '0911-111111',
-        memberEmail: 'abc@gmail.com',
-        memberPassword: '11111',
+        memberName: null,
+        memberCellphone: null,
+        memberEmail: null,
+        memberPassword: null,
+        memberId: null,
         // 管理員資料
         isAdiminsLogin: false,
         // 現在時刻
@@ -59,6 +60,9 @@ export default createStore({
         },
         updateMemberPassword(context, memberPassword) {
             context.commit('SetMemberPassword', memberPassword);
+        },
+        updateMemberId(context, memberId) {
+            context.commit('SetMemberId', memberId);
         },
         // 管理員資料
         updateIsAdiminsLogin(context, isAdiminsLogin) {
@@ -109,6 +113,9 @@ export default createStore({
         },
         SetMemberPassword(state, memberPassword) {
             state.memberPassword = memberPassword;
+        },
+        SetMemberId(state, memberId) {
+            state.memberId = memberId;
         },
         // 管理員資料
         SetIsAdiminsLogin(state, isAdiminsLogin) {

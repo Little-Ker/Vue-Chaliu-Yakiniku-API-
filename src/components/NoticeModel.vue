@@ -43,6 +43,7 @@ export default {
             this.$store.dispatch('updateIsShowCheckNotice', false);
         },
         clickLogoutBtn() {
+            this.resetMemberData();
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '登出成功');
             this.$store.dispatch('updateIsShowCheckNotice', false);
@@ -50,6 +51,13 @@ export default {
             this.$store.dispatch('updateIsAdiminsLogin', false);
             this.goTop();
             this.$router.push("/");
+        },
+        resetMemberData() {
+            this.$store.dispatch('updateMemberName', null);
+            this.$store.dispatch('updateMemberCellphone', null);
+            this.$store.dispatch('updateMemberEmail', null);
+            this.$store.dispatch('updateMemberPassword', null);
+            this.$store.dispatch('updateMemberId', null);
         },
         goTop() {
             $('html,body').scrollTop(0, 0);

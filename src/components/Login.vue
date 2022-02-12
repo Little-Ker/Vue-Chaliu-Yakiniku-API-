@@ -70,8 +70,9 @@ export default {
                 "acc": this.acc,
                 "pwd": this.pwd
             }).then((response) => {
-                const backStatus = response.data.status;
-                if (backStatus === 'success') {
+                const backData = response.data;
+                if (backData.status === 'success') {
+                    this.storeMemberData(backData);
                     this.loginSucFn();
                 } else {
                     this.loginFalseFn();
@@ -86,6 +87,14 @@ export default {
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '會員登入成功！');
             this.goOrderMessage();
+        },
+        storeMemberData(backData) {
+            const memberData = backData.result[0];
+            this.$store.dispatch('updateMemberName', memberData.name);
+            this.$store.dispatch('updateMemberCellphone', memberData.cellphone);
+            this.$store.dispatch('updateMemberEmail', memberData.email);
+            this.$store.dispatch('updateMemberPassword', memberData.pwd);
+            this.$store.dispatch('updateMemberId', memberData.MID);
         },
         loginFalseFn() {
             this.isShowTip = true;
