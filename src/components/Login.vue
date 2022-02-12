@@ -14,6 +14,11 @@
                     <label for="contactTel" class="colLabel">密碼</label>
                     <input v-model="pwd" type="password" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactTel" required>
                 </div>
+                <label  class="adminCheck">
+                    管理員登入
+                    <input v-model="isAdminLogin" type="checkbox" name="isAdminLogin">
+                    <span class="checkmark"></span>
+                </label>
             </div>
             <div class="align-self-center mt-4">
                 <button type="submit" class="btn d-block text-align-center main-brow-text">
@@ -48,6 +53,7 @@ export default {
     },
     data() {
         return {
+            isAdminLogin: false,
             isShowTip: false,
             acc:'',
             pwd:''
@@ -65,14 +71,18 @@ export default {
             this.goTop();
         },
         clickLoginBtn() {
-            const memberLoginApi = process.env.VUE_APP_M_LOGIN;
-            this.axios.post(memberLoginApi, {
+            const isMemberLoginApi = (!this.isAdminLogin) ? process.env.VUE_APP_M_LOGIN : process.env.VUE_APP_A_LOGIN;
+            this.axios.post(isMemberLoginApi, {
                 "acc": this.acc,
                 "pwd": this.pwd
             }).then((response) => {
                 const backData = response.data;
                 if (backData.status === 'success') {
-                    this.storeMemberData(backData);
+                    if (!this.isAdminLogin) {
+                        this.storeMemberData(backData);
+                    } else {
+                        this.$store.dispatch('updateIsAdiminsLogin', true);
+                    }
                     this.loginSucFn();
                 } else {
                     this.loginFalseFn();
@@ -82,10 +92,11 @@ export default {
             });
         },
         loginSucFn() {
-            this.closeLogin();
             this.$store.dispatch('updateIsLoginSuccess', true);
             this.$store.dispatch('updateIsShowNotice', true);
-            this.$store.dispatch('updateNoticeText', '會員登入成功！');
+            const noticeTxt = (!this.isAdminLogin) ? '會員' : '管理員';
+            this.$store.dispatch('updateNoticeText', `${noticeTxt}登入成功！`);
+            this.closeLogin();
             this.goOrderMessage();
         },
         storeMemberData(backData) {
@@ -117,6 +128,7 @@ export default {
         },
         clearForm() {
             this.isShowTip = false;
+            this.isAdminLogin = false;
             this.acc = '';
             this.pwd = '';
         },
@@ -256,6 +268,40 @@ export default {
             &:hover {
                 border-color: $main-light-blue-text;
                 color: $main-blue-text !important;
+            }
+        }
+
+        .adminCheck {
+            position: relative;
+            padding-left: 25px;
+            input {
+                display: none;
+            }
+            .checkmark {
+                position: absolute;
+                left: 0;
+                height: 15px;
+                width: 15px;
+                border-radius: 3px;
+                transition: .3s all;
+                border: 2px solid rgba(205, 205, 205, 0.7);
+            }
+            &:hover input ~ .checkmark {
+                border-color: #495057;
+            }
+            input:checked ~ .checkmark {
+                background-color: #495057;
+                border-color: #495057;
+            }
+            .checkmark::after {
+                content: "";
+                position: absolute;
+                left: 3.5px;
+                width: 5px;
+                height: 8px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
             }
         }
     }
