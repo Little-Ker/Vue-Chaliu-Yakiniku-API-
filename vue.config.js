@@ -6,5 +6,8 @@ module.exports = {
                 $: "jquery"
             })
         ]
+    },
+    devServer: {
+        proxy: 'https://lightten.tk:8082'
     }
 }
