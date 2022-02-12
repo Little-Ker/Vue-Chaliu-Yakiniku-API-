@@ -15,7 +15,7 @@
                 <div class="widthL item"><b>信箱</b></div>
             </div>
             <div v-for="(member, index) in filerMemberData" :key="index" class="listItem d-flex">
-                <div class="widthM item">{{member.admin}}</div>
+                <div class="widthM item">{{member.acc}}</div>
                 <div class="widthM item">{{member.name}}</div>
                 <div class="widthL item">{{member.cellphone}}</div>
                 <div class="widthL item">{{member.email}}</div>
@@ -29,12 +29,10 @@
 </template>
 
 <script>
-import memberListData from '@/assets/datas/memberListData.json';
-
 export default {
     data() {
         return {
-            memberList: memberListData.memberList,
+            memberList: [],
             filterTxt: '',
         }
     },
@@ -57,8 +55,20 @@ export default {
         },
         goTopScroll() {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
+        },
+        getMemberListData() {
+            const showMemberListApi = process.env.VUE_APP_A_SHOW_MEMBER_INFO;
+            this.axios.post(showMemberListApi).then((response) => {
+                const backData = response.data.result;
+                this.memberList = backData;
+            }).catch(function(error) {
+                console.log('error',error);
+            });
         }
     },
+    created() {
+        this.getMemberListData();
+    }
 }
 </script>
 
