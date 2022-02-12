@@ -46,6 +46,9 @@ export default {
     computed: {
         currentPwd() {
             return this.$store.state.memberPassword;
+        },
+        memberId() {
+            return this.$store.state.memberId;
         }
     },
     unmounted() {
@@ -56,17 +59,41 @@ export default {
             this.resetTip();
             if (this.oldPwd !== this.currentPwd) {
                 this.isShowOldTip = true;
+                this.showFalseAnim();
                 return;
             }
             if (this.newPwd !== this.checkPwd) {
                 this.isShowNewTip = true;
+                this.showFalseAnim();
                 return;
             }
+            const memberUpdatePwdApi = process.env.VUE_APP_M_UPDATE_PWD;
+            this.axios.post(memberUpdatePwdApi, {
+                "MID": this.memberId,
+                "newPassword": this.newPwd
+            }).then((response) => {
+                const backData = response.data;
+                if (backData.status === 'success') {
+                    this.updatePwdSucFn();
+                } else {
+                    this.showFalseAnim();
+                }
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        updatePwdSucFn() {
             this.$store.dispatch('updateMemberPassword', this.newPwd);
             this.clickCancelBtn();
             // 修改成功訊息
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '密碼修改成功');
+        },
+        showFalseAnim() {
+            $(".message").addClass("animate_headShake");
+            $(".message").on("webkitAnimationEnd", function(){
+                $(".message").removeClass("animate_headShake");
+            });
         },
         resetTip() {
             this.isShowOldTip = false;
