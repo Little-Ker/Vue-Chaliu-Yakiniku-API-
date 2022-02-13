@@ -27,7 +27,7 @@
             </p>
             <div :class="[{'orderStatus': !isShowNowOrder}, {'mt-2': isShowNowOrder}]" class="d-flex justify-content-bewteen">
                 <p class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>
-                <a v-if="isShowNowOrder" @click="clickCancelBtn" class="borderBtn">取消預約</a>
+                <a v-if="isShowNowOrder" @click="clickCancelBtn(item.OID)" class="borderBtn">取消預約</a>
                 <p v-if="!isShowNowOrder" class="statusTxt fw-700">{{item.status}}</p>
             </div>
         </div>
@@ -72,9 +72,18 @@ export default {
         }
     },
     methods: {
-        clickCancelBtn() {
-            this.$store.dispatch('updateIsShowNotice', true);
-            this.$store.dispatch('updateNoticeText', '取消預約成功');
+        clickCancelBtn(OID) {
+            const updateOrderStatusApi = process.env.VUE_APP_UPDATE_ORDER_STATUS;
+            this.axios.post(updateOrderStatusApi, {
+                "OID": OID,
+                "newStatus": '已取消'
+            }).then((response) => {
+                this.$store.dispatch('updateIsShowNotice', true);
+                this.$store.dispatch('updateNoticeText', '取消預約成功');
+                this.getMemberReseveList();
+            }).catch(function(error) {
+                console.log('error',error);
+            });
         },
         goTop() {
             $('html,body').scrollTop(0, 0);
