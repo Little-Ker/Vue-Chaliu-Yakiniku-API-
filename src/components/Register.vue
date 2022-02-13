@@ -5,10 +5,11 @@
         <p class="title text-align-center fw-700">新會員註冊</p>
         <form action="login-form" autoComplete="off" @submit.prevent="clickRegisterBtn" class="position-relative">
             <div class="form choose-select">
-                <div class="formBox d-flex flex-direction-column">
+                <div :class="{'redTip': isShowAccTip}" class="formBox d-flex flex-direction-column">
                     <label for="contactAcc" class="colLabel">帳號</label>
                     <input v-model="acc" type="text" @keydown="keydownNull($event)" autoComplete="off" maxlength="10" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactAcc" required>
                 </div>
+                <p v-if="isShowAccTip" class="tip">*此帳號已有人使用</p>
                 <div class="formBox">
                     <label for="contactPwd" class="colLabel">密碼</label>
                     <input v-model="pwd" type="password" @keydown="keydownNull($event)" autoComplete="off" minlength="5" placeholder="請輸入至少5個字元" maxlength="10" @focus="focusInputFn" @blur="blurInputFn"  class="form-control" id="contactPwd" required>
@@ -54,6 +55,7 @@ export default {
     data() {
         return {
             isShowTip: false,
+            isShowAccTip: false,
             acc: null,
             pwd: null,
             checkPwd: null,
@@ -65,9 +67,26 @@ export default {
     methods: {
         clickRegisterBtn() {
             if (this.pwd !== this.checkPwd) {
+                this.isShowTip = true;
                 this.showFalseAnim();
                 return;
             }
+            const memberCheckAcc = process.env.VUE_APP_M_CHECK_ACC;
+            this.axios.post(memberCheckAcc, {
+                "acc": this.acc
+            }).then((response) => {
+                const backData = response.data;
+                if (backData.status === 'success') {
+                    this.checkAccSucFn();
+                } else {
+                    this.isShowAccTip = true;
+                    this.showFalseAnim();
+                }
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        checkAccSucFn() {
             const memberRegistnApi = process.env.VUE_APP_M_REGIST;
             this.axios.post(memberRegistnApi, {
                 "acc": this.acc,
@@ -76,12 +95,7 @@ export default {
                 "cellphone": this.cellphone,
                 "email": this.email
             }).then((response) => {
-                const backData = response.data;
-                if (backData.status === 'success') {
-                    this.registSucFn();
-                } else {
-                    this.showFalseAnim();
-                }
+                this.registSucFn();
             }).catch(function(error) {
                 console.log('error',error);
             });
@@ -97,7 +111,6 @@ export default {
             this.clearForm();
         },
         showFalseAnim() {
-            this.isShowTip = true;
             $(".form-section").addClass("animate_headShake");
             $(".form-section").on("webkitAnimationEnd", function(){
                 $(".form-section").removeClass("animate_headShake");
@@ -111,6 +124,7 @@ export default {
             this.cellphone = null;
             this.email = null;
             this.isShowTip = false;
+            this.isShowAccTip = false;
         },
         focusInputFn(el) {
             $(el.target).closest('.formBox').addClass('inputFocus');
