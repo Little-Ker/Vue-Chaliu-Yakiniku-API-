@@ -22,12 +22,12 @@
             </div>
         </div>
         <div @click="goTop();" class="d-flex mb-3">
-            <div v-for="(status, index) in statusObj" :key="index" @click="resetChoose(status,index);statusObj[index].statusBool = true;" :class="{'active': statusObj[index].statusBool}" class="choose">
+            <div v-for="(status, index) in statusObj" :key="index" @click="resetChoose(status,index);clickChooseType(index);" :class="{'active': statusObj[index].statusBool}" class="choose">
                 {{status.statusName}}
             </div>
         </div>
-        <div v-for="(item, index) in orders" :key="index" class="order">
-            <div @click="clickDeleteBtn" v-if="!statusObj.isShowNowOrder.statusBool" class="btn-close"></div>
+        <div v-for="(item, index) in newMemberReseveData" :key="index" class="order">
+            <div @click="clickDeleteBtn(item.OID)" v-if="!statusObj.isShowNowOrder.statusBool" class="btn-close"></div>
             <div class="shop">
                 <p class="name">茶六燒肉堂 - {{item.shopName}}</p>
             </div>
@@ -57,19 +57,19 @@
                 <span>{{item.people}}人</span>
             </p>
             <div :class="[{'orderStatus': !statusObj.isShowNowOrder.statusBool}, {'mt-4': statusObj.isShowNowOrder.statusBool}]" class="d-flex justify-content-bewteen">
-                <p v-if="!statusObj.isShowNowOrder.statusBool" class="align-self-end main-white-888">於 {{item.bookTime}} 預約</p>
+                <p v-if="!statusObj.isShowNowOrder.statusBool" class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>
                 <div class="w-100 d-flex justify-content-end" v-if="statusObj.isShowNowOrder.statusBool">
                     <button class="borderBtn active">預約中</button>
-                    <button @click="clickOverBtn" class="borderBtn">已用餐</button>
-                    <button @click="clickCancelBtn" class="borderBtn">取消</button>
+                    <button @click="clickOverBtn(item.OID)" class="borderBtn">已用餐</button>
+                    <button @click="clickCancelBtn(item.OID)" class="borderBtn">取消</button>
                 </div>
                 <p v-if="!statusObj.isShowNowOrder.statusBool" class="statusTxt fw-700">{{item.status}}</p>
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div @click="goTopScroll" v-if="orders.length > 1" class="goTop transition-0-3 icon-left-open"></div>
+            <div @click="goTopScroll" v-if="newMemberReseveData.length > 1" class="goTop transition-0-3 icon-left-open"></div>
         </div>
-        <div v-if="orders.length === 0" class="noOrder">
+        <div v-if="newMemberReseveData.length === 0" class="noOrder">
             <p class="icon-calendar text-align-center"></p>
             <p class="txt fw-700 text-align-center">目前無任何紀錄</p>
         </div>
@@ -83,6 +83,7 @@ export default {
     data() {
         return {
             memberReseveData: [],
+            newMemberReseveData: [],
             shopPointData: shopPointData.shop,
             statusObj: {
                 isShowNowOrder:{
@@ -105,21 +106,6 @@ export default {
         }
     },
     computed: {
-        orders() {
-            const orderList = [];
-            this.memberReseveData.forEach(order => {
-                if (this.selectShop === order.shopName && (this.selectDate === '所有日期' || this.selectDate === order.date)) {
-                    Object.keys(this.statusObj).forEach((status) => {
-                        if (this.statusObj[status].statusBool && order.status === this.statusObj[status].statusName) {
-                            orderList.push(order);
-                        }
-                    })
-                }
-            });
-            // 日期時間升序
-            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
-            return orderList;
-        },
         ordersDate() {
             // '日期時間降序'
             //     return this.orders.sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
@@ -147,11 +133,31 @@ export default {
         },
     },
     methods: {
+        orders() {
+            const orderList = [];
+            this.memberReseveData.forEach(order => {
+                if (this.selectShop === order.shopName && (this.selectDate === '所有日期' || this.selectDate === order.date)) {
+                    Object.keys(this.statusObj).forEach((status) => {
+                        if (this.statusObj[status].statusBool && order.status === this.statusObj[status].statusName) {
+                            orderList.push(order);
+                        }
+                    })
+                }
+            });
+            // 日期時間升序
+            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            
+            this.newMemberReseveData = orderList;
+        },
         resetChoose() {
             Object.keys(this.statusObj).forEach((status) => {
                 this.statusObj[status].statusBool = false;
             })
             this.selectDate = '所有日期';
+        },
+        clickChooseType(index) {
+            this.statusObj[index].statusBool = true;
+            this.getShopOrderData();
         },
         clickShopSelect(shop) {
             this.selectShop = shop.shopName;
@@ -162,18 +168,39 @@ export default {
         clickDateSelect(date) {
             this.selectDate = date;
             this.isOpenDateSelect = false;
+            this.getShopOrderData();
         },
-        clickCancelBtn() {
-            this.$store.dispatch('updateIsShowNotice', true);
+        clickCancelBtn(OID) {
+            this.updateOrderStatusFn(OID, '已取消')
             this.$store.dispatch('updateNoticeText', '取消預約成功');
         },
-        clickOverBtn() {
-            this.$store.dispatch('updateIsShowNotice', true);
+        clickOverBtn(OID) {
+            this.updateOrderStatusFn(OID, '已用餐')
             this.$store.dispatch('updateNoticeText', '已用餐成功');
         },
-        clickDeleteBtn() {
-            this.$store.dispatch('updateIsShowNotice', true);
-            this.$store.dispatch('updateNoticeText', '紀錄刪除成功');
+        clickDeleteBtn(OID) {
+            const deleteOrderApi = process.env.VUE_APP_A_DELETE_ORDER;
+            this.axios.post(deleteOrderApi, {
+                "OID": OID
+            }).then((response) => {
+                this.getShopOrderData();
+                this.$store.dispatch('updateNoticeText', '紀錄刪除成功');
+                this.$store.dispatch('updateIsShowNotice', true);
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        updateOrderStatusFn(OID, status) {
+            const updateOrderStatusApi = process.env.VUE_APP_UPDATE_ORDER_STATUS;
+            this.axios.post(updateOrderStatusApi, {
+                "OID": OID,
+                "newStatus": status
+            }).then((response) => {
+                this.getShopOrderData();
+                this.$store.dispatch('updateIsShowNotice', true);
+            }).catch(function(error) {
+                console.log('error',error);
+            });
         },
         goTop() {
             $('html,body').scrollTop(0, 0);
@@ -187,7 +214,12 @@ export default {
                 "shopName": this.selectShop
             }).then((response) => {
                 const backData = response.data;
-                this.memberReseveData = backData.result;
+                if (backData.status === "success") {
+                    this.memberReseveData = backData.result;
+                } else {
+                    this.memberReseveData = [];
+                }
+                this.orders();
             }).catch(function(error) {
                 console.log('error',error);
             });
