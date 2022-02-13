@@ -3,10 +3,10 @@
         <h1 class="title">預約紀錄</h1>
         <p class="txt main-white-888">- 目前僅提供前十筆紀錄。</p>
         <div @click="goTop" class="d-flex mb-3">
-            <div @click="isShowNowOrder = true" :class="{'active': isShowNowOrder}" class="choose">即將用餐</div>
-            <div @click="isShowNowOrder = false" :class="{'active': !isShowNowOrder}" class="choose">歷史紀錄</div>
+            <div @click="isShowNowOrder = true;getMemberReseveList();" :class="{'active': isShowNowOrder}" class="choose">即將用餐</div>
+            <div @click="isShowNowOrder = false;getMemberReseveList();" :class="{'active': !isShowNowOrder}" class="choose">歷史紀錄</div>
         </div>
-        <div v-for="(item, index) in orders" :key="index" class="order">
+        <div v-for="(item, index) in newMemberReseveData" :key="index" class="order">
             <div class="shop">
                 <p class="name">茶六燒肉堂 - {{item.shopName}}</p>
                 <p class="main-white-888">{{shopAddress(item.shopName)}}</p>
@@ -26,17 +26,15 @@
                 <span>{{item.people}}人</span>
             </p>
             <div :class="[{'orderStatus': !isShowNowOrder}, {'mt-2': isShowNowOrder}]" class="d-flex justify-content-bewteen">
-                <p class="align-self-end main-white-888">於 {{item.bookTime}} 預約</p>
-                <a v-if="isShowNowOrder" @click="clickCancelBtn" class="btn-border">
-                    <span class="btn-border-text transition-0-3">取消預約</span>
-                </a>
+                <p class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>
+                <a v-if="isShowNowOrder" @click="clickCancelBtn" class="borderBtn">取消預約</a>
                 <p v-if="!isShowNowOrder" class="statusTxt fw-700">{{item.status}}</p>
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div @click="goTopScroll" v-if="orders.length > 1 && !isShowNowOrder" class="goTop transition-0-3 icon-left-open"></div>
+            <div @click="goTopScroll" v-if="newMemberReseveData.length > 1 && !isShowNowOrder" class="goTop transition-0-3 icon-left-open"></div>
         </div>
-        <div v-if="orders.length === 0" class="noOrder">
+        <div v-if="newMemberReseveData.length === 0" class="noOrder">
             <p class="icon-calendar text-align-center"></p>
             <p class="txt fw-700 text-align-center">目前無任何紀錄</p>
         </div>
@@ -44,7 +42,6 @@
 </template>
 
 <script>
-import memberReseveData from '@/assets/datas/memberReserveData.json';
 import shopPointData from '@/assets/datas/shopPointData.json';
 
 export default {
@@ -52,24 +49,14 @@ export default {
         return {
             maxDataCount: 10,
             isShowNowOrder: true,
-            memberReseveData : memberReseveData.reserves,
+            memberReseveData: [],
+            newMemberReseveData: [],
             shopPointData: shopPointData.shop,
         }
     },
     computed: {
-        orders() {
-            const orderList = [];
-            this.memberReseveData.forEach(order => {
-                if (this.isShowNowOrder && order.status === '訂位中') {
-                    orderList.push(order);
-                }
-                if (!this.isShowNowOrder && order.status !== '訂位中') {
-                    orderList.push(order);
-                }
-            });
-            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
-            if (orderList.length > this.maxDataCount) orderList.length = this.maxDataCount;
-            return orderList;
+        memberId() {
+            return this.$store.state.memberId;
         },
         shopAddress() {
             const vm = this;
@@ -94,8 +81,41 @@ export default {
         },
         goTopScroll() {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
-        }
+        },
+        getMemberReseveList() {
+            const memberShowOrderListApi = process.env.VUE_APP_M_SHOW_ORDER_INFO;
+            this.axios.post(memberShowOrderListApi, {
+                "MID": this.memberId,
+            }).then((response) => {
+                if (response.data.status === 'success') {
+                    this.memberReseveData = response.data.result;
+                } else {
+                    this.memberReseveData = [];
+                }
+                this.orders();
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        orders() {
+            const orderList = [];
+            this.memberReseveData.forEach(order => {
+                if (this.isShowNowOrder && order.status === '訂位中') {
+                    orderList.push(order);
+                }
+                if (!this.isShowNowOrder && order.status !== '訂位中') {
+                    orderList.push(order);
+                }
+            });
+            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            if (orderList.length > this.maxDataCount) orderList.length = this.maxDataCount;
+
+            this.newMemberReseveData = orderList;
+        },
     },
+    mounted() {
+        this.getMemberReseveList();
+    }
 }
 </script>
 
@@ -133,20 +153,21 @@ export default {
                 font-weight: 700;
             }
         }
-        .btn-border {
-            border-color: $main-brow-text;
-            margin-right: 0;
-            width: 120px;
-            .btn-border-text {
-                color: $main-brow-text;
-            }
+        .borderBtn {
+            cursor: pointer;
+            border: 1px solid $main-brow-text;
+            background-color: transparent;
+            color: $main-brow-text;
+            margin-left: 15px;
+            width: 100px;
+            height: 43px;
+            line-height: 43px;
+            transition: .2s all;
+            text-align: center;
+            letter-spacing: 1px;
             &:hover {
-                &::before {
-                    background-color: $main-brow-text;
-                }
-                .btn-border-text  {
-                    color: $main-white-text;
-                }
+                background-color: $main-brow-text;
+                color: $main-white-text;
             }
         }
         .orderStatus {
