@@ -42,8 +42,26 @@ export default {
             email: '',
         }
     },
+    computed: {
+        memberId() {
+            return this.$store.state.memberId;
+        }
+    },
     methods: {
         clickStoreBtn() {
+            const memberUpdateInfoApi = process.env.VUE_APP_M_UPDATE_INFO;
+            this.axios.post(memberUpdateInfoApi, {
+                "MID": this.memberId,
+                "newName": this.name,
+                "newCellphone": this.cellphone,
+                "newEmail": this.email
+            }).then(() => {
+                this.storeMemberDataSucFn();
+            }).catch(function(error) {
+                console.log('error',error);
+            }); 
+        },
+        storeMemberDataSucFn() {
             this.$store.dispatch('updateMemberName', this.name);
             this.$store.dispatch('updateMemberCellphone', this.cellphone);
             this.$store.dispatch('updateMemberEmail', this.email);
