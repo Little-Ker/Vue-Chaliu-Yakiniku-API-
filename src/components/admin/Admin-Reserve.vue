@@ -77,13 +77,12 @@
 </template>
 
 <script>
-import memberReseveData from '@/assets/datas/memberReserveData.json';
 import shopPointData from '@/assets/datas/shopPointData.json';
 
 export default {
     data() {
         return {
-            memberReseveData : memberReseveData.reserves,
+            memberReseveData: [],
             shopPointData: shopPointData.shop,
             statusObj: {
                 isShowNowOrder:{
@@ -145,7 +144,7 @@ export default {
             return function(selectShopName, shopName) {
                 return selectShopName === shopName;
             }
-        }
+        },
     },
     methods: {
         resetChoose() {
@@ -158,6 +157,7 @@ export default {
             this.selectShop = shop.shopName;
             this.selectDate = '所有日期';
             this.isOpenShopSelect = false;
+            this.getShopOrderData();
         },
         clickDateSelect(date) {
             this.selectDate = date;
@@ -181,7 +181,21 @@ export default {
         goTopScroll() {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
         },
+        getShopOrderData() {
+            const showShopOrderListApi = process.env.VUE_APP_A_SHOW_SHOP_ORDER_INFO;
+            this.axios.post(showShopOrderListApi, {
+                "shopName": this.selectShop
+            }).then((response) => {
+                const backData = response.data;
+                this.memberReseveData = backData.result;
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        }
     },
+    created() {
+        this.getShopOrderData();
+    }
 }
 </script>
 
