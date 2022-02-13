@@ -3,7 +3,7 @@
         <div class="container-620 w-100 d-flex flex-direction-col">
             <div class="form-group d-flex flex-direction-col">
                 <p class="main-white-text form-title">訂位資訊</p>
-                <div class="main-white-text form-data">
+                <div class="main-white-text form-data form-data-2">
                     <p class="icon-location data-title">
                         <span class="data-title-2">分店：</span>
                         <span class="fw-700">{{orderMessage.shop}}</span>
@@ -17,7 +17,7 @@
                             <span class="data-title-2">用餐時間： </span>
                         </p>
                         <div> 
-                            <p class="fw-700">{{orderMessage.date}}</p>
+                            <p class="fw-700">{{orderMessage.date}} {{orderMessage.day}}</p>
                             <p class="fw-700">{{orderMessage.time.period}} {{orderMessage.time.time}}</p>
                         </div>
                     </div>
@@ -33,15 +33,15 @@
                     <div class="main-white-text form-data">
                         <p class="icon-user data-title">
                             <span class="data-title-2">聯絡人：</span>
-                            <input type="text" v-model="memberName" @keydown="keydownNull($event)" maxlength="5" autoComplete="off" required>
+                            <input type="text" v-model="contact.name" @keydown="keydownNull($event)" maxlength="5" autoComplete="off" required>
                         </p>
                         <p class="icon-phone data-title">
                             <span class="data-title-2">電話：</span>
-                            <input type="tel" v-model="memberCellphone" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
+                            <input type="tel" v-model="contact.cellphone" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
                         </p>
                         <p class="icon-mail data-title">
                             <span class="data-title-2">信箱：</span>
-                            <input type="email" v-model="memberEmail" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
+                            <input type="email" v-model="contact.mail" @keydown="keydownNull($event)" maxlength="10" autoComplete="off" required>
                         </p>
                     </div>
                 </div>
@@ -79,6 +79,13 @@ export default {
         },
         memberEmail() {
             return this.$store.state.memberEmail;
+        },
+        memberId() {
+            return this.$store.state.memberId;
+        },
+        getBookTime() {
+            const date = new Date();
+            return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
         }
     },
     methods: {
@@ -93,11 +100,29 @@ export default {
                 mail: this.contact.mail
             };
             this.sendOrder(contact);
-            this.$store.dispatch('updateOrderLevel', 3);
-            this.goTop();
         },
         sendOrder(contact) {
-            console.log('order',this.orderMessage, contact);
+            const memberAddOrder = process.env.VUE_APP_M_ADD_ORDER;
+            this.axios.post(memberAddOrder, {
+                "MID": this.memberId,
+                "memberName": contact.name,
+                "cellphone": contact.cellphone,
+                "email": contact.mail,
+                "shopName": this.orderMessage.shop,
+                "date": this.orderMessage.date,
+                "time": `${this.orderMessage.time.period} ${this.orderMessage.time.time}`,
+                "people": this.orderMessage.people,
+                "bookDate": this.getBookTime,
+                "status": "訂位中"
+            }).then((response) => {
+                this.addOrderSucFn();
+            }).catch(function(error) {
+                console.log('error',error);
+            });
+        },
+        addOrderSucFn() {
+            this.$store.dispatch('updateOrderLevel', 3);
+            this.goTop();
         },
         goTop() {
             $('html,body').scrollTop(0, 0);
@@ -141,6 +166,9 @@ export default {
         }
         .form-data {
             padding: 30px 30px 25px 30px;
+            &.form-data-2 {
+                padding-bottom: 0;
+            }
             .data-title { 
                 margin-bottom: 15px;
                 &::before {
@@ -168,10 +196,9 @@ export default {
             }
         }
         .reviseBtn {
-            position: absolute;
             cursor: pointer;
             padding: 5px;
-            margin: 25px 15px;
+            margin: 0 15px 20px 10px;
             &:hover {
                 span {
                     color: $main-white-text;

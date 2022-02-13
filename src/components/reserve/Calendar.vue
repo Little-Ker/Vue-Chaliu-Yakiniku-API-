@@ -138,7 +138,7 @@ export default {
         },
         setChooseDay() {
             return function(year, month, date, day) {
-                return `${year}-${this.setZero(month + 1)}-${this.setZero(date)} 星期${this.setDay(day)}`;
+                return `${year}-${this.setZero(month + 1)}-${this.setZero(date)}`;
             }
         },
         getNextMonth() {
@@ -180,7 +180,7 @@ export default {
             const chooseMonth = this.chooseDay.month;
             const chooseDate = this.chooseDay.date;
             const chooseDay = this.chooseDay.day;
-            this.$emit("chooseDate", this.chooseDay, this.setChooseDay(chooseYear, chooseMonth, chooseDate, chooseDay))
+            this.$emit("chooseDate", this.chooseDay, this.setChooseDay(chooseYear, chooseMonth, chooseDate),`星期${this.setDay(chooseDay)}` )
         },
         chooseDateFn(i, j, chooseDateData) {
             if(this.setNotChooseDayClass(i, j) || this.setOtherClass(i, j)) return;

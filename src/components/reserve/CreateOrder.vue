@@ -64,6 +64,7 @@ export default {
             selectShop: shopPointData.shop[0].shopName,
             selectPeople: 1,
             chooseDate: '',
+            chooseDay: '',
             chooseTime: '',
         }
     },
@@ -109,8 +110,9 @@ export default {
         }
     },
     methods: {
-        getChooseDate(chooseDayVal, setChooseDayVal) {
-            this.chooseDate = setChooseDayVal;
+        getChooseDate(chooseDayVal, setChooseDateVal, setChooseDayVal) {
+            this.chooseDate = setChooseDateVal;
+            this.chooseDay = setChooseDayVal;
             this.chooseDateData = chooseDayVal;
         },
         getChooseTime(setChooseTimeVal) {
@@ -137,6 +139,7 @@ export default {
                 people: this.selectPeople,
                 dateData: this.chooseDateData,
                 date: this.chooseDate,
+                day: this.chooseDay,
                 time: this.chooseTime,
             };
             this.$store.dispatch('updateOrderMessage', orderMessage);
