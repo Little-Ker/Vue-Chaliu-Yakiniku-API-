@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
+
 export default {
     computed: {
         isShowLogin() {
@@ -80,9 +83,13 @@ export default {
                 this.$store.dispatch('updateIsShowLoading', 1);
                 const backData = response.data;
                 if (backData.status === 'success') {
+                    cookies.set('acc', this.acc, "6h");
+                    cookies.set('pwd', this.pwd, "6h");
                     if (!this.isAdminLogin) {
+                        cookies.set('isAdmin', false, "6h");
                         this.storeMemberData(backData);
                     } else {
+                        cookies.set('isAdmin', true, "6h");
                         this.$store.dispatch('updateIsAdiminsLogin', true);
                     }
                     this.loginSucFn();

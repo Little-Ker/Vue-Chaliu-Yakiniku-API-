@@ -14,6 +14,9 @@ import LoginView from '@/views/LoginView.vue'
 import Loading from '@/components/all/Loading.vue'
 import ChangePageAnim from '@/components/all/ChangePageAnim.vue'
 
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
+
 export default {
   name: 'all',
   components: {
@@ -22,6 +25,52 @@ export default {
     LoginView,
     Loading,
     ChangePageAnim
+  },
+  data() {
+    return {
+      acc: '',
+      pwd: '',
+      isAdmin: ''
+    }
+  },
+  methods: {
+    memberLogin() {
+      const isMemberLoginApi = (this.isAdmin === 'false') ? process.env.VUE_APP_M_LOGIN : process.env.VUE_APP_A_LOGIN;
+      this.axios.post(isMemberLoginApi, {
+          "acc": this.acc,
+          "pwd": this.pwd
+      }).then((response) => {
+          const backData = response.data;
+          if (backData.status === 'success') {
+              if (this.isAdmin === 'false') {
+                  this.storeMemberData(backData);
+              } else {
+                  this.$store.dispatch('updateIsAdiminsLogin', true);
+              }
+              this.$store.dispatch('updateIsLoginSuccess', true);
+              this.$store.dispatch('updateIsShowLogin', false);
+          }
+      }).catch(function(error) {
+          console.log('error',error);
+      });
+    },
+    storeMemberData(backData) {
+        const memberData = backData.result[0];
+        this.$store.dispatch('updateMemberName', memberData.name);
+        this.$store.dispatch('updateMemberCellphone', memberData.cellphone);
+        this.$store.dispatch('updateMemberEmail', memberData.email);
+        this.$store.dispatch('updateMemberPassword', memberData.pwd);
+        this.$store.dispatch('updateMemberId', memberData.MID);
+    },
+  },
+  mounted() {
+    this.acc = cookies.get('acc');
+    this.pwd = cookies.get('pwd');
+    this.isAdmin = cookies.get('isAdmin');
+
+    if (this.acc !== null && this.pwd !== null) {
+      this.memberLogin();
+    }
   }
 }
 </script>

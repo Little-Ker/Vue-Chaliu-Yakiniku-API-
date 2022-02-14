@@ -26,6 +26,9 @@
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
+
 export default {
     computed: {
         isShowNotice() {
@@ -43,6 +46,7 @@ export default {
             this.$store.dispatch('updateIsShowCheckNotice', false);
         },
         clickLogoutBtn() {
+            this.removeCookie();
             this.resetMemberData();
             this.$store.dispatch('updateIsShowNotice', true);
             this.$store.dispatch('updateNoticeText', '登出成功');
@@ -51,6 +55,11 @@ export default {
             this.$store.dispatch('updateIsAdiminsLogin', false);
             this.goTop();
             this.$router.push("/");
+        },
+        removeCookie() {
+            cookies.remove('acc');
+            cookies.remove('pwd');
+            cookies.remove('isAdmin');
         },
         resetMemberData() {
             this.$store.dispatch('updateMemberName', null);
