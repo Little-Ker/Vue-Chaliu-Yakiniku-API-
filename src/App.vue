@@ -3,12 +3,14 @@
   <router-view/>
   <Footer/>
   <LoginView/>
+  <Loading/>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import LoginView from '@/views/LoginView.vue'
+import Loading from '@/components/all/Loading.vue'
 
 export default {
   name: 'all',
@@ -16,6 +18,7 @@ export default {
     Navbar,
     Footer,
     LoginView,
+    Loading
   }
 }
 </script>

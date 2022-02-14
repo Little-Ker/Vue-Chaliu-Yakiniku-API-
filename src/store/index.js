@@ -2,6 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
+        isShowLoading: false,
+        // 登入
         isShowLogin: false,
         isLoginSuccess: false,
         isShowNotice: false,
@@ -30,6 +32,9 @@ export default createStore({
         },
     },
     actions: {
+        updateIsShowLoading(context, isShowLoading) {
+            context.commit('SetIsShowLoading', isShowLoading);
+        },
         updateIsShowLogin(context, isShowLogin) {
             context.commit('SetIsShowLogin', isShowLogin);
         },
@@ -83,6 +88,9 @@ export default createStore({
     },
     // 改state資料
     mutations: {
+        SetIsShowLoading(state, isShowLoading) {
+            state.isShowLoading = isShowLoading;
+        },
         SetIsShowLogin(state, isShowLogin) {
             state.isShowLogin = isShowLogin;
         },
