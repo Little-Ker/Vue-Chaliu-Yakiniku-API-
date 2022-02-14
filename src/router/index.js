@@ -1,3 +1,4 @@
+import store from '@/store/index';
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
@@ -9,6 +10,8 @@ const routes = [{
     {
         path: '/member',
         name: 'Member',
+        redirect: '/member/reserve',
+        meta: { requireMemberAuth: true },
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/MemberView.vue'),
         children: [{
@@ -34,6 +37,8 @@ const routes = [{
     {
         path: '/admin',
         name: 'Admin',
+        redirect: '/admin/reserve',
+        meta: { requireAdminAuth: true },
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/AdminView.vue'),
         children: [{
@@ -96,11 +101,32 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
+    {
+        path: '/:catchAll(.*)',
+        redirect: '/',
+    }
 ]
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    if ((to.meta.requireMemberAuth && !store.state.isLoginSuccess) ||
+        (to.meta.requireAdminAuth && !store.state.isAdiminsLogin)) {
+        store.commit('SetIsShowLogin', true);
+        var tops = $(document).scrollTop();
+        $(document).bind("scroll", function() { $(document).scrollTop(tops); });
+
+        if (from.name === undefined) {
+            next('/');
+            return;
+        }
+        next(from.path);
+        return;
+    }
+    next();
+});
 
 export default router
