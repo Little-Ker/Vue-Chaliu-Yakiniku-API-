@@ -52,6 +52,7 @@ export default {
             memberReseveData: [],
             newMemberReseveData: [],
             shopPointData: shopPointData.shop,
+            isLoadingOver: false,
         }
     },
     computed: {
@@ -73,11 +74,14 @@ export default {
     },
     methods: {
         clickCancelBtn(OID) {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const updateOrderStatusApi = process.env.VUE_APP_UPDATE_ORDER_STATUS;
             this.axios.post(updateOrderStatusApi, {
                 "OID": OID,
                 "newStatus": '已取消'
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
+                this.isLoadingOver = true;
                 this.$store.dispatch('updateIsShowNotice', true);
                 this.$store.dispatch('updateNoticeText', '取消預約成功');
                 this.getMemberReseveList();
@@ -92,16 +96,19 @@ export default {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
         },
         getMemberReseveList() {
+            if (!this.isLoadingOver) this.$store.dispatch('updateIsShowLoading', 0);
             const memberShowOrderListApi = process.env.VUE_APP_M_SHOW_ORDER_INFO;
             this.axios.post(memberShowOrderListApi, {
                 "MID": this.memberId,
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 3);
+                this.isLoadingOver = false
                 if (response.data.status === 'success') {
                     this.memberReseveData = response.data.result;
                 } else {
                     this.memberReseveData = [];
                 }
-                this.orders();
+                this.orders(); 
             }).catch(function(error) {
                 console.log('error',error);
             });
@@ -116,7 +123,10 @@ export default {
                     orderList.push(order);
                 }
             });
-            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            // '日期時間升序'
+            if (this.isShowNowOrder) orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            // '日期時間降序'
+            if (!this.isShowNowOrder) orderList.sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
             if (orderList.length > this.maxDataCount) orderList.length = this.maxDataCount;
 
             this.newMemberReseveData = orderList;

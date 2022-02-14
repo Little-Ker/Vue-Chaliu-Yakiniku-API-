@@ -60,6 +60,7 @@ export default {
         },
         sendPaginationNum() {
             this.goTop();
+            this.$store.dispatch('updateIsShowLoading', 2);
             this.$emit("nowPageNum", this.nowNum);
         }
     },

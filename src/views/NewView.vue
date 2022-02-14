@@ -92,10 +92,12 @@ export default {
     mounted() {
         this.resetId();
         this.goTop();
+        this.$store.dispatch('updateIsShowLoading', 2);
     },
     watch: {
         $route(now) {
             // console.log(now);
+            this.$store.dispatch('updateIsShowLoading', 2);
             this.resetId();
         }
     }

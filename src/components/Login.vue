@@ -71,11 +71,13 @@ export default {
             this.goTop();
         },
         clickLoginBtn() {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const isMemberLoginApi = (!this.isAdminLogin) ? process.env.VUE_APP_M_LOGIN : process.env.VUE_APP_A_LOGIN;
             this.axios.post(isMemberLoginApi, {
                 "acc": this.acc,
                 "pwd": this.pwd
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
                 const backData = response.data;
                 if (backData.status === 'success') {
                     if (!this.isAdminLogin) {

@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
-        isShowLoading: false,
+        isShowLoading: 1,
         // 登入
         isShowLogin: false,
         isLoginSuccess: false,

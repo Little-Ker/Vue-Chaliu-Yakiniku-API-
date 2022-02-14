@@ -57,8 +57,10 @@ export default {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
         },
         getMemberListData() {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const showMemberListApi = process.env.VUE_APP_A_SHOW_MEMBER_INFO;
             this.axios.post(showMemberListApi).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 2);
                 const backData = response.data.result;
                 this.memberList = backData;
             }).catch(function(error) {

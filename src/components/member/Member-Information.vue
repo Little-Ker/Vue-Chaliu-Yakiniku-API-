@@ -49,6 +49,7 @@ export default {
     },
     methods: {
         clickStoreBtn() {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const memberUpdateInfoApi = process.env.VUE_APP_M_UPDATE_INFO;
             this.axios.post(memberUpdateInfoApi, {
                 "MID": this.memberId,
@@ -56,6 +57,7 @@ export default {
                 "newCellphone": this.cellphone,
                 "newEmail": this.email
             }).then(() => {
+                this.$store.dispatch('updateIsShowLoading', 1);
                 this.storeMemberDataSucFn();
             }).catch(function(error) {
                 console.log('error',error);

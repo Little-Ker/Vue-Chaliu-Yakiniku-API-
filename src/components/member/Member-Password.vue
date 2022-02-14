@@ -67,11 +67,13 @@ export default {
                 this.showFalseAnim();
                 return;
             }
+            this.$store.dispatch('updateIsShowLoading', 0);
             const memberUpdatePwdApi = process.env.VUE_APP_M_UPDATE_PWD;
             this.axios.post(memberUpdatePwdApi, {
                 "MID": this.memberId,
                 "newPassword": this.newPwd
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
                 const backData = response.data;
                 if (backData.status === 'success') {
                     this.updatePwdSucFn();

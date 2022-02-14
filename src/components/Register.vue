@@ -71,15 +71,18 @@ export default {
                 this.showFalseAnim();
                 return;
             }
+            this.$store.dispatch('updateIsShowLoading', 0);
             const memberCheckAcc = process.env.VUE_APP_M_CHECK_ACC;
             this.axios.post(memberCheckAcc, {
                 "acc": this.acc
             }).then((response) => {
+                
                 const backData = response.data;
                 if (backData.status === 'success') {
                     this.checkAccSucFn();
                 } else {
                     this.isShowAccTip = true;
+                    this.$store.dispatch('updateIsShowLoading', 1);
                     this.showFalseAnim();
                 }
             }).catch(function(error) {
@@ -95,6 +98,7 @@ export default {
                 "cellphone": this.cellphone,
                 "email": this.email
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
                 this.registSucFn();
             }).catch(function(error) {
                 console.log('error',error);

@@ -45,6 +45,11 @@ export default {
             });
         },
     },
+    watch: {
+        selectType() {
+            this.$store.dispatch('updateIsShowLoading', 2);
+        }
+    },
     mounted() {
         if (this.$route.query.id === undefined) return;
         const routeId = parseInt(this.$route.query.id);

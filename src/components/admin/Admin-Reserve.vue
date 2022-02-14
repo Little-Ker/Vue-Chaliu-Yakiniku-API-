@@ -103,6 +103,7 @@ export default {
             isOpenShopSelect: false,
             selectDate: '所有日期',
             isOpenDateSelect: false,
+            isLoadingOver: false,
         }
     },
     computed: {
@@ -143,10 +144,15 @@ export default {
                         }
                     })
                 }
-            });
+            });    
             // 日期時間升序
-            orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
-            
+            if (this.statusObj.isShowNowOrder.statusBool) {
+                orderList.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+            } else {
+                // 日期時間降序
+                orderList.sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
+            }
+
             this.newMemberReseveData = orderList;
         },
         resetChoose() {
@@ -179,10 +185,13 @@ export default {
             this.$store.dispatch('updateNoticeText', '已用餐成功');
         },
         clickDeleteBtn(OID) {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const deleteOrderApi = process.env.VUE_APP_A_DELETE_ORDER;
             this.axios.post(deleteOrderApi, {
                 "OID": OID
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
+                this.isLoadingOver = true;
                 this.getShopOrderData();
                 this.$store.dispatch('updateNoticeText', '紀錄刪除成功');
                 this.$store.dispatch('updateIsShowNotice', true);
@@ -191,11 +200,14 @@ export default {
             });
         },
         updateOrderStatusFn(OID, status) {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const updateOrderStatusApi = process.env.VUE_APP_UPDATE_ORDER_STATUS;
             this.axios.post(updateOrderStatusApi, {
                 "OID": OID,
                 "newStatus": status
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 1);
+                this.isLoadingOver = true;
                 this.getShopOrderData();
                 this.$store.dispatch('updateIsShowNotice', true);
             }).catch(function(error) {
@@ -209,10 +221,13 @@ export default {
             $('html,body').animate({ scrollTop: (0, 0) }, 'slow');
         },
         getShopOrderData() {
+            if(!this.isLoadingOver) this.$store.dispatch('updateIsShowLoading', 0);
             const showShopOrderListApi = process.env.VUE_APP_A_SHOW_SHOP_ORDER_INFO;
             this.axios.post(showShopOrderListApi, {
                 "shopName": this.selectShop
             }).then((response) => {
+                this.$store.dispatch('updateIsShowLoading', 3);
+                this.isLoadingOver = false;
                 const backData = response.data;
                 if (backData.status === "success") {
                     this.memberReseveData = backData.result;

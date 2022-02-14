@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isShowLoading" class="loading">
+    <div class="loading loadingHide">
         <span></span>
         <span></span>
         <span></span>
@@ -13,6 +13,9 @@ export default {
         isShowLoading() {
             return this.$store.state.isShowLoading;
         },
+        isShowAutoLoading() {
+            return this.$store.state.isShowAutoLoading;
+        },
     },
     methods: {
         createRandom(min, max) {
@@ -25,33 +28,55 @@ export default {
         },
         startScrollBar() {
             $(document).unbind("scroll");
+        },
+        closeLoading(minSec, maxSec) {
+            this.stopScrollBar();
+            let randomSec = this.createRandom(minSec, maxSec)
+            this.timeout = setTimeout(() => {
+                this.startScrollBar();
+                $('.loading').addClass('loadingHide');
+                this.$store.dispatch('updateIsShowLoading', 1);
+                clearTimeout(this.timeout);
+            }, randomSec);
         }
     },
     watch: {
         isShowLoading() {
-            console.log(111,this.isShowLoading);
-            if (!this.isShowLoading) return;
-            this.stopScrollBar();
-            let randomSec = this.createRandom(300, 1000)
-            this.timeout = setTimeout(() => {
-                this.startScrollBar();
-                this.$store.dispatch('updateIsShowLoading', false);
-                clearTimeout(this.timeout);
-            }, randomSec);
-        }
+            if (this.isShowLoading === 0) {
+                // 開啟
+                $('.loading').removeClass('loadingHide');
+                return;
+            }
+            if (this.isShowLoading === 1) {
+                // 立刻關閉
+                $('.loading').addClass('loadingHide');
+                return;
+            }
+            if (this.isShowLoading === 2) {
+                // 開啟且自動過幾秒關閉
+                $('.loading').removeClass('loadingHide');
+                this.closeLoading(500, 1000);
+                return;
+            } 
+            if (this.isShowLoading === 3) {
+                // 過幾秒關閉
+                this.closeLoading(500, 700);
+                return;
+            } 
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
 span:nth-child(1) {
-    animation: loadingAnim 1.5s 0.13s ease-out infinite
+    animation: loadingAnim 0.8s 0.08s ease-out infinite
 }
 span:nth-child(2) {
-    animation: loadingAnim 1.5s 0.26s ease-out infinite
+    animation: loadingAnim 0.8s 0.16s ease-out infinite
 }
 span:nth-child(3) {
-    animation: loadingAnim 1.5s 0.39s ease-out infinite
+    animation: loadingAnim 0.8s 0.24s ease-out infinite
 }
 
 .loading {
@@ -61,7 +86,7 @@ span:nth-child(3) {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,8 +94,17 @@ span:nth-child(3) {
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: #aa8243;
-        margin: 0px 15px;
+        background-color: #c7994f;
+        margin-right: 30px;
+        opacity: 0;
+        transform: scale(0.2);
+        &:last-child {
+            margin: 0;
+        }
     }
+}
+
+.loadingHide {
+    display: none;
 }
 </style>

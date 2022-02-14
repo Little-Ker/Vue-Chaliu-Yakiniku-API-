@@ -99,9 +99,11 @@ export default {
                 cellphone: this.contact.cellphone,
                 mail: this.contact.mail
             };
+            this.goTop();
             this.sendOrder(contact);
         },
         sendOrder(contact) {
+            this.$store.dispatch('updateIsShowLoading', 0);
             const memberAddOrder = process.env.VUE_APP_M_ADD_ORDER;
             this.axios.post(memberAddOrder, {
                 "MID": this.memberId,
@@ -116,6 +118,7 @@ export default {
                 "status": "訂位中"
             }).then((response) => {
                 this.addOrderSucFn();
+                this.$store.dispatch('updateIsShowLoading', 3);
             }).catch(function(error) {
                 console.log('error',error);
             });
@@ -135,6 +138,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch('updateIsShowLoading', true);
         this.contact = {
             name: this.memberName,
             cellphone: this.memberCellphone,
