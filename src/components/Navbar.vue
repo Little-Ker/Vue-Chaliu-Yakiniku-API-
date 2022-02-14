@@ -1,11 +1,11 @@
 <template>
 <div class="nav">
     <div class="navBg d-flex justify-content-bewteen">
-        <router-link to="/" @click="goTop" class="logo">
+        <router-link to="/" class="logo">
             <img :src="logoUrl" class="img-fit" alt="茶六">
         </router-link>
         <div class="d-flex menu">
-            <router-link :to="item.url" @click="goTop" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
+            <router-link :to="item.url" v-for="(item, index) in linkList" :key="index" class="link">{{item.txt}}</router-link>
             <a v-if="!isLoginSuccess" @click="clickLoginFn" class="loginBtn transition-0-3">會員登入</a>
             <a @click="clickAdminFn();goTop();" v-if="isLoginSuccess" class="loginBtn userBtn flex-direction-col transition-0-3">
                 <p class="icon-cog"></p>

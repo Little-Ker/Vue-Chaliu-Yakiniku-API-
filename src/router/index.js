@@ -116,8 +116,7 @@ router.beforeEach((to, from, next) => {
     if ((to.meta.requireMemberAuth && !store.state.isLoginSuccess) ||
         (to.meta.requireAdminAuth && !store.state.isAdiminsLogin)) {
         store.commit('SetIsShowLogin', true);
-        var tops = $(document).scrollTop();
-        $(document).bind("scroll", function() { $(document).scrollTop(tops); });
+        $(document).bind("scroll", function() { $(document).scrollTop($(document).scrollTop()); });
 
         if (from.name === undefined) {
             next('/');
@@ -126,7 +125,22 @@ router.beforeEach((to, from, next) => {
         next(from.path);
         return;
     }
-    next();
+    if (to.meta.requireMemberAuth || to.meta.requireAdminAuth) {
+        next();
+        return;
+    }
+
+    // 換頁動畫
+    store.dispatch('updateIsChangePageAnim', true);
+    if (store.state.isFirstEnterWeb && to.name === 'Home') {
+        next();
+        return;
+    }
+    store.dispatch('updateIsFirstEnterWeb', false);
+    const timeout = setTimeout(() => {
+        next();
+        clearTimeout(timeout);
+    }, 600);
 });
 
 export default router

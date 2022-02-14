@@ -3,6 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
     state: {
         isShowLoading: 1,
+        isChangePageAnim: false,
+        isFirstEnterWeb: true,
         // 登入
         isShowLogin: false,
         isLoginSuccess: false,
@@ -34,6 +36,12 @@ export default createStore({
     actions: {
         updateIsShowLoading(context, isShowLoading) {
             context.commit('SetIsShowLoading', isShowLoading);
+        },
+        updateIsChangePageAnim(context, isChangePageAnim) {
+            context.commit('SetIsChangePageAnim', isChangePageAnim);
+        },
+        updateIsFirstEnterWeb(context, isFirstEnterWeb) {
+            context.commit('SetIsFirstEnterWeb', isFirstEnterWeb);
         },
         updateIsShowLogin(context, isShowLogin) {
             context.commit('SetIsShowLogin', isShowLogin);
@@ -90,6 +98,12 @@ export default createStore({
     mutations: {
         SetIsShowLoading(state, isShowLoading) {
             state.isShowLoading = isShowLoading;
+        },
+        SetIsChangePageAnim(state, isChangePageAnim) {
+            state.isChangePageAnim = isChangePageAnim;
+        },
+        SetIsFirstEnterWeb(state, isFirstEnterWeb) {
+            state.isFirstEnterWeb = isFirstEnterWeb;
         },
         SetIsShowLogin(state, isShowLogin) {
             state.isShowLogin = isShowLogin;

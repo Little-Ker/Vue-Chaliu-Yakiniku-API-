@@ -25,6 +25,7 @@ export default {
             newsListData: newsListData.news,
             onePageCount: 5,
             nowNum: 1,
+            isEnterFirst: true,
         }
     },
     computed: {
@@ -60,12 +61,10 @@ export default {
         },
         sendPaginationNum() {
             this.goTop();
-            this.$store.dispatch('updateIsShowLoading', 2);
+            if (!this.isEnterFirst) this.$store.dispatch('updateIsShowLoading', 2); 
+            this.isEnterFirst = false;
             this.$emit("nowPageNum", this.nowNum);
         }
-    },
-    mounted() {
-        this.sendPaginationNum();
     },
     watch: {
         chooseType() {
