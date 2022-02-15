@@ -22,8 +22,18 @@
             </div>
             <p class="fw-700">
                 <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
-                <span class="mr-2">預定人數:</span>
+                <span class="mr-2">訂位人數:</span>
                 <span>{{item.people}}人</span>
+            </p>
+            <p class="fw-700">
+                <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
+                <span class="mr-2">聯絡人:</span>
+                <span>{{item.memberName}}</span>
+            </p>
+            <p class="fw-700">
+                <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
+                <span class="mr-2">手機號碼:</span>
+                <span>{{item.cellphone}}</span>
             </p>
             <div :class="[{'orderStatus': !isShowNowOrder}, {'mt-2': isShowNowOrder}]" class="d-flex justify-content-bewteen">
                 <p class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>

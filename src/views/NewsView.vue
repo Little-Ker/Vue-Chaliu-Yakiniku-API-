@@ -49,6 +49,7 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .newsView {
+    padding-bottom: 60px;
     .banner {
         width: 100%;
         height: 200px;

@@ -57,6 +57,7 @@ export default {
 
 .pointView {
     position: relative;
+    padding-bottom: 60px;
     .banner {
         width: 100%;
         height: 200px;

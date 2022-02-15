@@ -108,6 +108,7 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .newView {
+    padding-bottom: 60px;
     padding-top: 140px;
     p {
         font-family: "Courier New", Courier, monospace;

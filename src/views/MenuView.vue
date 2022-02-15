@@ -47,6 +47,7 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .menuView {
+    padding-bottom: 45px;
     .banner {
         width: 100%;
         height: 200px;

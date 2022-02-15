@@ -94,7 +94,7 @@ span:nth-child(3) {
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: #c7994f;
+        background-color: #fff;
         margin-right: 30px;
         opacity: 0;
         transform: scale(0.2);
