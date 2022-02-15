@@ -2,12 +2,12 @@
     <div class="orderFalse">
         <div class="container-620 w-100">
             <div class="icon-cancel-circled main-white-text text-align-center"></div>
-            <p class="main-white-text text-align-center title">目前已有預約中紀錄！</p>
-            <p class="main-white-opcity-text text-align-center">如需修改預約資訊，請先取消當前預約或聯絡服務人員</p>
+            <p class="main-white-text text-align-center title">目前登入身分為管理員！</p>
+            <p class="main-white-opcity-text text-align-center">如需進行訂位作業，請先登出改以會員身分登入</p>
         </div>
         <div class="d-flex justify-content-center">
-            <router-link to="/member/reserve" @click="goTop()" class="btn-border">
-                <span class="btn-border-text fw-700 transition-0-3">前往預約紀錄</span>
+            <router-link to="/admin/reserve" @click="goTop()" class="btn-border">
+                <span class="btn-border-text fw-700 transition-0-3">前往訂位紀錄</span>
             </router-link>
         </div>
     </div>

@@ -6,10 +6,10 @@
                     <h1 class="main-brow-text">線上訂位系統</h1>
                     <p class="main-brow-text">Reserve System</p>
                 </div>
-                <div v-if="orderLevel == 1 && isAlreadyOrder">
+                <div v-if="orderLevel == 1 && isAdminLogin">
                   <OrderFalse></OrderFalse>
                 </div>
-                <div v-if="orderLevel == 1 && !isAlreadyOrder">
+                <div v-if="orderLevel == 1 && !isAdminLogin">
                     <CreateOrder></CreateOrder>
                 </div>
                 <div v-if="orderLevel == 2">
@@ -40,12 +40,18 @@ export default {
     data() {
         return {
             bannerImg: require('@/assets/images/reserve/banner.jpg'),
-            isAlreadyOrder: false,
+            isAdminLogin: false,
         }
     },
     computed: {
         orderLevel() {
             return this.$store.state.orderLevel;
+        },
+        isLoginSuccess() {
+            return this.$store.state.isLoginSuccess;
+        },
+        isAdiminsLogin() {
+            return this.$store.state.isAdiminsLogin;
         }
     },
     methods: {
@@ -64,14 +70,25 @@ export default {
                 day: '',
             };
             this.$store.dispatch('updateChooseReserveDateData', chooseReserveDateData);
+            this.$store.dispatch('updateChooseReserveTimeData', '');
+        },
+        loginSucFn() {
+            if (this.isLoginSuccess && this.isAdiminsLogin) {
+                this.isAdminLogin = true;
+            }
         }
     },
     mounted() {
-        this.isAlreadyOrder = false;
+        this.loginSucFn();
     },
     unmounted() {
         this.$store.dispatch('updateOrderLevel', 1);
         this.resetData();
+    },
+    watch: {
+        isLoginSuccess() {
+            this.loginSucFn();
+        }
     }
 }
 </script>
