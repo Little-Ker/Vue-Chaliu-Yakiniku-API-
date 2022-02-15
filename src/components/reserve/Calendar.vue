@@ -196,6 +196,8 @@ export default {
             this.chooseDay.month = chooseDateData.month;
             this.chooseDay.date = chooseDateData.date;
             this.chooseDay.day = chooseDateData.day;
+            this.$store.dispatch('updateChooseReserveTimeData', '');
+
             this.isSameDate();
             this.getNowTime();
             this.sendChooseDate();

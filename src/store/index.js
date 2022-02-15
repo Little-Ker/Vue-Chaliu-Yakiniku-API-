@@ -30,6 +30,7 @@ export default createStore({
             date: '',
             day: '',
         },
+        chooseReserveTimeData: '',
         orderMessage: {
             shop: '',
             people: '',
@@ -99,6 +100,9 @@ export default createStore({
         updateChooseReserveDateData(context, chooseReserveDateData) {
             context.commit('SetChooseReserveDateData', chooseReserveDateData);
         },
+        updateChooseReserveTimeData(context, chooseReserveTimeData) {
+            context.commit('SetChooseReserveTimeData', chooseReserveTimeData);
+        },
         updateOrderMessage(context, orderMessage) {
             context.commit('SetOrderMessage', orderMessage);
         },
@@ -163,6 +167,9 @@ export default createStore({
         // 預約單資訊
         SetChooseReserveDateData(state, chooseReserveDateData) {
             state.chooseReserveDateData = chooseReserveDateData;
+        },
+        SetChooseReserveTimeData(state, chooseReserveTimeData) {
+            state.chooseReserveTimeData = chooseReserveTimeData;
         },
         SetOrderMessage(state, orderMessage) {
             state.orderMessage = orderMessage;

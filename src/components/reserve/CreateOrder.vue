@@ -35,11 +35,11 @@
             </div>
             <div class="d-flex form-group">
                 <p class="main-white-text select-title select-title-bg2">用餐時段</p>
-                <p class="main-white-text fw-700 chooseDate">{{chooseTime.period}} {{chooseTime.time}}</p>
+                <p class="main-white-text fw-700 chooseDate">{{chooseReserveTimeData.period}} {{chooseReserveTimeData.time}}</p>
                 <p class="icon-stopwatch main-white-text"></p>
             </div>
             <div class="custom-time">
-                <Time :businessTime="getBusinessTime" @chooseTime="getChooseTime"></Time>
+                <Time :businessTime="getBusinessTime"></Time>
             </div>
             <a @click="nextStepFn()" class="btn-border align-self-end">
                 <span class="btn-border-text fw-700 transition-0-3">下一步</span>
@@ -62,7 +62,6 @@ export default {
             isOpenPeopleSelect: false,
             selectShop: shopPointData.shop[0].shopName,
             selectPeople: 1,
-            chooseTime: '',
         }
     },
     computed: {
@@ -71,6 +70,9 @@ export default {
         },
         chooseReserveDateData() {
             return this.$store.state.chooseReserveDateData;
+        },
+        chooseReserveTimeData() {
+            return this.$store.state.chooseReserveTimeData;
         },
         getBusinessTime() {
             const businessTime = {
@@ -110,9 +112,6 @@ export default {
         }
     },
     methods: {
-        getChooseTime(setChooseTimeVal) {
-            this.chooseTime = setChooseTimeVal;
-        },
         getNowTime() {
             const newTime = new Date().getHours();
             this.$store.dispatch('updateNowTime', newTime);
@@ -135,7 +134,7 @@ export default {
                 dateData: this.chooseReserveDateData.dateData,
                 date: this.chooseReserveDateData.date,
                 day: this.chooseReserveDateData.day,
-                time: this.chooseTime,
+                time: this.chooseReserveTimeData,
             };
             this.$store.dispatch('updateOrderMessage', orderMessage);
             if (!this.isLoginSuccess) {

@@ -27,6 +27,9 @@ export default {
         orderMessage() {
             return this.$store.state.orderMessage; 
         },
+        chooseReserveTimeData() {
+            return this.$store.state.chooseReserveTimeData; 
+        },
         nowTime() {
             return this.$store.state.nowTime;
         },
@@ -99,38 +102,43 @@ export default {
             return this.nowTimeAry
         },
         sendChooseTime() {
-            this.$emit("chooseTime", this.chooseTime)
+            this.$store.dispatch('updateChooseReserveTimeData', this.chooseTime);
         },
         clickTimeFn(item) {
             if (this.setNotChooseTimeClass(item.id)) return;
-
             this.chooseTime = item;
             this.sendChooseTime();
         },
         chooseNowTime() {
             const getNowChooseTimeAry = this.getNowChooseTime();
             if (getNowChooseTimeAry.length == 0) return;
-            this.chooseTime = getNowChooseTimeAry[0];
+            this.chooseTime = getNowChooseTimeAry[0]; 
+            this.sendChooseTime();
         },
         alreadyChooseTime() {
-            const alreadyTime = this.orderMessage.time;
-            if (alreadyTime === '') return;
+            const alreadyTime = this.chooseReserveTimeData;
+            if (alreadyTime === '') {
+                this.chooseNowTime();
+                return;
+            }
             const timeDate = {
                 id: alreadyTime.id,
                 period: alreadyTime.period,
                 time: alreadyTime.time
             };
             this.chooseTime = timeDate;
+            this.sendChooseTime();
         }
     },
     mounted() {
-        this.chooseNowTime();
         this.alreadyChooseTime();
-        this.sendChooseTime();
     },
     watch: {
-        nowTime() {
-            this.chooseNowTime();
+        chooseReserveDateData: {
+            handler() {
+                this.alreadyChooseTime();
+            },
+            deep: true
         }
     }
 }
