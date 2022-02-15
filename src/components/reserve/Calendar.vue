@@ -64,6 +64,7 @@ export default {
                 date:0,
                 day:0
             },
+            isCanChooseToday: false,
         }
     },
     computed: {
@@ -94,9 +95,7 @@ export default {
             return function(i, j) {
                 if (this.setNotChooseDayClass(i, j)) return false;
                 const calendar = this.setCalendarData(i, j);
-                const chooseDay = calendar.year === calendar.year && calendar.month === this.chooseDay.month && calendar.date === this.chooseDay.date;
-                const canChooseday = !this.setNotChooseDayClass(i, j);
-                return (canChooseday || chooseDay);
+                return true;
             }
         },
         setNotChooseDayClass() {
@@ -105,8 +104,11 @@ export default {
                 // 星期一公休
                 // if (calendar.day == 1) return true;
 
+                // 非這個月
                 if ((calendar.month != this.today.month) && (calendar.month != this.getNextMonth(this.today.month))) return true;
-
+                // 今天已不可選
+                if (!this.isCanChooseToday && calendar.year == this.today.year && calendar.month == this.today.month && calendar.date == this.today.date) return true;
+                // 當月今天之前、下個月今天之後
                 const monthDate = (calendar.month == this.today.month && calendar.date < this.today.date);
                 const nextMonthDate = (calendar.month == this.getNextMonth(this.today.month) && calendar.date >= this.today.date);
                 return (monthDate || nextMonthDate);
@@ -137,7 +139,7 @@ export default {
             }
         },
         setChooseDay() {
-            return function(year, month, date, day) {
+            return function(year, month, date) {
                 return `${year}-${this.setZero(month + 1)}-${this.setZero(date)}`;
             }
         },
@@ -170,7 +172,7 @@ export default {
                     day:date.getDay()
                 })
             }
-            console.log(data);
+            // console.log(data);
             return data;
         }
     },
@@ -180,7 +182,13 @@ export default {
             const chooseMonth = this.chooseDay.month;
             const chooseDate = this.chooseDay.date;
             const chooseDay = this.chooseDay.day;
-            this.$emit("chooseDate", this.chooseDay, this.setChooseDay(chooseYear, chooseMonth, chooseDate),`星期${this.setDay(chooseDay)}` )
+
+            const chooseDayData = {
+                dateData: this.chooseDay,
+                date: this.setChooseDay(chooseYear, chooseMonth, chooseDate),
+                day: `星期${this.setDay(chooseDay)}`,
+            }
+            this.$store.dispatch('updateChooseReserveDateData', chooseDayData);
         },
         chooseDateFn(i, j, chooseDateData) {
             if(this.setNotChooseDayClass(i, j) || this.setOtherClass(i, j)) return;
@@ -208,25 +216,23 @@ export default {
             this.$store.dispatch('updateNowTime', newTime);
         },
         setToday() {
-            const addDay = this.getNowTime();
-            const date = new Date(new Date().getTime() + addDay * 24 * 60 * 60 * 1000);
+            const date = new Date();
             this.today.year = this.calendar.year = date.getFullYear();
             this.today.month = this.calendar.month  = date.getMonth(); // 0~11月
             this.today.date = this.calendar.date  = date.getDate();
             this.today.day = this.calendar.day  = date.getDay();
         },
         getChooseDay() {
-            for (let i = 1; i < this.getWeekCount; i++) {
-                for(let j = 1; j < 7; j++) {
-                    if (this.setCanChooseDayClass(i, j)) {
-                        const canDate = this.setCalendarData(i, j);
-                        this.chooseDay.year = canDate.year;
-                        this.chooseDay.month = canDate.month;
-                        this.chooseDay.date = canDate.date;
-                        this.chooseDay.day = canDate.day;
-                        return;
-                    }
-                }
+            const addDay = this.getNowTime();
+            const date = new Date(new Date().getTime() + addDay * 24 * 60 * 60 * 1000);
+            this.chooseDay.year = date.getFullYear();
+            this.chooseDay.month = date.getMonth(); // 0~11月
+            this.chooseDay.date = date.getDate();
+            this.chooseDay.day = date.getDay();
+            this.calendar.month = this.chooseDay.month;
+
+            if (this.chooseDay.year === this.today.year && this.chooseDay.month === this.today.month && this.chooseDay.date === this.today.date) {
+                this.isCanChooseToday = true;
             }
         },
         changeYear(fix) {
@@ -259,6 +265,7 @@ export default {
             this.chooseDay.month = alreadyDate.month;
             this.chooseDay.date = alreadyDate.date;
             this.chooseDay.day = alreadyDate.day;
+            this.calendar.month = this.chooseDay.month;
         }
     },
     created() {

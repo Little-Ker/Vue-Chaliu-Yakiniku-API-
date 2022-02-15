@@ -27,11 +27,11 @@
             </div>
             <div @click="showCalendar()" class="d-flex form-group">
                 <p class="main-white-text select-title select-title-bg2">用餐日期</p>
-                <p class="main-white-text fw-700 chooseDate">{{chooseDate}}</p>
+                <p class="main-white-text fw-700 chooseDate">{{this.chooseReserveDateData.date}} {{this.chooseReserveDateData.day}}</p>
                 <p class="icon-calendar main-white-text"></p>
             </div>
             <div class="custom-calendar">
-                <Calendar :businessTime="getBusinessTime" @chooseDate="getChooseDate"></Calendar>
+                <Calendar :businessTime="getBusinessTime"></Calendar>
             </div>
             <div class="d-flex form-group">
                 <p class="main-white-text select-title select-title-bg2">用餐時段</p>
@@ -60,17 +60,17 @@ export default {
             shopPointData: shopPointData.shop,
             isOpenShopSelect: false,
             isOpenPeopleSelect: false,
-            chooseDateData: '',
             selectShop: shopPointData.shop[0].shopName,
             selectPeople: 1,
-            chooseDate: '',
-            chooseDay: '',
             chooseTime: '',
         }
     },
     computed: {
         isLoginSuccess() {
             return this.$store.state.isLoginSuccess;
+        },
+        chooseReserveDateData() {
+            return this.$store.state.chooseReserveDateData;
         },
         getBusinessTime() {
             const businessTime = {
@@ -110,11 +110,6 @@ export default {
         }
     },
     methods: {
-        getChooseDate(chooseDayVal, setChooseDateVal, setChooseDayVal) {
-            this.chooseDate = setChooseDateVal;
-            this.chooseDay = setChooseDayVal;
-            this.chooseDateData = chooseDayVal;
-        },
         getChooseTime(setChooseTimeVal) {
             this.chooseTime = setChooseTimeVal;
         },
@@ -137,9 +132,9 @@ export default {
             const orderMessage = {
                 shop: this.selectShop,
                 people: this.selectPeople,
-                dateData: this.chooseDateData,
-                date: this.chooseDate,
-                day: this.chooseDay,
+                dateData: this.chooseReserveDateData.dateData,
+                date: this.chooseReserveDateData.date,
+                day: this.chooseReserveDateData.day,
                 time: this.chooseTime,
             };
             this.$store.dispatch('updateOrderMessage', orderMessage);

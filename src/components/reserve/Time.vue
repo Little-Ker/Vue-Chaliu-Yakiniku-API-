@@ -30,12 +30,25 @@ export default {
         nowTime() {
             return this.$store.state.nowTime;
         },
+        chooseReserveDateData() {
+            return this.$store.state.chooseReserveDateData;
+        },
+        canChooseTime() {
+            let time = 9;
+            const isTodayYear = (this.chooseReserveDateData.dateData.year === new Date().getFullYear());
+            const isTodayMonth = (this.chooseReserveDateData.dateData.month === (new Date().getMonth()));
+            const isTodayDate = (this.chooseReserveDateData.dateData.date === new Date().getDate());
+            if (isTodayYear && isTodayMonth && isTodayDate) {
+                time =  this.nowTime;
+            }
+            return time;
+        },
         setNotChooseTimeClass() {
             return function(time) {
                 // 15:00休息
                 // const rest15 = (time == 15);
                 // 超時
-                const overTime = (this.nowTime >= time)
+                const overTime = (this.canChooseTime >= time)
                 // return (rest15 || overTime);
                 return (overTime);
             }

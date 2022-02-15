@@ -25,11 +25,17 @@ export default createStore({
         // 預約單狀態
         orderLevel: 1,
         // 預約單資訊
+        chooseReserveDateData: {
+            dateData: '',
+            date: '',
+            day: '',
+        },
         orderMessage: {
             shop: '',
             people: '',
             dateData: '',
             date: '',
+            day: '',
             time: '',
         },
     },
@@ -90,6 +96,9 @@ export default createStore({
             context.commit('SetOrderLevel', orderLevel);
         },
         // 預約單資訊
+        updateChooseReserveDateData(context, chooseReserveDateData) {
+            context.commit('SetChooseReserveDateData', chooseReserveDateData);
+        },
         updateOrderMessage(context, orderMessage) {
             context.commit('SetOrderMessage', orderMessage);
         },
@@ -152,6 +161,9 @@ export default createStore({
             state.orderLevel = orderLevel;
         },
         // 預約單資訊
+        SetChooseReserveDateData(state, chooseReserveDateData) {
+            state.chooseReserveDateData = chooseReserveDateData;
+        },
         SetOrderMessage(state, orderMessage) {
             state.orderMessage = orderMessage;
         },

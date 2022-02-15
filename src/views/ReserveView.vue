@@ -58,6 +58,12 @@ export default {
                 time: '',
             };
             this.$store.dispatch('updateOrderMessage', resetOrder);
+            const chooseReserveDateData = {
+                dateData: '',
+                date: '',
+                day: '',
+            };
+            this.$store.dispatch('updateChooseReserveDateData', chooseReserveDateData);
         }
     },
     mounted() {
