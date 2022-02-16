@@ -41,9 +41,13 @@ export default {
     },
     mounted() {
         $('.nav').addClass('blackNav');
+        $('.footer').addClass('removePadding');
+        $('.navBottom').addClass('no-display');
     },
     beforeUnmount() {
         $('.nav').removeClass('blackNav');
+        $('.footer').removeClass('removePadding');
+        $('.navBottom').removeClass('no-display');
     },
 }
 </script>

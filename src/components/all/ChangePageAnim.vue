@@ -49,15 +49,22 @@ export default {
             tween
             .to(".changePage", 0,{ left: 0 })
             .to(".changePage", 0.1, { opacity: 1 })
+            .add(() => {
+                $(".navBottom").removeClass("showBottomBtn");
+                $(".navBottom").removeClass("showMenuBottomBtn");
+            })
             .to(".changePage", sec, { opacity: 1 })
-            .add(() => { this.goTop(); })
+            .add(() => {
+                this.startScrollBar();
+                this.goTop();
+            })
             .to(".changePage", 0.1, { opacity: 0 })
             .to(".changePage", 0, { left: '-100%',
                 delay: 0.6,
                 onComplete: () => {
                     this.$store.dispatch('updateIsChangePageAnim', false);
                     $(".changePage").removeClass("opacity-index-changePage");
-                    this.startScrollBar();
+                    ($(window).scrollTop() > 10) ? $(".navBottom").addClass("showBottomBtn") : $(".navBottom").removeClass("showBottomBtn");
                 }
             });
         },

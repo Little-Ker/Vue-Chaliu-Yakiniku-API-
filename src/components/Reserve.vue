@@ -10,7 +10,7 @@
                         </div>
                         <p class="txt main-white-text">{{reserveTxt}}</p>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="item-list d-flex justify-content-between">
                         <a href="#" class="d-block d-flex flex-direction-col align-items-center reserve-item" v-for="(item, index) in reserveList" :key="index">
                             <span class="d-block transition-0-3 item-img text-align-center" :class="item.iconClass"></span>
                             <span class="d-flex flex-direction-col">
@@ -43,17 +43,17 @@ export default {
                 {
                     title:'線上預訂',
                     iconClass: 'icon-mobile',
-                    txt: '不開放當天線上預約，6人以上訂位，請來電進行訂位'
+                    txt: '開放一個月內線上預約。6人以上請來電訂位'
                 },
                 {
                     title:'電話訂位',
                     iconClass: 'icon-phone',
-                    txt: '訂位電話服務時段，早上09:30 - 凌晨01:00'
+                    txt: '訂位電話服務時段，早上 09:30 - 凌晨 01:00'
                 },
                 {
                     title:'到店現場訂位',
                     iconClass: 'icon-user',
-                    txt: '現場訂位服務時段，早上11:00 - 凌晨01:00'
+                    txt: '現場訂位服務時段，早上 11:00 - 凌晨 01:00'
                 }
             ]
         }
@@ -78,7 +78,7 @@ export default {
     }
     .txt {
         margin-bottom: 80px;
-        line-height: 22px;
+        line-height: 24px;
     }
     .reserve-block {
         padding: 90px 50px 80px;
@@ -113,7 +113,7 @@ export default {
             .item-title {
                 font-size: 20px;
                 color: $main-white-text;
-                margin-top: 20px;
+                margin-top: 40px;
                 margin-bottom: 20px;
                 letter-spacing: 2px;
                 text-shadow: 0.1em 0.1em 0.2em black
@@ -153,6 +153,122 @@ export default {
             height: 48px;
             margin-left: 40px;
             margin-right: 40px;
+        }
+    }
+
+    @media(max-width:1445px){
+        .title {
+            h1, p {
+                text-align: center;
+            }
+        }
+        .txt {
+            padding: 0 80px;
+        }
+        .container-1440 {
+            padding: 0;
+            .reserve-item {
+                padding: 0 30px !important;
+            }
+        }
+    }
+    @media(max-width:830px){
+        .reserve-block {
+            padding: 90px 20px 80px;
+        }
+    }
+    @media(max-width:768px){
+        .reserve-item {
+            .item-title, .icon-right-open{
+                color: #aa8243 !important;
+            }
+            .item-txt {
+                height: 78px;
+            }
+        }
+    }
+
+    @media(max-width:710px){
+        .reserve-block {
+            padding: 90px 0 80px;
+            .title {
+                h1 {
+                    font-size: 32px;
+                }
+            }
+        }
+    }
+    @media(max-width:650px){
+        .reserve-block{
+            .txt {
+                padding: 0 60px;
+                margin-bottom: 0;
+            }
+            .item-list {
+                flex-wrap: wrap;
+                .reserve-item {
+                    padding: 50px 10px 0 10px !important;
+                    margin-bottom: 20px;
+                    width: 100%;
+                    &::before {
+                        width: 150px;
+                        height: 1px;
+                        background-color: #b3894567;
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                    }
+                    &:nth-child(1)::before {
+                        width: 0;
+                    }
+                    .d-block {
+                        align-self: center;
+                    }
+                    .item-title {
+                        margin-top: 20px;
+                        margin-bottom: 5px;
+                    }
+                    .item-txt {
+                        height: auto;
+                        text-align: center;
+                    }
+                    .item-img {
+                        width: 80px;
+                        height: 80px;
+                        font-size: 44px;
+                        line-height: 76px;
+                    }
+                    &:hover .item-img {
+                        font-size: 54px;
+                    }
+                }
+            }
+            .moreBtn {
+                margin-top: 30px;
+            }
+
+        }
+    }
+    @media(max-width:530px){
+        .title {
+            h1 {
+                font-size: 28px;
+            }
+        }
+    }
+    @media(max-width:470px) {
+        .reserve-block .txt {
+            padding: 0 30px;
+        }
+    }
+    @media(max-width:390px) {
+        .reserve-block .txt {
+            padding: 0 30px;
+        }
+    }
+    @media(max-width:320px) {
+        .reserve-block .txt {
+            padding: 0 20px;
         }
     }
 }

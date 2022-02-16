@@ -1,6 +1,6 @@
 <template>
 <div class="news container-1440 main-margin-top main-padding-bottom pos-relative">
-    <div class="title main-brow-text">
+    <div class="main-title title main-brow-text">
         <h1>活動新訊</h1>
         <p>News</p>
     </div>
@@ -72,14 +72,18 @@ export default {
                 autoplay: false,
                 speed: 800,
                 breakpoints: {
-                    // 1: {
-                    //     slidesPerView: 2,
-                    //     spaceBetween: 10,
-                    // },
-                    // 992: {
-                    //     slidesPerView: 4,
-                    //     spaceBetween: 20,
-                    // },
+                    1: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    992: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
                 }
             },
         }
@@ -195,6 +199,109 @@ export default {
                     -webkit-filter:grayscale(0);
                 }
             }
+        }
+    }
+
+    @media(max-width:1150px){
+        .main-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .d-flex {
+            flex-wrap: wrap;
+            flex-direction: column-reverse;
+            .list {
+                width: 100%;
+            }
+            .moreBtn {
+                margin-top: 30px;
+            }
+        }
+        .swiper-slide {
+            .line3 {
+                -webkit-line-clamp: 2;
+            }
+        }
+    }
+    @media(max-width:992px){
+        .d-flex {
+            .moreBtn {
+                margin-top: 10px;
+            }
+        }
+        .news .list {
+            padding: 0 20px
+        }
+        img {
+            -webkit-filter: grayscale(0) !important;
+        } 
+    }
+     @media(max-width:740px){
+        .swiper-button {
+            cursor: pointer;
+            &.swiper-next-btn {
+                right: -20px;            
+            }
+            &.swiper-prev-btn {
+                left: -20px;
+            }
+        }
+        .list {
+            padding: 0 20px
+        }
+        .btn-border {
+            margin-right: 20px;
+        }
+    }
+    @media(max-width:710px){
+        .title {
+            h1 {
+                font-size: 32px;
+            }
+        }
+    }
+    @media(max-width:576px){
+        .list  {
+            margin-top: 40px !important;
+            .swiper-slide {
+                height: 380px;
+                img {
+                    height: 180px !important;
+                } 
+            }
+        }
+        .btn-border {
+            margin-top: 20px;
+        }
+    }
+    @media(max-width:530px){
+        .title {
+            h1 {
+                font-size: 28px;
+            }
+        }
+    }
+    @media(max-width:500px){
+        .swiper-button {
+            cursor: pointer;
+            &.swiper-next-btn {
+                right: -35px;            
+            }
+            &.swiper-prev-btn {
+                left: -35px;
+            }
+        }
+        .list {
+            padding: 0;
+        }
+        .btn-border {
+            margin-right: 0;
+        }
+    }
+    @media(max-width:300px){
+        .moreBtn {
+            align-self: center !important;
         }
     }
 }

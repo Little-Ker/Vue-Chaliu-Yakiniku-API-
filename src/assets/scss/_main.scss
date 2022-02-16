@@ -11,9 +11,17 @@
 .blackNav {
     background: none !important;
     .navBg {
-        background-color: #07111B;
+        background-color: #07111B !important;
         box-shadow: 0 1px 5px rgb(0 0 0 / 19%);
     }
+    .navBottom.no-display {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.footer.removePadding {
+    padding-bottom: 0 !important;
 }
 
 // 顏色配置

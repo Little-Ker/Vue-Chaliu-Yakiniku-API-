@@ -5,7 +5,7 @@
                 <div class="navList d-flex">
                     <router-link :to="item.url" v-for="(item, index) in linkList" :key="index" class="d-block main-white-text link">{{item.txt}}</router-link>
                 </div>
-                <p class="d-block leftTxt main-white-text font-Roboto">2021 Vue Chaliu Yakiniku Design by Vivi</p>
+                <p class="d-block leftTxt main-white-text font-Roboto">2022 Vue Chaliu Yakiniku by Vivi</p>
             </div>
             <div class="right d-flex flex-direction-col">
                 <div class="logo align-self-end">
@@ -41,12 +41,8 @@ export default {
                 {
                     txt: '線上訂位',
                     url: '#'
-                },
-                {
-                    txt: '聯絡我們',
-                    url: '#'
-                },
-            ]
+                }
+            ],
         }
     }
 }
@@ -56,6 +52,7 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .footer {
+    padding-bottom: 50px;
     position: relative;
     z-index: 10;
     width: 100%;
@@ -88,6 +85,7 @@ export default {
         .right {
             .logo {
                 height: 150px;
+                width: 75px;
                 margin-bottom: 20px;
                 position: relative;
             }
@@ -115,6 +113,43 @@ export default {
                         text-decoration: none;
                     }
                     transform: scale(1.1);
+                }
+            }
+        }
+    }
+
+    @media(max-width:576px) {
+        .footer-block {
+            padding: 40px;
+            padding-top: 50px;
+        }
+        .left {
+           .navList {
+                flex-direction: column;
+                .link:hover {
+                    top: 0px;
+                    font-weight: 500;
+                }
+            } 
+        }
+        .right {
+            justify-content: flex-end;
+        }
+    }
+    @media(max-width:430px) {
+        .footer-block {
+            flex-direction: column-reverse;
+            padding-bottom: 30px;
+            .left {
+                align-self: center !important;
+                .navList {
+                    display: none !important;
+                } 
+            }
+            .right {
+                align-self: center;
+                .logo {
+                    align-self: center !important;
                 }
             }
         }

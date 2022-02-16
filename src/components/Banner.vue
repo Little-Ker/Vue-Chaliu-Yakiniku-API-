@@ -103,7 +103,7 @@ export default {
     .banner-text {
         position: absolute;
         bottom: 0;
-        padding: 120px;
+        padding: 100px;
         z-index: 1;
         text-align: right;
         letter-spacing: 4px;
@@ -114,7 +114,49 @@ export default {
         }
         .content {
             font-size: 28px;
-            margin: 20px 0px;
+            margin: 30px 0px;
+        }
+    }
+
+    @media(max-width:950px){
+        .banner-text {
+            padding: 60px;
+            letter-spacing: 4px;
+        }
+    }
+    @media(max-width:650px){
+        .banner-text {
+            padding: 50px;
+            .title {
+                font-size: 34px;
+            }
+            .content {
+                font-size: 22px;
+                margin: 20px 0 0 0;
+            }
+        }
+    }
+    @media(max-width:430px){
+        .banner-text {
+            padding: 60px 30px;
+            .title {
+                font-size: 28px;
+            }
+            .content {
+                font-size:20px;
+            }
+        }
+    }
+    @media(max-width:320px){
+        .banner-text {
+            padding: 40px 15px;
+            .title {
+                font-size: 26px;
+            }
+            .content {
+                font-size:18px;
+                margin: 15px 0 0 0;
+            }
         }
     }
 }
