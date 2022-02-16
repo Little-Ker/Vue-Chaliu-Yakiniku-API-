@@ -4,9 +4,9 @@
             <div class="top">
                 <p class="main-white-999 fw-700 text-right">{{newData(id).type}}</p>
                 <p class="main-brow-text title fw-700">{{newData(id).title}}</p>
-                <div class="d-flex justify-content-between">
+                <div class="top-share-block d-flex justify-content-between">
                     <p class="fw-700 main-white-999">{{newData(id).date}}</p>
-                    <div class="d-flex align-items-center">
+                    <div class="share-list d-flex align-items-center">
                         <p class="share fw-700 main-white-999">SHARE</p>
                         <a :href="`http://line.naver.jp/R/msg/text/?${shareUrl}`" class="icon icon-line"></a>
                         <a :href="`https://www.facebook.com/sharer.php?u=${shareUrl}`" target="_blank" class="icon icon-facebook"></a>
@@ -18,15 +18,15 @@
                 <img :src="newData(id).img" alt="茶六">
             </div>
             <div class="bottom d-flex justify-content-between align-items-center">
-                <router-link :to="`/new/${prevId}`" @click="goTop()" class="prev-btn d-flex align-items-center fw-700">
+                <router-link :to="`/new/${prevId}`" class="prev-btn d-flex align-items-center fw-700">
                     <p class="icon-left-open  main-brow-text"></p>
                     <p class="txt main-brow-text">PREV</p>
                     <p class="content text-left">{{nextNewTitle(prevId)}}</p>
                 </router-link>
-                <router-link to="/news" @click="goTop()" class="btn-border align-self-end">
+                <router-link to="/news" class="btn-border align-self-end">
                     <span class="btn-border-text fw-700 transition-0-3">返回列表</span>
                 </router-link>
-                <router-link :to="`/new/${nextId}`" @click="goTop()" class="next-btn d-flex align-items-center fw-700">
+                <router-link :to="`/new/${nextId}`" class="next-btn d-flex align-items-center fw-700">
                     <p class="content text-right">{{nextNewTitle(nextId)}}</p>
                     <p class="txt main-brow-text">NEXT</p>
                     <p class="icon-right-open main-brow-text"></p>
@@ -92,12 +92,10 @@ export default {
     mounted() {
         this.resetId();
         this.goTop();
-        this.$store.dispatch('updateIsShowLoading', 2);
     },
     watch: {
         $route(now) {
             // console.log(now);
-            this.$store.dispatch('updateIsShowLoading', 2);
             this.resetId();
         }
     }
@@ -110,6 +108,9 @@ export default {
 .newView {
     padding-bottom: 60px;
     padding-top: 140px;
+    .container-920 {
+        padding: 0 30px;
+    }
     p {
         font-family: "Courier New", Courier, monospace;
     }
@@ -189,6 +190,56 @@ export default {
         .btn-border {
             margin: 0;
             margin-bottom: 5px;
+        }
+    }
+
+    @media(max-width:810px){
+        .top {
+            .text-right{
+                text-align: left !important;  
+            }
+            .title {
+                font-size: 28px;
+                margin-left: -2px;
+            }
+            .top-share-block {
+                flex-direction: column;
+                .share-list {
+                    align-self: flex-end !important;
+                    margin-top: 30px;
+                    .share {
+                        right: -37px;
+                        &::before {
+                            width: 20px;
+                            right: -50%;
+                        }
+                    }
+                }
+            }
+        }
+        .content {
+            display: none;
+        }
+    }
+    @media(max-width:530px){
+        .newView {
+            padding-top: 120px;
+        }
+        .title {
+            font-size: 24px !important;
+        }
+        .bottom {
+            .btn-border {
+                width: 120px;
+            }
+            .txt {
+                margin: 0 !important;
+            }  
+        }
+    }
+    @media(max-width:370px){
+        .bottom .btn-border {
+            width: 100px;
         }
     }
 }

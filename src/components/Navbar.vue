@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
     <div class="navBg d-flex justify-content-bewteen">
-        <router-link to="/" class="logo">
+        <router-link to="/" @click="startScrollBar();isClickToggle = false;" class="logo">
             <img :src="logoUrl" class="img-fit" alt="茶六">
         </router-link>
         <div :class="{'showMenu':isClickToggle}" class="d-flex menu">

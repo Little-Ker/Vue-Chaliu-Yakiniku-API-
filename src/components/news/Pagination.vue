@@ -128,6 +128,23 @@ export default {
     .notClick {
         color: #555;
     }
+
+    @media(max-width:660px){
+        .nums p {
+            margin: 0 10px;
+        }
+        .prev-btn .txt, .next-btn .txt {
+            margin: 0 5px;
+        }
+    }
+    @media(max-width:400px){
+        .prev-btn .txt, .next-btn .txt {
+            display: none;
+        }
+        .prev-btn, .next-btn {
+            margin: 0 15px;
+        }
+    }
 }
 </style>
 

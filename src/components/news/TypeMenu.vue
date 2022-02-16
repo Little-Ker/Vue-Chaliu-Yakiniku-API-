@@ -87,8 +87,46 @@ export default {
             padding: 5px 40px;
             transition: .3s all;
             font-weight: 700;
-            &:first-child {
-                margin-left: 0;
+        }
+    }
+
+    @media(max-width:768px){
+        .typeStyle {
+            padding: 5px 30px !important;
+        }
+    }
+    @media(max-width:576px){
+        .typeList {
+            justify-content: center !important;
+        }
+        .typeStyle {
+            padding: 5px 20px !important;
+        }
+    }
+    @media(max-width:481px){
+        .typeStyle {
+            padding: 5px 20px !important;
+        }
+    }
+    @media(max-width:456px){
+        .typeList {
+            margin: 0 0 50px 0;
+            .typeBorder::before {
+                height: 60%;
+                top: 25%;
+            }
+            .typeStyle {
+                width: 85px;
+                line-height:24px;
+                padding: 5px 30px;
+            }
+        }
+    }
+    @media(max-width:400px){
+        .typeList {
+            .typeStyle {
+                width: 75px;
+                padding: 5px 15px !important;
             }
         }
     }

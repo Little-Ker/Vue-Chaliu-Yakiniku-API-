@@ -4,22 +4,25 @@
             <div class="imgScale">
                 <div class="img bg-fit" :style="{backgroundImage:'url('+news.img+')'}"></div>  
             </div>
-            <div class="txt d-flex justify-content-center flex-direction-col">
-                <p class="title main-brow-text fw-700">{{news.title}}</p>
-                <p class="date fw-700 main-white-text">{{news.date}} | {{news.type}}</p>
-                <p class="type fw-700"></p>
+            <div class="txt-block d-flex align-items-center">
+                <div class="txt d-flex justify-content-center flex-direction-col">
+                    <p class="title line1 main-brow-text fw-700">{{news.title}}</p>
+                    <p class="date fw-700 main-white-text">{{news.date}} | {{news.type}}</p>
+                    <p class="type fw-700"></p>
+                </div>
+                <div class="moreBtn fw-700">
+                    <p>View More</p>
+                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                        <path class="rect-arrow" d="M41.9,32.3c0.1-0.2,0.1-0.4,0-0.6c0-0.1-0.1-0.2-0.2-0.3l0,0l-5-5c-0.3-0.3-0.7-0.3-1,0c-0.3,0.3-0.3,0.7,0,1l3.8,3.8H22.8
+                            c-0.4,0-0.8,0.3-0.8,0.8s0.3,0.8,0.8,0.8h16.7l-3.8,3.8c-0.3,0.3-0.3,0.7,0,1c0.1,0.1,0.3,0.2,0.5,0.2c0.2,0,0.4-0.1,0.5-0.2l5-5
+                            l0,0C41.9,32.5,41.9,32.4,41.9,32.3z">
+                        </path>
+                        <polyline class="rect-line" fill="none" stroke-width="1" stroke-miterlimit="10" points="0,12 0,0 64,0 64,64 0,64 0,52 "></polyline>
+                        <polyline class="rect-line--bg" fill="none" stroke-width="1" stroke-miterlimit="10" points="0,12 0,0 64,0 64,64 0,64 0,52 "></polyline>
+                    </svg>
+                </div>
             </div>
-            <div class="moreBtn fw-700">
-                <p>View More</p>
-                <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-                    <path class="rect-arrow" d="M41.9,32.3c0.1-0.2,0.1-0.4,0-0.6c0-0.1-0.1-0.2-0.2-0.3l0,0l-5-5c-0.3-0.3-0.7-0.3-1,0c-0.3,0.3-0.3,0.7,0,1l3.8,3.8H22.8
-                        c-0.4,0-0.8,0.3-0.8,0.8s0.3,0.8,0.8,0.8h16.7l-3.8,3.8c-0.3,0.3-0.3,0.7,0,1c0.1,0.1,0.3,0.2,0.5,0.2c0.2,0,0.4-0.1,0.5-0.2l5-5
-                        l0,0C41.9,32.5,41.9,32.4,41.9,32.3z">
-                    </path>
-                    <polyline class="rect-line" fill="none" stroke-width="1" stroke-miterlimit="10" points="0,12 0,0 64,0 64,64 0,64 0,52 "></polyline>
-                    <polyline class="rect-line--bg" fill="none" stroke-width="1" stroke-miterlimit="10" points="0,12 0,0 64,0 64,64 0,64 0,52 "></polyline>
-                </svg>
-            </div>
+            
         </router-link>
   </div>
 </template>
@@ -79,7 +82,9 @@ export default {
         .txt {
             margin-left: 50px;
             .title {
+                line-height: 25px;
                 font-size: 22px;
+                // width: 325px;
             }
             .date {
                 margin: 10px 0;
@@ -125,6 +130,83 @@ export default {
             .rect-arrow {
                 transform: translateX(8px);
             }
+        }
+    }
+
+    @media(max-width:920px){
+        .new {
+            height: 240px;
+            .txt-block {
+                height: 100%;
+                flex-direction: column;
+                justify-content: center;
+                padding: 0 40px;
+                .txt {
+                    margin: 0;
+                }
+                .moreBtn {
+                    position: relative;
+                    align-self: flex-start;
+                    left: 90px;
+                }
+            }
+        }
+    }
+    @media(max-width:710px){
+        .new {
+            height: 180px;
+            .imgScale {
+                min-width: 200px;
+            }
+            .txt-block {
+                padding: 0 20px;
+                .txt {
+                    .title {
+                        font-size: 20px;
+                    }
+                    .date {
+                        margin: 3px 0;
+                    }
+                }
+                .moreBtn {
+                    margin-top: 5px !important;
+                }
+            }
+        }
+    }
+    @media(max-width:576px){
+        .new {
+            flex-direction: column;
+            height: 360px;
+            background: 0;
+            padding: 0 30px;
+            .imgScale {
+                width: 100%;
+                height: 100%;
+            }
+            .txt-block {
+                width: 100%;
+                padding: 20px 0 0 0;
+                height: 150px;
+                .txt {
+                    align-self: flex-start;
+                }
+                .moreBtn {
+                    display: none;
+                }
+            }
+        }
+    }
+    @media(max-width:450px){
+        .new {
+            height: 280px;
+            padding: 0 20px; 
+        }
+    }
+    @media(max-width:376px){
+        .new {
+            height: 240px;
+            padding: 0 10px; 
         }
     }
 }

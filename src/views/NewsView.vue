@@ -59,6 +59,24 @@ export default {
     .title {
         margin-bottom: 30px;
     }
+
+    @media(max-width:710px){
+        .title h1 {
+            font-size: 32px;
+        }
+    }
+    @media(max-width:530px){
+        .title h1 {
+            font-size: 28px;
+        }
+        .banner {
+            height: 150px;
+            margin-bottom: 60px;
+        }
+        .container-1100 {
+            padding: 0 20px !important;
+        }
+    }
 }
 </style>
 
