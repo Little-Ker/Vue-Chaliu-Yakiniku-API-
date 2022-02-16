@@ -58,6 +58,21 @@ export default {
     .food {
         margin-top: 130px;
     }
+
+    @media(max-width:710px){
+        .title h1 {
+            font-size: 32px;
+        }
+    }
+    @media(max-width:530px){
+        .title h1 {
+            font-size: 28px;
+        }
+        .banner {
+            height: 150px;
+            margin-bottom: 60px;
+        }
+    }
 }
 </style>
 

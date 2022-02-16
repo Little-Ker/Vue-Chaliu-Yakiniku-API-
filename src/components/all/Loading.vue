@@ -95,11 +95,25 @@ span:nth-child(3) {
         height: 30px;
         border-radius: 50%;
         background-color: #fff;
-        margin-right: 30px;
+        margin-right: 40px;
         opacity: 0;
         transform: scale(0.2);
         &:last-child {
             margin: 0;
+        }
+    }
+
+    @media(max-width:576px){
+        span {
+            width: 20px;
+            height: 20px;
+            margin-right: 35px;
+        }
+    }
+    @media(max-width:390px){
+        span {
+            width: 15px;
+            height: 15px;
         }
     }
 }

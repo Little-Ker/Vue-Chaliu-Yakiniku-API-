@@ -8,6 +8,7 @@
             :speed="swiperOption.speed"
             :slides-per-view="swiperOption.slidesPerView"
             :space-between="swiperOption.spaceBetween"
+            :breakpoints="swiperOption.breakpoints"
             @swiper="onSwiper"
         >
             <swiper-slide  v-for="(meal, index) in foodListDataMeal" :key="index">
@@ -62,6 +63,24 @@ export default {
                     disableOnInteraction: false,
                 },
                 speed: 1000,
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 0,
+                    },
+                    780: {
+                        slidesPerView: 3,
+                        spaceBetween: 0,
+                    },
+                    990: {
+                        slidesPerView: 4,
+                        spaceBetween: 0,
+                    }
+                }
             },
             foodListDataMeal: foodListData.meal,
             foodListDataSide: foodListData.side,
@@ -106,7 +125,7 @@ export default {
         position: absolute;
         color: $main-white-555;
         transition: .3s all;
-        top: 50%;
+        top: 35%;
         font-size: 24px;
         z-index: 2;
         &:hover {
@@ -187,6 +206,74 @@ export default {
     .txt {
         line-height: 28px;
         font-weight: 700;
-    }    
+    }
+
+    @media(max-width:1100px){
+        .swiper-slide .food .img {
+            height: 220px;
+        }
+    }
+    @media(max-width:840px){
+        .swiper-button {
+            top: 30%;
+        }
+        .d-flex {
+            flex-wrap: wrap;
+            .other-block {
+                width: 33.33%;
+                max-width: 140px;
+                .food-title {
+                    margin: 10px 5px 0 0
+                }
+            }
+        }
+    }
+    @media(max-width:780px){
+        .swiper-slide .food .mealData .meat {
+            height: 90px;
+        }
+    }
+    @media(max-width:725px){
+        .d-flex {
+            .other-block {
+                width: 33.333%;
+                max-width: 180px;
+            }
+        }
+    }
+    @media(max-width:690px){
+        .d-flex {
+            .other-block {
+                width: 25%;
+                max-width: 120px;
+            }
+        }
+    }
+    @media(max-width:630px){
+        .d-flex {
+            justify-content: space-between;
+        }
+    }
+    @media(max-width:576px){
+        .mealData .meat {
+            height: 60px !important;
+        }
+        .food .img {
+            border-width: 1px !important;
+        }
+    }
+    @media(max-width:455px){
+        .swiper-button {
+            top: 25%;
+        }
+        .mealData .meat {
+            height: 80px !important;
+        }
+    }
+    @media(max-width:375px){
+        .swiper-slide .food .mealData .meat {
+            height: 100px !important;
+        }
+    }
 }
 </style>

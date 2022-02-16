@@ -82,6 +82,7 @@ export default {
             padding: 17px 20px;
             transition: .3s all;
             font-weight: 700;
+            line-height: 22px;
             margin: 0 15px;
             &:first-child {
                 margin-left: 0;
@@ -121,6 +122,8 @@ export default {
                     letter-spacing: 2px;
                     padding-bottom: 15px;
                     margin-bottom: 35px;
+                    max-width: 88px;
+                    line-height: 24px;
                     &::before {
                         content: '';
                         width: 22px;
@@ -137,6 +140,60 @@ export default {
                     opacity: 1;
                 }
             }
+        }
+    }
+
+    @media(max-width:1000px){
+        .allFood {
+            justify-content: space-between;
+        }
+        .food {
+            justify-content: center;
+            width: calc((100% - 50px) / 2) !important;
+            .txt {
+                width: 120px !important;
+                max-width: 120px !important;
+            }
+        }
+    }
+    @media(max-width:760px){
+        .typeMenu {
+            margin-top: 50px;
+            a {
+                width: 80px;
+            }
+        }
+    }
+    @media(max-width:710px){
+        .txt {
+            font-size: 18px !important;
+        }
+    }
+    @media(max-width:678px){
+        .food {
+            height: 130px !important;
+        }
+    }
+    @media(max-width:630px){
+        .food {
+            height: 110px !important;
+        }
+    }
+    @media(max-width:576px){
+        .food {
+            width: 100% !important;
+            margin: 0 0 20px 0 !important;
+        }
+    }
+    @media(max-width:445px){
+        .typeStyle {
+            margin: 5px !important;
+            padding: 17px 17px !important;
+        }
+    }
+    @media(max-width:350px){
+        .typeStyle {
+            padding: 15px !important;
         }
     }
 }
