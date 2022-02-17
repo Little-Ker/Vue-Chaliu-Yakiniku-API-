@@ -92,6 +92,12 @@ export default {
         height: 250px;
         opacity: 0;
     }
+
+    @media(max-width:576px){
+        img {
+            height: 180px;
+        }
+    }
 }
 .opacity-index-changePage {
     z-index: 100;

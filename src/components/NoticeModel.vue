@@ -143,6 +143,22 @@ export default {
             }
         }
     }
+
+    @media(max-width:576px){ 
+        .model {
+            padding: 40px;
+            .title {
+                font-size: 20px;
+            }
+            .icon-logout {
+                font-size:56px;
+                margin-bottom:30px;
+            }
+            .cancel {
+                margin-right: 15px;
+            }
+        }
+    }
 }
 
 /* 提示框進出場動畫 */

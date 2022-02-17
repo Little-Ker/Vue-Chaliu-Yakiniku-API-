@@ -179,7 +179,7 @@ export default {
         }
     }
     .register-btn {
-        margin-top: 50px;
+        margin-top: 40px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
@@ -261,6 +261,7 @@ export default {
             .form-control{
                 border:none;
                 letter-spacing: 2px;
+                padding: 0;
                 &:focus {
                     color: #495057;
                     background-color: transparent;
