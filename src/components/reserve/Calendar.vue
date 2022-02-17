@@ -318,7 +318,7 @@ export default {
         .date {
             cursor: pointer;
             font-family: 'Noto Serif TC', serif;
-            padding: 15px;
+            padding: 15px 0;
         }
     }
     .other{

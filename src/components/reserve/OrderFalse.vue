@@ -48,5 +48,11 @@ export default {
         margin-top: 50px;
         letter-spacing: 1px;
     }
+
+    @media(max-width:530px){
+        .title {
+            font-size: 20px;
+        }
+    }
 }
 </style>

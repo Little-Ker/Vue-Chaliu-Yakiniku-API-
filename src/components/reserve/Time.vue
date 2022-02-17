@@ -173,5 +173,22 @@ export default {
             color: #fff;
         }
     }
+
+    @media(max-width:576px){
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .item {
+            width: 90px;
+            margin: 0 10px 5px 0;
+        }
+    }
+    @media(max-width:375px){
+        flex-wrap:nowrap;
+        justify-content: space-between;
+        .item {
+            margin: 0;
+            width: calc(100% / 6 - 5px);
+        }
+    }
 }
 </style>

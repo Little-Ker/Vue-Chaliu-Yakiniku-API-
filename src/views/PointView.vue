@@ -95,6 +95,128 @@ export default {
             padding: 0 20px;
         }
     }
+
+    @media(max-width:935px){
+        .shopDataList {
+            justify-content: center;
+            .dataPadding {
+                padding: 0 40px;
+                &:nth-child(2) {
+                    padding-left: 0;
+                }
+                .shopData .shopTitle {
+                    flex: 0 0 110px;
+                }
+            }
+        }
+        .w-50 {
+            width: 100% !important;
+        }
+    }
+    @media(max-width:900px){
+        .shopList .img {
+            height: 280px;
+        }
+    }
+    @media(max-width:875px){
+        .shopDataList {
+            .dataPadding {
+                padding: 0 10px;
+                &:nth-child(2) {
+                    padding-right: 10px;
+                }
+                .shopData .shopTitle {
+                    flex: 0 0 100px;
+                }
+            }
+        }
+    }
+    @media(max-width:770px){
+        .shopDataList {
+            .dataPadding {
+                padding: 0 40px;
+                &:nth-child(2) {
+                    display: none !important;
+                }
+                .shopData .shopTitle {
+                    flex: 0 0 130px;
+                }
+                .shopData .shopName {
+                    margin-bottom: 25px;
+                }
+            }
+        }
+    }
+    @media(max-width:710px){
+        .title {
+            h1 {
+                font-size: 32px;
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+        }
+        .shopList .img {
+            height: 240px;
+        }
+        .shopName {
+            font-size: 24px;
+        }
+    }
+    @media(max-width:770px){
+        .shopList {
+            margin-top: 50px;
+        }
+        .shopDataList {
+            margin-top: 50px;
+            .dataPadding {
+                padding: 0 30px;
+                .shopData .shopTitle {
+                    flex: 0 0 110px;
+                }
+            }
+        }
+    }
+    @media(max-width:530px){
+        .title h1 {
+            font-size: 28px;
+        }
+        .banner {
+            height: 150px;
+            margin-bottom: 60px;
+        }
+        .shopName {
+            font-size: 22px;
+        }
+        .shopDataList .dataPadding {
+            padding: 0 10px;
+        }
+    }
+    @media(max-width:466px){
+        .shopDataList {
+            .dataPadding {
+                padding: 0;
+                .shopData {
+                    flex-wrap: wrap;
+                    margin-bottom: 20px;
+                    &:last-child {
+                        margin-bottom: 0;  
+                    }
+                    .shopTitle {
+                        flex: 0 0 100%;
+                        margin-bottom: 7px;
+                    }
+                }
+                p {
+                    display: block;
+                }
+            }
+            &.container-1100 {
+                padding: 0 20px;
+            }
+        }
+    }
 }
 
 </style>

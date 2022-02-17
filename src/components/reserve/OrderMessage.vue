@@ -12,12 +12,12 @@
                         <span class="data-title-2">人數：</span>
                         <span class="fw-700">{{orderMessage.people}} 位</span>
                     </p>
-                    <div class="d-flex">
+                    <div class="d-flex time-flex">
                         <p class="icon-stopwatch data-title">
                             <span class="data-title-2">用餐時間： </span>
                         </p>
-                        <div> 
-                            <p class="fw-700">{{orderMessage.date}} {{orderMessage.day}}</p>
+                        <div class="time-data"> 
+                            <p class="fw-700">{{orderMessage.date}}  <span class="data-day">{{orderMessage.day}}</span></p>
                             <p class="fw-700">{{orderMessage.time.period}} {{orderMessage.time.time}}</p>
                         </div>
                     </div>
@@ -215,6 +215,44 @@ export default {
         height: 55px;
         margin: 0;
         letter-spacing: 3px;
+    }
+
+    @media(max-width:500px){
+        .form-group .reviseBtn {
+            margin: 20px 15px 20px 10px;
+        }
+        .icon-stopwatch {
+            flex-shrink: 0;
+        }
+        .data-day {
+            display: block;
+        }
+        .btn-border {
+            width: 200px;
+        }
+    }
+    @media(max-width:390px){
+        .form-group {
+            padding: 30px 20px 20px 20px;
+            .form-data {
+                padding: 0;
+            }
+            .reviseBtn {
+                margin: 10px 0 0 0;
+            }
+        }
+    }
+    @media(max-width:355px){
+        .time-flex {
+            flex-wrap: wrap;
+        }
+        .icon-stopwatch {
+            width: 100%;
+            margin-bottom: 0 !important;
+        }
+        .time-data {
+            margin-left: 30px;
+        }
     }
 }
 </style>

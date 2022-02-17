@@ -12,10 +12,14 @@
                     </div>
                 </div>
             </div>
-            <p class="main-brow-text shopData icon-location fw-700">地址<span class="address">{{shopAddress(selectShop)}}</span></p>
-            <p class="main-brow-text shopData icon-phone fw-700">電話<span class="address">{{shopPhone(selectShop)}}</span></p>
+            <p class="main-brow-text shopData icon-location fw-700">
+                <span class="shopDataTitle">地址</span><span class="address">{{shopAddress(selectShop)}}</span>
+            </p>
+            <p class="main-brow-text shopData icon-phone fw-700">
+                <span class="shopDataTitle">電話</span><span class="address">{{shopPhone(selectShop)}}</span>
+            </p>
             <div class="d-flex form-group">
-                <p class="main-white-text select-title select-title-bg2">人數選擇（六位以上請來電訂位）</p>
+                <p class="main-white-text select-title select-title-bg2">人數選擇<span class="webTip">（六位以上請來電訂位）</span></p>
                 <div class="shop-custom-select w-100" tabindex="0" @blur="isOpenPeopleSelect = false">
                     <div class="selected icon-right-open fw-700" @click="isOpenPeopleSelect = !isOpenPeopleSelect" >{{ selectPeople }}位</div>
                     <div class="items" :class="{selectHide: !isOpenPeopleSelect}">
@@ -25,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            <p class="main-brow-text shopData fw-700 mobileTip">（六位以上請來電進行訂位）</p>
             <div @click="showCalendar()" class="d-flex form-group">
                 <p class="main-white-text select-title select-title-bg2">用餐日期</p>
                 <p class="main-white-text fw-700 chooseDate">{{this.chooseReserveDateData.date}} {{this.chooseReserveDateData.day}}</p>
@@ -191,9 +196,17 @@ export default {
             display: none;
         }
         .shopData {
+            display: flex;
             margin: 5px 0 0 30px;
             .address {
+                
                 margin-left: 10px;
+            }
+            .shopDataTitle{
+                flex: 0 0 45px;
+            }
+            &.mobileTip {
+                display: none;
             }
         }
         .chooseDate {
@@ -213,13 +226,14 @@ export default {
             width: 240px;
             line-height: 43px;
             letter-spacing: 2px;
+            outline: none;
             &.date-custom-select {
                 width: 160px;
             }
             .selected {
                 color: #fff;
                 padding-left: 30px;
-                padding: 3px 0 3px 30px;
+                padding: 3px 0 3px 30px;       
                 cursor: pointer;
                 &::before {
                     font-size: 17px;
@@ -264,6 +278,20 @@ export default {
             margin: 0;
             margin-top: 40px;
             letter-spacing: 3px;
+        }
+    }
+
+    @media(max-width:576px){
+        .mobileTip {
+            display: block !important;
+        }
+        .webTip {
+            display: none;
+        }
+    }
+    @media(max-width:405px) {
+        .reserve-form .shopData {
+            margin: 5px 0 0 5px;
         }
     }
 }

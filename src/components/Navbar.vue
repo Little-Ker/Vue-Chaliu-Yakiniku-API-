@@ -27,7 +27,7 @@
             <p v-if="!isAdiminsLogin" class="icon-cog">會員系統</p>
             <p v-else class="icon-cog">管理員系統</p>
         </a>
-        <router-link to="/reserve" class="link bottom-btn transition-0-3">
+        <router-link to="/reserve" @click="isClickToggle = false;" class="link bottom-btn transition-0-3">
             <p class="icon-calendar">線上訂位</p>
         </router-link>
     </div>
@@ -335,6 +335,13 @@ export default {
             .link {
                 font-size: 16px !important;
             }
+        }
+        .navBottom {
+            height: 55px;
+            .bottom-btn.link p {
+                font-size: 16px;
+                line-height: 55px ;
+            }  
         }
     }
 }

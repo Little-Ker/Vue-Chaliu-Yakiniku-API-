@@ -131,5 +131,19 @@ export default {
             }
         }
     }
+
+    @media(max-width:710px){
+        .title h1 {
+            font-size: 32px !important;
+        }
+    }
+    @media(max-width:530px){
+        .title h1 {
+            font-size:28px !important;
+        }
+        .banner .blackHide {
+            padding: 110px 0 100px 0;
+        }
+    }
 }
 </style>
