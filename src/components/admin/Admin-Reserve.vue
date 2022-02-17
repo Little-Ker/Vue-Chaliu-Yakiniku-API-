@@ -2,24 +2,29 @@
     <div class="member-reserve">
         <h1 class="title">會員訂位紀錄</h1>
         <div class="shopSelect d-flex justify-content-end align-items-center">
-            <p class="selectTitle fw-700">分店</p>
-            <div class="shop-custom-select" tabindex="0" @blur="isOpenShopSelect = false">
-                <div class="selected icon-right-open fw-700" @click="isOpenShopSelect = !isOpenShopSelect" >{{ selectShop }}</div>
-                <div class="items" :class="{selectHide: !isOpenShopSelect}">
-                    <div class="item fw-700 d-flex" @click="clickShopSelect(shop)" :class="{'selectPick':selectSameOption(selectShop, shop.shopName)}" v-for="(shop, i) in shopPointData" :key="i">
-                        {{ shop.shopName }}
+            <div class="select-flex d-flex align-items-center">
+                <p class="selectTitle fw-700">分店</p>
+                <div class="shop-custom-select" tabindex="0" @blur="isOpenShopSelect = false">
+                    <div class="selected icon-right-open fw-700" @click="isOpenShopSelect = !isOpenShopSelect" >{{ selectShop }}</div>
+                    <div class="items" :class="{selectHide: !isOpenShopSelect}">
+                        <div class="item fw-700 d-flex" @click="clickShopSelect(shop)" :class="{'selectPick':selectSameOption(selectShop, shop.shopName)}" v-for="(shop, i) in shopPointData" :key="i">
+                            {{ shop.shopName }}
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="select-flex d-flex align-items-center">
+                <p class="selectTitle fw-700">日期</p>
+                <div class="shop-custom-select date-custom-select" tabindex="0" @blur="isOpenDateSelect = false">
+                    <div class="selected icon-right-open fw-700" @click="isOpenDateSelect = !isOpenDateSelect" >{{ selectDate }}</div>
+                    <div class="items" :class="{selectHide: !isOpenDateSelect}">
+                        <div class="item fw-700 d-flex" @click="clickDateSelect(date)" :class="{'selectPick':selectSameOption(selectDate, date)}" v-for="(date, i) in ordersDate" :key="i">
+                            {{ date }}
+                        </div>
                     </div>
                 </div>
             </div>
-            <p class="selectTitle fw-700">日期</p>
-            <div class="shop-custom-select date-custom-select" tabindex="0" @blur="isOpenDateSelect = false">
-                <div class="selected icon-right-open fw-700" @click="isOpenDateSelect = !isOpenDateSelect" >{{ selectDate }}</div>
-                <div class="items" :class="{selectHide: !isOpenDateSelect}">
-                    <div class="item fw-700 d-flex" @click="clickDateSelect(date)" :class="{'selectPick':selectSameOption(selectDate, date)}" v-for="(date, i) in ordersDate" :key="i">
-                        {{ date }}
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div @click="goTop();" class="d-flex mb-3">
             <div v-for="(status, index) in statusObj" :key="index" @click="resetChoose(status,index);clickChooseType(index);" :class="{'active': statusObj[index].statusBool}" class="choose">
@@ -31,34 +36,34 @@
             <div class="shop">
                 <p class="name">茶六燒肉堂 - {{item.shopName}}</p>
             </div>
-            <p class="fw-700 mb-1">
-                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot fs-20"></span>
+            <p class="fw-700 data d-flex mb-1">
+                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot"></span>
                 <span class="mr-2">訂位者:</span>
                 <span>{{item.memberName}}</span>
             </p>
-            <p class="fw-700 mb-1">
-                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot fs-20"></span>
+            <p class="fw-700 data d-flex mb-1">
+                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot"></span>
                 <span class="mr-2">手機號碼:</span>
                 <span>{{item.cellphone}}</span>
             </p>
-            <div class="fw-700 d-flex mb-1">
+            <div class="fw-700 data d-flex mb-1">
                 <p class="mr-2">
-                    <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot fs-20"></span>
+                    <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot"></span>
                     <span></span>預定時間:
                 </p>
-                <p class="d-flex">
+                <p class="d-flex time-block">
                     <span class="mr-2 d-block">{{item.date}}</span>
                     <span class="d-block">{{item.time}}</span>
                 </p> 
             </div>
-            <p class="fw-700 mb-1">
-                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot fs-20"></span>
+            <p class="fw-700 data d-flex mb-1">
+                <span :class="{'main-brow-text': statusObj.isShowNowOrder.statusBool}" class="icon-dot"></span>
                 <span class="mr-2">預定人數:</span>
                 <span>{{item.people}}人</span>
             </p>
             <div :class="[{'orderStatus': !statusObj.isShowNowOrder.statusBool}, {'mt-4': statusObj.isShowNowOrder.statusBool}]" class="d-flex justify-content-bewteen">
                 <p v-if="!statusObj.isShowNowOrder.statusBool" class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>
-                <div class="w-100 d-flex justify-content-end" v-if="statusObj.isShowNowOrder.statusBool">
+                <div class="w-100 d-flex btn-list justify-content-end" v-if="statusObj.isShowNowOrder.statusBool">
                     <button class="borderBtn active">預約中</button>
                     <button @click="clickOverBtn(item.OID)" class="borderBtn">已用餐</button>
                     <button @click="clickCancelBtn(item.OID)" class="borderBtn">取消</button>
@@ -290,6 +295,7 @@ export default {
             }
         }
         .icon-dot {
+            font-size: 20px;
             margin-left: -8px;
         }
         .shop {
@@ -367,6 +373,7 @@ export default {
         }
     }
     .shop-custom-select {
+        outline: none;
         position: relative;
         width: 150px;
         line-height: 43px;
@@ -412,6 +419,102 @@ export default {
                     background-color: $main-white-555;
                     color: #fff;
                 }
+            }
+        }
+    }
+
+    @media(max-width:880px){
+        .title {
+            font-size: 22px;
+            padding-left: 0;
+        }
+        .choose {
+            font-size: 18px;
+        }
+        .order {
+            font-size: 17px;
+        }
+    }
+    @media(max-width:576px){
+        .title {
+            font-size: 20px;
+        }
+        .choose {
+            font-size: 16px;
+            text-align: center;
+        }
+        .order {
+            font-size: 16px;
+            padding: 35px 5px;
+        }
+        .shopSelect  {
+            margin: 50px 0 20px 0;
+            .selectTitle {
+                margin: 0 10px;
+                font-size: 16px;
+            }
+        } 
+        .shop-custom-select {
+            margin-bottom: 7px;
+            font-size: 16px;
+            width: 140px !important;
+            line-height: 37px;
+            .selected {
+                padding-left: 17px;
+            }
+            .items {
+                top: 32px;
+                .item{
+                    padding-left: 17px;
+                }
+            }
+        }
+        .date-custom-select .items .item {
+            padding-left: 0;
+            justify-content: center;
+            &:first-child {
+                padding-left: 17px;
+                justify-content: flex-start;
+            }
+        }
+    }
+    @media(max-width:500px){
+        .btn-list {
+            justify-content: flex-start !important;
+        }
+        .order .borderBtn {
+            margin: 0 10px 0 0;
+        }
+    }
+    @media(max-width:477px){
+        .select-flex {
+            flex-direction: column;
+            margin-left: 5px;
+            align-items: flex-start !important;
+        }
+    }      
+    @media(max-width:430px){
+        .time-block {
+            flex-direction: column;
+        }
+        .data {
+            margin: 5px 0;
+        }
+    }
+    @media(max-width:320px){
+        .shop-custom-select {
+            width: 120px !important;
+            .selected {
+                padding-left: 10px; 
+                &::before {
+                    right: 4px;
+                }
+            }
+        }
+        .date-custom-select .items .item {
+            padding-left: 0 !important;
+            &:first-child {
+                padding-left: 10px !important; 
             }
         }
     }

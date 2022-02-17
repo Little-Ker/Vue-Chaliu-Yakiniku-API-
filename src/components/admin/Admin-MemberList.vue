@@ -15,10 +15,22 @@
                 <div class="widthL item"><b>信箱</b></div>
             </div>
             <div v-for="(member, index) in filerMemberData" :key="index" class="listItem d-flex">
-                <div class="widthM item">{{member.acc}}</div>
-                <div class="widthM item">{{member.name}}</div>
-                <div class="widthL item">{{member.cellphone}}</div>
-                <div class="widthL item">{{member.email}}</div>
+                <div class="widthM">
+                    <p class="item-title">帳號</p>
+                    <p class="item">{{member.acc}}</p>
+                </div>
+                <div class="widthM">
+                    <p class="item-title">姓名</p>
+                    <p class="item">{{member.name}}</p>
+                </div>
+                <div class="widthL">
+                    <p class="item-title">電話</p>
+                    <p class="item">{{member.cellphone}}</p>
+                </div>
+                <div class="widthL">
+                    <p class="item-title">信箱</p>
+                    <p class="item">{{member.email}}</p>
+                </div>
             </div>
         </div>
         <div v-if="filerMemberData.length === 0" class="noMember">
@@ -113,11 +125,14 @@ export default {
         .listTitle, .listItem {
             padding: 20px 5px;
             letter-spacing: 1px;
+            .item-title {
+                margin: 0 15px 3px 0;
+                display: none;
+            }
             .item {
                 text-align: center;
                 padding: 0 5px;
                 font-weight: 700;
-                text-align: center;
             }
         }
         .listTitle {
@@ -148,6 +163,40 @@ export default {
         .txt {
             font-size: 20px;
             margin-top: 30px;
+        }
+    }
+
+    @media(max-width:880px){
+        .title {
+            padding-left: 0;
+        }
+    }
+    @media(max-width:576px){
+        .title {
+            font-size: 20px;
+            padding-left: 10px;
+        }
+        .list {
+            .listTitle {
+                display: none !important;
+            }
+            .listItem  {
+                padding: 15px 10px;
+                flex-direction: column;
+                .widthL, .widthM {
+                    width: 100% !important;
+                }
+                .item-title, .item {
+                    display: inline-block !important;
+                }
+            }
+        }
+        .form {
+            margin-top:50px;
+            margin-bottom:10px;
+            input {
+                width: 140px;
+            }
         }
     }
 }
