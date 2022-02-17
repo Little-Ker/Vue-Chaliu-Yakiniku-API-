@@ -6,7 +6,7 @@
                 <p class="main-brow-text">Delicacy</p>
             </div>
             <div class="food-list d-flex justify-content-around">
-                <router-link :to="`/menu?id=${typeListAryIndex(item.title)}`" @click="goTop()" class="item d-flex" v-for="(item, index) in foodTitleList" :key="index">
+                <router-link :to="`/menu?id=${typeListAryIndex(item.title)}`" class="item d-flex" v-for="(item, index) in foodTitleList" :key="index">
                     <div class="food-item-img">
                         <div :class="item.class" class="bgScale bg-fit transition-0-6" :style="{backgroundImage:'url('+item.img+')'}"></div>
                     </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="bottom d-flex justify-content-bewteen">
             <div class="moreBtn align-self-end">
-                <router-link to="/menu" @click="goTop()" class="btn-border">
+                <router-link to="/menu" class="btn-border">
                     <span class="btn-border-text fw-700 transition-0-3">線上菜單</span>
                 </router-link>
             </div>

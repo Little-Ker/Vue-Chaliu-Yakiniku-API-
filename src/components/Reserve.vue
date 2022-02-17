@@ -11,7 +11,7 @@
                         <p class="txt main-white-text">{{reserveTxt}}</p>
                     </div>
                     <div class="item-list d-flex justify-content-between">
-                        <a href="#" class="d-block d-flex flex-direction-col align-items-center reserve-item" v-for="(item, index) in reserveList" :key="index">
+                        <router-link :to="item.link" class="d-block d-flex flex-direction-col align-items-center reserve-item" v-for="(item, index) in reserveList" :key="index">
                             <span class="d-block transition-0-3 item-img text-align-center" :class="item.iconClass"></span>
                             <span class="d-flex flex-direction-col">
                                 <span class="d-block">
@@ -20,12 +20,12 @@
                                 </span>
                                 <span class="d-block item-txt">{{item.txt}}</span>
                             </span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="moreBtn align-self-center">
-                        <a class="btn-border"> 
+                        <router-link to="/point" class="btn-border"> 
                             <span class="btn-border-text fw-700 transition-0-3">前往分店資訊</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div> 
             </div>
@@ -43,17 +43,20 @@ export default {
                 {
                     title:'線上預訂',
                     iconClass: 'icon-mobile',
-                    txt: '開放一個月內線上預約。6人以上請來電訂位'
+                    txt: '開放一個月內線上預約。6人以上請來電訂位',
+                    link: '/reserve'
                 },
                 {
                     title:'電話訂位',
                     iconClass: 'icon-phone',
-                    txt: '訂位電話服務時段，早上 09:30 - 凌晨 01:00'
+                    txt: '訂位電話服務時段，早上 09:30 - 凌晨 01:00',
+                    link: '/point'
                 },
                 {
                     title:'到店現場訂位',
                     iconClass: 'icon-user',
-                    txt: '現場訂位服務時段，早上 11:00 - 凌晨 01:00'
+                    txt: '現場訂位服務時段，早上 11:00 - 凌晨 01:00',
+                    link: '/point'
                 }
             ]
         }

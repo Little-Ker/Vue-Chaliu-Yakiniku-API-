@@ -52,6 +52,9 @@ export default {
         },
         orderMessageShop() {
             return this.$store.state.orderMessage.shop;
+        },
+        isAdiminsLogin() {
+            return this.$store.state.isAdiminsLogin;
         }
     },
     data() {
@@ -70,6 +73,10 @@ export default {
         },
         goOrderMessage() {
             if (this.orderMessageShop == '') return;
+            if (this.isAdiminsLogin) {
+                this.$store.dispatch('updateOrderLevel', 1);
+                return;
+            }
             this.$store.dispatch('updateOrderLevel', 2);
             this.goTop();
         },

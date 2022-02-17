@@ -28,19 +28,19 @@ export default {
             linkList: [
                 {
                     txt: '活動新訊',
-                    url: '#'
+                    url: '/news'
                 },
                 {
                     txt: '美食饗宴',
-                    url: '#'
+                    url: '/menu'
                 },
                 {
                     txt: '門市據點',
-                    url: '#'
+                    url: '/point'
                 },
                 {
                     txt: '線上訂位',
-                    url: '#'
+                    url: '/reserve'
                 }
             ],
         }
@@ -52,7 +52,6 @@ export default {
 @import "@/assets/scss/_variable.scss";
 
 .footer {
-    padding-bottom: 50px;
     position: relative;
     z-index: 10;
     width: 100%;
@@ -118,6 +117,9 @@ export default {
         }
     }
 
+    @media(max-width:768px) {
+        padding-bottom: 50px;
+    }
     @media(max-width:576px) {
         .footer-block {
             padding: 40px;
