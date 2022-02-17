@@ -30,8 +30,8 @@
 export default {
     data() {
         return {
-            img01: require('../assets/images/index/index-about-img01.jpg'),
-            img02: require('../assets/images/index/index-about-img02.jpg')
+            img01: require('@/assets/images/index/index-about-img01.jpg'),
+            img02: require('@/assets/images/index/index-about-img02.jpg')
         }
     }
 }

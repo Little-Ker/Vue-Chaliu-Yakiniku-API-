@@ -41,10 +41,10 @@ export default {
             },
             swiperList: [
                 {
-                    img: require('../assets/images/index/banner01.jpg'),
+                    img: require('@/assets/images/index/banner01.jpg'),
                 },
                 {
-                    img: require('../assets/images/index/banner02.jpg'),
+                    img: require('@/assets/images/index/banner02.jpg'),
                 },
             ],
             bannerText: {

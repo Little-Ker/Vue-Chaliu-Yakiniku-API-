@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import Footer from '@/components/Footer.vue'
+import Navbar from '@/components/all/Navbar.vue'
+import Footer from '@/components/all/Footer.vue'
 import LoginView from '@/views/LoginView.vue'
 import Loading from '@/components/all/Loading.vue'
 import ChangePageAnim from '@/components/all/ChangePageAnim.vue'
