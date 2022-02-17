@@ -216,5 +216,30 @@ export default {
             }
         }
     }
+
+    @media(max-width:880px){
+        .form-section .title {
+            font-size: 22px;
+
+        }
+    }
+    @media(max-width:576px){
+        .form-section {
+            .title {
+                font-size: 20px;
+            }
+            .btn {
+                width: 140px;
+            }
+            .formBox {
+                .colLabel {
+                    min-width: 100px;
+                }
+                .form-control {
+                    padding: 0 10px;
+                }
+            }
+        }
+    }  
 }
 </style>

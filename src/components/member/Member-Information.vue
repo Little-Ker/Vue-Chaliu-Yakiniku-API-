@@ -6,15 +6,15 @@
             <div class="form choose-select">
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactName" class="colLabel">姓名</label>
-                    <input type="text" v-model="name" @keydown="keydownNull($event)" placeholder="請輸入真實姓名" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
+                    <input type="text" v-model="name" @keydown="keydownNull($event)" placeholder="請輸入真實姓名" maxlength="5" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactName" required>
                 </div>
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactCellphone" class="colLabel">手機</label>
-                    <input type="text" v-model="cellphone" @keydown="keydownNull($event)" placeholder="請輸入手機號碼" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
+                    <input type="text" v-model="cellphone" @keydown="keydownNull($event)" placeholder="請輸入手機號碼" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactCellphone" required>
                 </div>
                 <div class="formBox d-flex flex-direction-column">
                     <label for="contactEmail" class="colLabel">信箱</label>
-                    <input type="email" v-model="email" @keydown="keydownNull($event)" placeholder="請輸入電子信箱" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactEmail" required>
+                    <input type="email" v-model="email" @keydown="keydownNull($event)" placeholder="請輸入電子信箱" maxlength="10" autoComplete="off" @focus="focusInputFn" @blur="blurInputFn" class="form-control" id="contactEmail" required>
                 </div>
             </div>
             <div class="d-flex mt-5 justify-content-end">
@@ -171,5 +171,22 @@ export default {
             }
         }
     }
+
+    @media(max-width:880px){
+        .form-section .title {
+            font-size: 22px;
+
+        }
+    }
+    @media(max-width:576px){
+        .form-section {
+            .title {
+                font-size: 20px;
+            }
+            .btn {
+                width: 140px;
+            }
+        }
+    }  
 }
 </style>

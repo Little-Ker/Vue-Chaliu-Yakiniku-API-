@@ -100,5 +100,97 @@ export default {
         padding: 60px 80px;
         width: 80%;
     }
+
+    @media(max-width:990px){
+        .choose {
+            margin-right: 30px;
+        }
+    }
+    @media(max-width:880px){
+        .container-920 {
+            flex-wrap: wrap;
+            max-width: 680px;
+        }
+        .choose {
+            font-size: 18px;
+            width: 100%;
+            height: auto;
+            margin: 0 0 30px 0;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 30px 0;
+            .top {
+                padding: 0 80px;
+                font-size: 20px;
+                p {
+                    line-height: 32px;
+                    text-align: center;
+                    padding: 0;
+                }
+            }
+            .bottom {
+                padding: 0 80px;
+                border-top: 0;
+                border-left: 1px solid #DCDCDC;
+                .link {
+                    margin: 15px 0;
+                }
+            }
+        }
+        .message {
+            width: 100%;
+        }
+    }
+    @media(max-width:576px){
+        padding-top: 100px;
+        padding-bottom: 60px;
+        .choose {
+            .top, .bottom {
+                padding: 0 50px;
+            }
+        }
+        .message {
+            padding: 35px 25px;
+        }
+    }
+    @media(max-width:420px){
+        .choose {
+            padding: 30px 40px;
+            .top {
+                font-size: 18px;
+                padding: 0 35px 0 0;
+                p {
+                    line-height: 30px;
+                }
+            }
+            .bottom {
+                border: 0;
+                border-left: 1px solid #DCDCDC;
+                padding: 0 0 0 35px;
+                .link:last-child {
+                    margin-bottom: 0;
+                }
+                .link:first-child {
+                    margin-top: 0;
+                }
+                .link {
+                    font-size: 16px;
+                    margin: 5px 0;
+                }
+            }
+        }
+    }
+    @media(max-width:345px){
+        .choose {
+            padding: 25px 30px;
+            .top {
+                padding: 0 25px 0 0;
+            }
+            .bottom {
+                padding: 0 0 0 25px;
+            }
+        }
+    }
 }
 </style>

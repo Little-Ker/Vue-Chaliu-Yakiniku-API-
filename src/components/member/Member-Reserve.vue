@@ -1,48 +1,48 @@
 <template>
     <div class="member-reserve">
         <h1 class="title">預約紀錄</h1>
-        <p class="txt main-white-888">- 目前僅提供前十筆紀錄。</p>
+        <p class="txt main-white-aaa">- 目前僅提供前十筆紀錄。</p>
         <div @click="goTop" class="d-flex mb-3">
             <div @click="isShowNowOrder = true;getMemberReseveList();" :class="{'active': isShowNowOrder}" class="choose">即將用餐</div>
             <div @click="isShowNowOrder = false;getMemberReseveList();" :class="{'active': !isShowNowOrder}" class="choose">歷史紀錄</div>
         </div>
         <div v-for="(item, index) in newMemberReseveData" :key="index" class="order">
             <div class="shop">
-                <p class="name">茶六燒肉堂 - {{item.shopName}}</p>
-                <p class="main-white-888">{{shopAddress(item.shopName)}}</p>
+                <p class="name d-flex">茶六燒肉堂 - {{item.shopName}}</p>
+                <p class="main-white-aaa d-flex">{{shopAddress(item.shopName)}}</p>
             </div>
-            <div class="fw-700 d-flex">
+            <div class="fw-700 data d-flex">
                 <p class="mr-2">
                     <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
                     <span></span>預定時間:</p>
-                <p class="d-flex">
+                <p class="d-flex time-block">
                     <span class="mr-2 d-block">{{item.date}}</span>
                     <span class="d-block">{{item.time}}</span>
                 </p> 
             </div>
-            <p class="fw-700">
+            <p class="fw-700 data d-flex">
                 <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
                 <span class="mr-2">訂位人數:</span>
                 <span>{{item.people}}人</span>
             </p>
-            <p class="fw-700">
+            <p class="fw-700 data d-flex">
                 <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
                 <span class="mr-2">聯絡人:</span>
                 <span>{{item.memberName}}</span>
             </p>
-            <p class="fw-700">
+            <p class="fw-700 data d-flex">
                 <span :class="{'main-brow-text': isShowNowOrder}" class="mr-1 icon-ok"></span>
                 <span class="mr-2">手機號碼:</span>
                 <span>{{item.cellphone}}</span>
             </p>
             <div :class="[{'orderStatus': !isShowNowOrder}, {'mt-2': isShowNowOrder}]" class="d-flex justify-content-bewteen">
-                <p class="align-self-end main-white-888">於 {{item.bookDate}} 預約</p>
+                <p class="recordTime align-self-end main-white-aaa fs-14">於 {{item.bookDate}} 預約</p>
                 <a v-if="isShowNowOrder" @click="clickCancelBtn(item.OID)" class="borderBtn">取消預約</a>
                 <p v-if="!isShowNowOrder" class="statusTxt fw-700">{{item.status}}</p>
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div @click="goTopScroll" v-if="newMemberReseveData.length > 1 && !isShowNowOrder" class="goTop transition-0-3 icon-left-open"></div>
+            <div @click="goTopScroll" v-if="newMemberReseveData.length > 1" class="goTop transition-0-3 icon-left-open"></div>
         </div>
         <div v-if="newMemberReseveData.length === 0" class="noOrder">
             <p class="icon-calendar text-align-center"></p>
@@ -158,7 +158,7 @@ export default {
         margin-bottom: 15px;
     }
     .txt {
-        margin-bottom: 40px;
+        margin-bottom: 60px;
         margin-left: 3px;
     }
     .choose {
@@ -242,6 +242,52 @@ export default {
         &:hover {
             background-color: $main-blue-text;
             color: #fff;
+        }
+    }
+
+    @media(max-width:880px){
+        .title {
+            font-size: 22px;
+            padding-left: 0;
+        }
+        .choose {
+            font-size: 18px;
+        }
+        .order {
+            font-size: 17px;
+            padding: 35px 5px;
+        }
+    }
+    @media(max-width:576px){
+        .title {
+            font-size: 20px;
+        }
+        .choose {
+            font-size: 16px;
+            text-align: center;
+        }
+        .order {
+            font-size: 16px;
+        }
+    }   
+    @media(max-width:437px){
+        .time-block {
+            flex-direction: column;
+        }
+        .data {
+            margin: 3px 0;
+        }
+        .order {
+            .mt-2 {
+                margin-top: 20px !important;
+                justify-content: flex-end !important;
+                .recordTime {
+                    display: none;
+                }
+            }
+            .shop {
+                margin-bottom: 25px;
+            }       
         }
     }
 }
