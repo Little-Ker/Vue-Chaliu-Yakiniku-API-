@@ -7,7 +7,7 @@
         :autoplay="swiperOption.autoplay"
         :speed="swiperOption.speed"
         @swiper="onSwiper"
-        class="swiper-scale-effect"
+        class="swiper-scale-effect swiper-no-swiping"
         >
             <swiper-slide v-for="(item, index) in swiperList" :key="index">
                 <div class="slide-bg swiper-slide-cover" :class="item.class" :style="{backgroundImage:'url('+item.img+')'}">
