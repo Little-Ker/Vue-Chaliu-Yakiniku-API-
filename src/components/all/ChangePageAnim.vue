@@ -34,10 +34,7 @@ export default {
         goTop() {
             $('html,body').scrollTop(0, 0);
         },
-    },
-    watch: {
-        isChangePageAnim() {
-            if (this.isChangePageAnim === false) return;
+        gsapPageAnim() {
             let sec = 0.8;
             if (this.isFirstEnterWeb) {
                 sec = 1.2;
@@ -58,7 +55,7 @@ export default {
                 this.goTop();
             })
             .to(".changePage", {duration: 0.1, alpha: 0 })
-            .to(".changePage", {duration: 0, x: '-100%',
+            .to(".changePage", {duration: 0, left: '-100%',
                 delay: 0.6,
                 onComplete: () => {
                     this.$store.dispatch('updateIsChangePageAnim', false);
@@ -66,6 +63,13 @@ export default {
                     ($(window).scrollTop() > 10) ? $(".navBottom").addClass("showBottomBtn") : $(".navBottom").removeClass("showBottomBtn");
                 }
             });
+        }
+        
+    },
+    watch: {
+        isChangePageAnim() {
+            if (this.isChangePageAnim === false) return;
+            this.gsapPageAnim();
         },
     },
 }
