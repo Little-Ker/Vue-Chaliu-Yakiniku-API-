@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { TimelineMax } from 'gsap'
+import gsap from 'gsap';
 
 export default {
     name: 'changePageAnim',
@@ -45,21 +45,20 @@ export default {
                 $(".changePage").addClass("opacity-index-changePage");
             }
 
-            const tween = new TimelineMax();
-            tween
-            .to(".changePage", 0,{ left: 0 })
-            .to(".changePage", 0.1, { opacity: 1 })
+            gsap.timeline()
+            .to(".changePage", {duration: 0, left: 0 })
+            .to(".changePage", {duration: 0.1, alpha: 1 })
             .add(() => {
                 $(".navBottom").removeClass("showBottomBtn");
                 $(".navBottom").removeClass("showMenuBottomBtn");
             })
-            .to(".changePage", sec, { opacity: 1 })
+            .to(".changePage", {duration: sec, alpha: 1 })
             .add(() => {
                 this.startScrollBar();
                 this.goTop();
             })
-            .to(".changePage", 0.1, { opacity: 0 })
-            .to(".changePage", 0, { left: '-100%',
+            .to(".changePage", {duration: 0.1, alpha: 0 })
+            .to(".changePage", {duration: 0, x: '-100%',
                 delay: 0.6,
                 onComplete: () => {
                     this.$store.dispatch('updateIsChangePageAnim', false);
