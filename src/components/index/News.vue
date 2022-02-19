@@ -21,14 +21,14 @@
                 :speed="swiperOption.speed"
                 @swiper="onSwiper"
             >
-                <swiper-slide v-for="(num, index) in 5" :key="index">
-                    <router-link :to="`/new/${newsData(num).id}`" class="new">
+                <swiper-slide v-for="(item, index) in newsList" :key="index">
+                    <router-link :to="`/new/${item.id}`" class="new">
                         <div>
-                            <p class="d-block date text-align-right fw-700 font-CourierNew main-blue-text">{{newsData(num).date}}</p>
-                            <img :src="newsData(num).img" class="img-fit" alt="圖片">
-                            <p class="title line1 fw-700 main-brow-text">{{newsData(num).title}}</p>
+                            <p class="d-block date text-align-right fw-700 font-CourierNew main-blue-text">{{item.date}}</p>
+                            <img :src="item.img" class="img-fit" alt="圖片">
+                            <p class="title line1 fw-700 main-brow-text">{{item.title}}</p>
                             <p class="txt main-white-text line3">
-                                <span v-for="(txt, index) in articleAry(num)" :key="index">{{txt}}</span>
+                                <span v-for="(txt, index) in item.txt" :key="index">{{txt}}</span>
                             </p>
                         </div>
                         <div class=" fw-700 main-white-text font-CourierNew">
@@ -93,16 +93,13 @@ export default {
         SwiperSlide,
     },
     computed: {
-        newsData() {
-            return function(num) {
-                return this.newsListData[num];
-            }
+        newsList() {
+            let ary = [];
+            this.newsListData.forEach((element, index) => {
+                if (index < 5) ary.push(element);
+            });
+            return ary;
         },
-        articleAry() {
-            return function(num) {
-                return this.newsData(num).txt;
-            }
-        }
     },
     methods: {
         onSwiper(swiper) {

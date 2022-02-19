@@ -7,7 +7,5 @@ module.exports = {
             })
         ]
     },
-    devServer: {
-        proxy: 'https://lightten.tk:8082'
-    }
+    publicPath: './'
 }

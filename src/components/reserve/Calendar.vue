@@ -1,9 +1,9 @@
 <template>
     <div class="calendar">
         <div class="d-flex justify-content-between">
-            <p @click="clickMonthBtn(-1);" class="icon-left-open show-cursor-pointer" :class="{'hideOpcity':calendar.month == this.today.month} "></p>
-            <p class="title text-center main-white-text align-self-center">{{calendar.year}}年 {{setZero(calendar.month + 1)}}月</p>
-            <p @click="clickMonthBtn(1);" class="icon-right-open show-cursor-pointer" :class="{'hideOpcity':calendar.month == getNextMonth(this.today.month)}"></p>
+            <p @click="clickMonthBtn(-1);" class="icon-left-open show-cursor-pointer" :class="{'hideOpcity':calendarMonth == todayMonth} "></p>
+            <p class="title text-center main-white-text align-self-center">{{calendarYear}}年 {{setZero(calendarMonth + 1)}}月</p>
+            <p @click="clickMonthBtn(1);" class="icon-right-open show-cursor-pointer" :class="{'hideOpcity':calendarMonth == getNextMonth(todayMonth)}"></p>
         </div>
         <div class="weekDay d-flex w-100">
             <div class="day">
@@ -29,12 +29,13 @@
             </div>
         </div>
         <div class="week d-flex" v-for="i in getWeekCount" :key="i">
-            <div @click="chooseDateFn(i, j, calendarMonth[(i-1)*7+j-1])" class="date"
-             :class="{ today:setTodayClass(i, j), other:setOtherClass(i, j),
-              canChooseDay:setCanChooseDayClass(i, j), notChooseDay:setNotChooseDayClass(i, j),
-              chooseDay: calendarMonth[(i-1)*7+j-1].year === chooseDay.year && calendarMonth[(i-1)*7+j-1].month === chooseDay.month && calendarMonth[(i-1)*7+j-1].date === chooseDay.date,
-            }" v-for="j in 7" :key="j">
-                <p>{{calendarMonth[(i-1)*7+j-1].date}}</p>
+            <div @click="chooseDateFn(i, j, calendarMonthCalc[(i-1)*7+j-1])" class="date"
+            :class="{ today:setTodayClass(i, j), other:setOtherClass(i, j),
+            canChooseDay:setCanChooseDayClass(i, j), notChooseDay:setNotChooseDayClass(i, j),
+            chooseDay: calendarMonthCalc[(i-1)*7+j-1].year === chooseDayYear && calendarMonthCalc[(i-1)*7+j-1].month === chooseDayMonth && calendarMonthCalc[(i-1)*7+j-1].date === chooseDayDate,
+            }"
+              v-for="j in 7" :key="j">
+                <p>{{calendarMonthCalc[(i-1)*7+j-1].date}}</p>
             </div>
         </div>
     </div>
@@ -46,24 +47,18 @@ export default {
     props: ["businessTime"],
     data() {
         return {
-            today:{
-                year:0,
-                month:0,
-                date:0,
-                day:0
-            },
-            chooseDay:{
-                year:0,
-                month:0,
-                date:0,
-                day:0
-            },
-            calendar:{
-                year:0,
-                month:0,
-                date:0,
-                day:0
-            },
+            todayYear: 0,
+            todayMonth: 0,
+            todayDate: 0,
+            todayDay: 0,
+            chooseDayYear: 0,
+            chooseDayMonth: 0,
+            chooseDayDate: 0,
+            chooseDayDay: 0,
+            calendarYear: 0,
+            calendarMonth: 0,
+            calendarDate: 0,
+            calendarDay: 0,
             isCanChooseToday: false,
         }
     },
@@ -76,19 +71,19 @@ export default {
         },
         setCalendarData() {
             return function(i, j) {
-                return this.calendarMonth[(i-1)*7+j-1];
+                return this.calendarMonthCalc[(i-1)*7+j-1];
             }
         },
         setTodayClass() {
             return function(i, j) {
                 const calendar = this.setCalendarData(i, j);
-                return calendar.year === this.today.year && calendar.month === this.today.month && calendar.date === this.today.date;
+                return calendar.year === this.todayYear && calendar.month === this.todayMonth && calendar.date === this.todayDate;
             }
         },
         setOtherClass() {
             return function(i, j) {
                 const calendar = this.setCalendarData(i, j);
-                return calendar.month !== this.calendar.month;
+                return calendar.month !== this.calendarMonth;
             }
         },
         setCanChooseDayClass() {
@@ -103,21 +98,20 @@ export default {
                 const calendar = this.setCalendarData(i, j);
                 // 星期一公休
                 // if (calendar.day == 1) return true;
-
                 // 非這個月
-                if ((calendar.month != this.today.month) && (calendar.month != this.getNextMonth(this.today.month))) return true;
+                if ((calendar.month != this.todayMonth) && (calendar.month != this.getNextMonth(this.todayMonth))) return true;
                 // 今天已不可選
-                if (!this.isCanChooseToday && calendar.year == this.today.year && calendar.month == this.today.month && calendar.date == this.today.date) return true;
+                if (!this.isCanChooseToday && calendar.year == this.todayYear && calendar.month == this.todayMonth && calendar.date == this.todayDate) return true;
                 // 當月今天之前、下個月今天之後
-                const monthDate = (calendar.month == this.today.month && calendar.date < this.today.date);
-                const nextMonthDate = (calendar.month == this.getNextMonth(this.today.month) && calendar.date >= this.today.date);
+                const monthDate = (calendar.month == this.todayMonth && calendar.date < this.todayDate);
+                const nextMonthDate = (calendar.month == this.getNextMonth(this.todayMonth) && calendar.date >= this.todayDate);
                 return (monthDate || nextMonthDate);
             }
         },
         getWeekCount() {
             let chooseMonth = '';
             let monthCount = 0;
-            this.calendarMonth.forEach(item => {
+            this.calendarMonthCalc.forEach(item => {
                 if (chooseMonth === item.month || chooseMonth === '') monthCount++; 
                 if (item.date === 1 && chooseMonth === '') chooseMonth = item.month;
             });
@@ -151,8 +145,8 @@ export default {
             }
         },
         calendarFirstDay(){
-            const mDate = new Date(this.calendar.year,this.calendar.month,1)
-            const date = new Date(this.calendar.year,this.calendar.month,1 - mDate.getDay())
+            const mDate = new Date(this.calendarYear,this.calendarMonth,1)
+            const date = new Date(this.calendarYear,this.calendarMonth,1 - mDate.getDay())
             return {
                 year:date.getFullYear(),
                 month:date.getMonth(),
@@ -160,7 +154,7 @@ export default {
                 day:date.getDay(),
             }
         },
-        calendarMonth() {
+        calendarMonthCalc() {
             const data = [];
             let date;
             for(let i = 0; i < 42; i++){
@@ -178,13 +172,19 @@ export default {
     },
     methods: {
         sendChooseDate() {
-            const chooseYear = this.chooseDay.year;
-            const chooseMonth = this.chooseDay.month;
-            const chooseDate = this.chooseDay.date;
-            const chooseDay = this.chooseDay.day;
+            const chooseYear = this.chooseDayYear;
+            const chooseMonth = this.chooseDayMonth;
+            const chooseDate = this.chooseDayDate;
+            const chooseDay = this.chooseDayDay;
+            const dayData = {
+                year: chooseYear,
+                month: chooseMonth,
+                date: chooseDate,
+                day: chooseDay
+            };
 
             const chooseDayData = {
-                dateData: this.chooseDay,
+                dateData: dayData,
                 date: this.setChooseDay(chooseYear, chooseMonth, chooseDate),
                 day: `星期${this.setDay(chooseDay)}`,
             }
@@ -192,10 +192,10 @@ export default {
         },
         chooseDateFn(i, j, chooseDateData) {
             if(this.setNotChooseDayClass(i, j) || this.setOtherClass(i, j)) return;
-            this.chooseDay.year = chooseDateData.year;
-            this.chooseDay.month = chooseDateData.month;
-            this.chooseDay.date = chooseDateData.date;
-            this.chooseDay.day = chooseDateData.day;
+            this.chooseDayYear = chooseDateData.year;
+            this.chooseDayMonth = chooseDateData.month;
+            this.chooseDayDate = chooseDateData.date;
+            this.chooseDayDay = chooseDateData.day;
             this.$store.dispatch('updateChooseReserveTimeData', '');
 
             this.isSameDate();
@@ -210,7 +210,7 @@ export default {
             return 0;
         },
         isSameDate() {
-            if (this.today.date !== this.chooseDay.date) {
+            if (this.todayDate !== this.chooseDayDate) {
                 this.$store.dispatch('updateNowTime', (this.businessTime.open - 1));
                 return;
             }
@@ -219,43 +219,43 @@ export default {
         },
         setToday() {
             const date = new Date();
-            this.today.year = this.calendar.year = date.getFullYear();
-            this.today.month = this.calendar.month  = date.getMonth(); // 0~11月
-            this.today.date = this.calendar.date  = date.getDate();
-            this.today.day = this.calendar.day  = date.getDay();
+            this.todayYear = this.calendarYear = date.getFullYear();
+            this.todayMonth = this.calendarMonth  = date.getMonth(); // 0~11月
+            this.todayDate = this.calendarDate  = date.getDate();
+            this.todayDay = this.calendarDay  = date.getDay();
         },
         getChooseDay() {
             const addDay = this.getNowTime();
             const date = new Date(new Date().getTime() + addDay * 24 * 60 * 60 * 1000);
-            this.chooseDay.year = date.getFullYear();
-            this.chooseDay.month = date.getMonth(); // 0~11月
-            this.chooseDay.date = date.getDate();
-            this.chooseDay.day = date.getDay();
-            this.calendar.month = this.chooseDay.month;
+            this.chooseDayYear = date.getFullYear();
+            this.chooseDayMonth = date.getMonth(); // 0~11月
+            this.chooseDayDate = date.getDate();
+            this.chooseDayDay = date.getDay();
+            this.calendarMonth = this.chooseDayMonth;
 
-            if (this.chooseDay.year === this.today.year && this.chooseDay.month === this.today.month && this.chooseDay.date === this.today.date) {
+            if (this.chooseDayYear === this.todayYear && this.chooseDayMonth === this.todayMonth && this.chooseDayDate === this.todayDate) {
                 this.isCanChooseToday = true;
             }
         },
         changeYear(fix) {
-            this.calendar.year += fix;
+            this.calendarYear += fix;
         },
         changeMonth(fix) {
-            let month = this.calendar.month + fix;
+            let month = this.calendarMonth + fix;
             if(month > 11) {
                 this.changeYear(1);
-                this.calendar.month = 0;
+                this.calendarMonth = 0;
             } else if (month < 0){
                 this.changeYear(-1);
-                this.calendar.month = 11;
+                this.calendarMonth = 11;
             } else {
-                this.calendar.month = month;
+                this.calendarMonth = month;
             }
         },
         clickMonthBtn(fix) {
-            const todayMonth = this.calendar.month == this.today.month;
+            const todayMonth = this.calendarMonth == this.todayMonth;
             if(fix < 0 && todayMonth) return;
-            const nextMonth = this.calendar.month == this.getNextMonth(this.today.month);
+            const nextMonth = this.calendarMonth == this.getNextMonth(this.todayMonth);
             if(fix > 0 && nextMonth) return;
             
             this.changeMonth(fix);
@@ -263,11 +263,11 @@ export default {
         alreadyChooseDate() {
             const alreadyDate = this.orderMessage.dateData;
             if (alreadyDate === '') return;
-            this.chooseDay.year = alreadyDate.year;
-            this.chooseDay.month = alreadyDate.month;
-            this.chooseDay.date = alreadyDate.date;
-            this.chooseDay.day = alreadyDate.day;
-            this.calendar.month = this.chooseDay.month;
+            this.chooseDayYear = alreadyDate.year;
+            this.chooseDayMonth = alreadyDate.month;
+            this.chooseDayDate = alreadyDate.date;
+            this.chooseDayDay = alreadyDate.day;
+            this.calendarMonth = this.chooseDayMonth;
         }
     },
     created() {

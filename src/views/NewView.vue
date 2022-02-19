@@ -2,10 +2,10 @@
     <div class="newView main-bg-img main-white-text">
         <div class="container-920">
             <div class="top">
-                <p class="main-white-999 fw-700 text-right">{{newData(id).type}}</p>
-                <p class="main-brow-text title fw-700">{{newData(id).title}}</p>
+                <p class="main-white-999 fw-700 text-right">{{newData.type}}</p>
+                <p class="main-brow-text title fw-700">{{newData.title}}</p>
                 <div class="top-share-block d-flex justify-content-between">
-                    <p class="fw-700 main-white-999">{{newData(id).date}}</p>
+                    <p class="fw-700 main-white-999">{{newData.date}}</p>
                     <div class="share-list d-flex align-items-center">
                         <p class="share fw-700 main-white-999">SHARE</p>
                         <a :href="`http://line.naver.jp/R/msg/text/?${shareUrl}`" class="icon icon-line"></a>
@@ -14,20 +14,20 @@
                 </div>
             </div>
             <div class="article">
-                <p v-for="(txt, index) in articleAry" :key="index">{{txt}}</p>
-                <img :src="newData(id).img" alt="茶六">
+                <p v-for="(txt, index) in newData.txt" :key="index">{{txt}}</p>
+                <img :src="newData.img" alt="茶六">
             </div>
             <div class="bottom d-flex justify-content-between align-items-center">
                 <router-link :to="`/new/${prevId}`" class="prev-btn d-flex align-items-center fw-700">
                     <p class="icon-left-open  main-brow-text"></p>
                     <p class="txt main-brow-text">PREV</p>
-                    <p class="content text-left">{{nextNewTitle(prevId)}}</p>
+                    <p class="content text-left">{{preNewTitle}}</p>
                 </router-link>
                 <router-link to="/news" class="btn-border align-self-end">
                     <span class="btn-border-text fw-700 transition-0-3">返回列表</span>
                 </router-link>
                 <router-link :to="`/new/${nextId}`" class="next-btn d-flex align-items-center fw-700">
-                    <p class="content text-right">{{nextNewTitle(nextId)}}</p>
+                    <p class="content text-right">{{nextNewTitle}}</p>
                     <p class="txt main-brow-text">NEXT</p>
                     <p class="icon-right-open main-brow-text"></p>
                 </router-link>
@@ -55,12 +55,8 @@ export default {
             return url;
         },
         newData() {
-            return function(id) {
-                return this.newsListData[id];
-            }
-        },
-        articleAry() {
-            return this.newData(this.id).txt;
+            const news = this.newsListData[this.id];
+            return news;
         },
         newsLength() {
             return this.newsListData.length;
@@ -73,11 +69,12 @@ export default {
                 return newId;
             }
         },
+        preNewTitle() {
+            return this.newsListData[this.prevId].title;
+        },
         nextNewTitle() {
-            return function(num) {
-                return this.newData(num).title;
-            }
-        }
+            return this.newsListData[this.nextId].title;
+        },
     },
     methods: {
         goTop() {
