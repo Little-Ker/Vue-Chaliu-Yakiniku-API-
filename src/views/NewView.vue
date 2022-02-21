@@ -51,7 +51,7 @@ export default {
     },
     computed: {
         shareUrl() {
-            const url = `https://little-ker.github.io/Vue-Chaliu-Yakinikuy/#/new/${this.id}`;
+            const url = `https://lightten.tk:8082/CHALIU_WEB/#/new/${this.id}`;
             return url;
         },
         newData() {
