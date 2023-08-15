@@ -1,4 +1,4 @@
-# Vue Chaliu Yakiniku 茶六
+# Vue Chaliu Yakiniku 茶六(API版)
 
 > 以茶六為主題，使用 Vue CLI 框架製作的線上訂位網站。
 
